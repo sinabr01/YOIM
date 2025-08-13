@@ -25,6 +25,8 @@ public class NaverOauthService {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
+
+
         params.add("client_secret", clientSecret);
         params.add("code", code);
         params.add("state", state);
