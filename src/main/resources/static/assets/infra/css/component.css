@@ -24,17 +24,32 @@
   background: url("../img/common/ico_like.png") no-repeat center;
   background-size: 3.5rem auto;
 }
+@media (max-width: 767px) {
+  .ico.like {
+    background-size: 3rem auto;
+  }
+}
 .ico.mypage {
   width: 3.5rem;
   height: 3.5rem;
   background: url("../img/common/ico_mypage.png") no-repeat center;
   background-size: 3.5rem auto;
 }
+@media (max-width: 767px) {
+  .ico.mypage {
+    background-size: 3rem auto;
+  }
+}
 .ico.menu {
   width: 3.5rem;
   height: 3.5rem;
   background: url("../img/common/ico_menu.png") no-repeat center;
   background-size: 3.5rem auto;
+}
+@media (max-width: 767px) {
+  .ico.menu {
+    background-size: 3rem auto;
+  }
 }
 
 /* -------------------------------------------------------------- */

@@ -5,7 +5,7 @@
 }
 
 @mixin desktop {
-  @media (max-width: 1170px) {
+  @media (max-width: 1200px) {
     @content;
   }
 }
@@ -88,6 +88,12 @@ html, body {
 
 }
 
+.inner {
+  max-width: 160rem;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+}
+
 
 // * -------------------------------
 // * 헤더 */
@@ -97,13 +103,13 @@ html, body {
   top: 0;
   width: 100%;
   z-index: 9992;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 
   border-bottom: 1px solid var(--color-border-gray);
 
   .inner {
     max-width: 120rem;
-    width: 100%;
+    width: calc(100% - 4rem);
     margin: 0 auto;
     height: 7.5rem;
 
@@ -111,6 +117,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
   }
+
   .logo {
     .logo-wh {
       display: inline-block;
@@ -119,6 +126,11 @@ html, body {
 
       background: url("../img/common/logo_wh.png") no-repeat center;
       background-size: auto 100%;
+
+      @include mobile {
+        width: 9.5rem;
+        height: 2.5rem;
+      }
     }
   }
 
@@ -126,10 +138,19 @@ html, body {
     display: flex;
     gap: 1.5rem;
 
+    @include mobile {
+      gap: 1.2rem;
+    }
+
     .ico {
       position: relative;
-      width:4rem;
+      width: 4rem;
       height: 4rem;
+
+      @include mobile {
+        width: 3rem;
+        height: 3rem;
+      }
 
       &:after {
         content: '';
@@ -177,6 +198,21 @@ html, body {
 
   &.active {
     display: block;
+  }
+
+
+  @include desktop {
+    left: auto;
+    right: 2rem;
+    transform: translateX(0);
+  }
+
+  @include mobile {
+    max-width:90%;
+  }
+
+  .inner {
+    width: 100%;
   }
 
 
@@ -323,6 +359,92 @@ html, body {
     &:nth-of-type(1) {
       border-top: none;
     }
+  }
+}
+
+// * -------------------------------
+// * 푸터 */
+// * -------------------------------
+#footer {
+  background: rgba(250, 250, 250, 1);
+  padding: 0 0 4rem 0;
+  border-top: 1px solid #ddd;
+
+  .inner {
+
+  }
+
+  .foot-top {
+    border-bottom: 1px solid #ddd;
+
+
+    .link-area {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      padding: 0 2rem;
+
+      @include mobile {
+        justify-content: center;
+        padding: 0 1.6rem;
+      }
+
+      .link {
+        font-size: 1.6rem;
+        color: #000;
+        padding: 1rem 0;
+        display: block;
+
+        @include mobile {
+          font-size: 1.3rem;
+          padding: 0.8rem 0;
+        }
+
+        &:before {
+          content: '|';
+          display: inline-block;
+          font-size: 1.6rem;
+          color: #eee;
+          margin: 0 1rem;
+
+          @include mobile {
+            margin: 0 0.5rem;
+          }
+        }
+
+
+        &.privacy {
+          color: #1F93FF;
+        }
+      }
+
+      li {
+        &:nth-of-type(1) {
+          .link {
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  address {
+    margin-top: 3rem;
+    .txt {
+      font-size: 1.2rem;
+      color: rgb(153, 153, 153, 1);
+    }
+  }
+
+  .copy {
+    display: block;
+    margin-top: 2rem;
+
+    font-size: 1.2rem;
+    color: rgb(153, 153, 153, 1);
   }
 }
 

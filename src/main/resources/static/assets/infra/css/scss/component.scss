@@ -54,6 +54,10 @@
 
     background: url("../img/common/ico_like.png") no-repeat center;
     background-size: 3.5rem auto;
+
+    @include mobile {
+      background-size: 3rem auto;
+    }
   }
   &.mypage {
     width: 3.5rem;
@@ -61,6 +65,10 @@
 
     background: url("../img/common/ico_mypage.png") no-repeat center;
     background-size: 3.5rem auto;
+
+    @include mobile {
+      background-size: 3rem auto;
+    }
   }
   &.menu {
     width: 3.5rem;
@@ -68,6 +76,10 @@
 
     background: url("../img/common/ico_menu.png") no-repeat center;
     background-size: 3.5rem auto;
+
+    @include mobile {
+      background-size: 3rem auto;
+    }
   }
 }
 
