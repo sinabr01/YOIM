@@ -1,0 +1,23 @@
+server:
+    tomcat:
+      max-threads: 500
+    port: 8200
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:mysql://localhost:3310/yoim?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: root
+
+kakao:
+  api_key: b8ccc970905ff026a227b142e6834570
+  redirect_uri: http://localhost:8200/login
+
+naver:
+  client-id: bRewgblVZHuMpJPLh7X1
+  client-secret: kc9c2QSLVt
+  redirect-uri: http://localhost:8200/naverLogin

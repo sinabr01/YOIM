@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="utf-8">
+<div class="navbar" th:fragment="navbarFragment">
+	 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <div role="search" class="navbar-form-custom" action="search_results.html">
+                        <div class="disk">
+                             <img th:src="@{/resource/assets/img/nautes_logo.png}" alt="company_logo"> 
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                 
+                    <li>
+                        <a href="/user_logout" class="logout">
+                            <i class="fas fa-sign-in-alt"></i> 로그아웃
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+</div>
+</html>

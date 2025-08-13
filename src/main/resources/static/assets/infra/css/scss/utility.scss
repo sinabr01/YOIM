@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+/*-------------------------------------------------------------------
+    파일정의 : 유틸리티
+-------------------------------------------------------------------*/
+// * -------------------------------
+// * mixin
+// * -------------------------------
+@mixin DESKTOP {
+  @media (max-width:1170px) {
+    @content;
+  }
+}
+@mixin TABLET {
+  @media (max-width:1023px) {
+    @content;
+  }
+}
+@mixin MOBILE {
+  @media (max-width:767px) {
+    @content;
+  }
+}
+
+// * -------------------------------
+// * Margin
+// * -------------------------------
+@for $i from 0 through 150 {
+  .mt#{$i} {
+    margin-top: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .ml#{$i} {
+    margin-left: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .mr#{$i} {
+    margin-right: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .mb#{$i} {
+    margin-bottom: #{$i}px!important;
+  }
+}
+
+
+// * -------------------------------
+// * Padding
+// * -------------------------------
+@for $i from 0 through 150 {
+  .pt#{$i} {
+    padding-top: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .pl#{$i} {
+    padding-left: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .pr#{$i} {
+    padding-right: #{$i}px!important;
+  }
+}
+@for $i from 0 through 150 {
+  .pb#{$i} {
+    padding-bottom: #{$i}px!important;
+  }
+}
+
+
+
+// * -------------------------------
+// * width
+// * -------------------------------
+.wp100 {width: 100% !important;}
+
+// * -------------------------------
+// * float
+// * -------------------------------
+.cf::after{ display: block; clear: both; content: ""; }
+
+.fl-none{ float: none; }
+
+.fl-l{ float: left; }
+.fl-r{ float: right; }
+
+// * -------------------------------
+// * Align
+// * -------------------------------
+.ta-l { text-align: left !important; }
+.ta-c { text-align: center !important; }
+.ta-r { text-align: right !important; }
+
+// * -------------------------------
+// * font-weight
+// * -------------------------------
+.txt-bold {font-weight: 700!important;}
+.txt-semibold {font-weight: 600!important;}
+.txt-medium {font-weight: 500!important;}
+.txt-normal {font-weight: 400!important;}
+.txt-light {font-weight: 300!important;}
+
+// * -------------------------------
+// * 말줄임
+// * -------------------------------
+.ellipsis1 {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis2 {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.ellipsis3 {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+// * -------------------------------
+// * Flexible
+// * -------------------------------
+.flex{
+  display: flex;
+
+  &.fd-c{ flex-direction: column; }
+  &.wrap{ flex-wrap: wrap; }
+  &.jc-c{ justify-content: center; }
+  &.jc-sb{ justify-content: space-between; }
+  &.jc-fe{ justify-content: flex-end; }
+
+  &.ai-fs{ align-items: flex-start; }
+  &.ai-fe{ align-items: flex-end; }
+  &.ai-c{ align-items: center; }
+  &.ai-s{ align-items: stretch; }
+}
+
+.flex-none{ flex: none; }
+
+.flex1{ flex: 1 0 !important; }
+.flex2{ flex: 2 0 !important; }
+.flex3{ flex: 3 0 !important; }
+
+/*-------------------------------------------------------------------
+    @Only (Display 스타일은 다양하므로 숨길경우만 사용)
+-------------------------------------------------------------------*/
+/* Base */
+.hidden { display: none !important; }
+/* Device */
+.pc-only   { display: none; }
+.tablet-only    { display: none; }
+.mobile-only    { display: none; }
+
+@include DESKTOP {
+  .pc-only {display: block!important;}
+}
+
+@include TABLET {
+  .tablet-only {display: block!important;}
+}
+
+@include MOBILE {
+  .mobile-only {display: block!important;}
+}
+
+
+/* Media */
+@media screen { .hide-screen {display:none !important;} }
+@media print { .hide-print {display:none !important;} }
+
+/*-------------------------------------------------------------------
+    @Color Set
+    - 배경: bg-, 텍스트: txt-, 라인: line-
+    - 밝은: -light, 어두운: -dark, 더 밝은/어두운: ~er
+-------------------------------------------------------------------*/
+/* 기본 */
+.bg-none {background-color:transparent !important;}
+.txt-none {color:transparent !important;}
+.line-none {border-color:transparent !important;}
+
+/* 배경 */
+
+
+/* 텍스트 */
+
+
+/* 라인 */
+
+/* 상태 */

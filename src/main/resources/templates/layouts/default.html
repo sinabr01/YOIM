@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/resource/assets/favicon/apple-touch-icon.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/resource/assets/favicon/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/resource/assets/favicon/favicon-16x16.png}">
+    <link rel="mask-icon" th:href="@{/resource/assets/favicon/safari-pinned-tab.svg}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Wake up call</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/resource/assets/css/reset.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resource/assets/css/bootstrap.min.css}">
+     
+    <link th:href="@{/resource/assets/css/bootstrap-theme.css}" rel="stylesheet">
+   
+    <link rel="stylesheet" th:href="@{/resource/assets/jqwidgets/styles/jqx.base.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{/resource/assets/jqwidgets/styles/jqx.light.css}" type="text/css" />
+
+	
+
+    <script th:src="@{/resource/assets/css/all.min.js}"></script>
+    <script th:src="@{/resource/assets/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/resource/assets/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/resource/assets/css/sideMenu_style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resource/assets/css/animate.css}">
+
+</head>
+<header th:replace="fragments/header :: headerFragment"></header>
+<div layout:fragment="content"></div>
+</html>

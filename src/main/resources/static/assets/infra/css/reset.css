@@ -1,0 +1,136 @@
+/* reset v20190901
+------------------------------------------------------------*/
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
+	outline-offset: -2px;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	text-size-adjust: none;
+	list-style: none;
+	-webkit-tap-highlight-color: transparent;
+}
+address,
+em {
+	font-style: normal;
+}
+a img,
+fieldset,
+img {
+	border: none;
+}
+caption,
+legend {
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	border: none;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px,1px,1px,1px);
+}
+caption {
+	position: static;
+	color: transparent;
+}
+table {
+	position: relative;
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+button,
+input,
+textarea,
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	font-family: inherit;
+	font-size: inherit;
+	letter-spacing: inherit;
+}
+textarea {
+	font-family: inherit;
+	resize: vertical;
+
+	-ms-overflow-style: none;
+}
+[type=checkbox] {
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	appearance: checkbox;
+}
+[type=radio] {
+	-webkit-appearance: radio;
+	-moz-appearance: radio;
+	appearance: radio;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+	display: block;
+	margin: 0;
+}
+audio,
+button,
+canvas,
+iframe,
+img,
+input,
+label,
+select,
+svg,
+video {
+	vertical-align: middle;
+}
+input[type=text]::-ms-clear,
+input[type=text]::-ms-reveal {
+	display: none;
+}
+select::-ms-expand {
+	display: none;
+}
+a,
+button,
+input[type=button] {
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}
+::-webkit-input-placeholder,
+:-ms-input-placeholder,
+::-moz-placeholder,
+:-moz-placeholder,
+::placeholder {
+	color: #888!important;
+}
+pre {
+	font-family: inherit;
+	font-size: inherit;
+}

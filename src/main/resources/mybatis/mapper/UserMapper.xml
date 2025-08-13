@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yoim.www.mapper.UserMapper">
+	
+	<resultMap type="user" id="getSelectMap">
+		<result property="userSeq" column="user_seq"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userNm" column="user_nm"/>
+		<result property="nickNm" column="nick_nm"/>
+		<result property="email" column="email"/>
+		<result property="birthDate" column="birth_date"/>
+		<result property="gender" column="gender"/>
+		<result property="intro" column="intro"/>
+		<result property="interests" column="interests"/>
+		<result property="phone" column="phone"/>
+		<result property="providerId" column="provider_id"/>
+		<result property="providerType" column="provider_type"/>
+		<result property="userDelYn" column="user_del_yn"/>
+		<result property="userDelDate" column="user_del_date"/>
+		<result property="userImg" column="user_img"/>
+		<result property="userType" column="user_type"/>
+		<result property="registId" column="regist_id"/>
+		<result property="registDt" column="regist_dt"/>
+		<result property="updusrId" column="updusr_id"/>
+		<result property="updtDt" column="updt_dt"/>
+	</resultMap>
+	
+	<select id="providerLogin" parameterType="hashmap" resultMap="getSelectMap">
+		select * from tb_user where provider_id = #{providerId}
+	</select>
+	
+	<insert id="upsert" parameterType="hashmap">
+		insert into tb_user_auth
+		(
+		provider_id, 
+		provider_type, 
+		provider_name, 
+		regist_id,
+		regist_dt
+		)
+		values(
+		#{providerId},
+		#{providerType}, 
+		#{providerName}, 
+		'SYSTEM',
+		now()
+		)
+		ON DUPLICATE KEY UPDATE
+	    provider_type = VALUES(provider_type),
+	    provider_name = VALUES(provider_name),
+	    updusr_id = 'SYSTEM',
+	    updt_dt = NOW();
+	</insert>
+	
+	
+	
+	
+</mapper>

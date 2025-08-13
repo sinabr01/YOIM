@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- Spring Boot 기본 설정 -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <property name="APP_HOME" value="${conf.home}/../logs"/>
+
+    <!-- 파일 롤링 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_HOME}/yoim.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${APP_HOME}/yoim.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>300</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 앱 로그 레벨 -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springframework.jdbc.core" level="INFO"/>
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+    <logger name="com.yoim.www" level="INFO"/>
+
+    <!-- MyBatis 기본 로그 끔 (Preparing/Parameters 중복 방지) -->
+    <logger name="org.apache.ibatis" level="OFF"/>
+    <logger name="org.mybatis" level="OFF"/>
+    <logger name="java.sql" level="OFF"/>
+    <logger name="java.sql.Statement" level="OFF"/>
+    <logger name="java.sql.PreparedStatement" level="OFF"/>
+
+    <!-- ★ log4jdbc가 log4j2 델리게이터로 뿜는 커넥션/프리페어드 로그 통째로 차단 -->
+    <logger name="log4jdbc.log4j2" level="OFF"/>
+
+    <!-- log4jdbc : '쿼리 한 줄' + '결과 테이블'만 ON -->
+    <logger name="jdbc.sqlonly" level="OFF"/>          <!-- 필요없음 -->
+    <logger name="jdbc.sqltiming" level="DEBUG"/>      <!-- 실행된 SQL (한 줄 + 시간) -->
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="INFO"/>  <!-- 결과 테이블 -->
+    <logger name="jdbc.connection" level="OFF"/>
+
+    <!-- 루트: 콘솔(base.xml의 CONSOLE) + 파일 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
