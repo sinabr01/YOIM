@@ -1,0 +1,31 @@
+@mixin desktop {
+  @media (max-width:1170px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin mini {
+  @media (max-width: 359px) {
+    @content;
+  }
+}
+
+// * -------------------------------
+// * letter-spacing -> px에서 em 으로단위변환
+// * -------------------------------
+@function px-to-em($px, $base-font-size: 16) {
+  @return ($px / $base-font-size) * 1em;
+}
+

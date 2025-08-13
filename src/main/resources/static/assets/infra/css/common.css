@@ -1,0 +1,207 @@
+@charset "UTF-8";
+:root {
+  --color-gradient: linear-gradient(103deg, #0E457B 9.89%, #075D5D 90.9%);
+  /* Primary Colors */
+  --color-primary-blue: #0E457B;
+  --color-primary-green: #075D5D;
+  /* Grayscale */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-sky: #79B1E9;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-800: #323232;
+  --color-border-gray: #EBEBEB;
+  /* Text */
+  --text-main: #111;
+  --text-sub: #666;
+  --text-placeholder: #aaa;
+  /* Alert */
+  --color-error: #ff4d4f;
+  --color-success: #52c41a;
+}
+
+html, body {
+  font-family: "Pretendard", "돋움", dotum, sans-serif;
+  font-size: 62.5%;
+  line-height: 1.5;
+  color: #323232;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9992;
+  background: rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid var(--color-border-gray);
+}
+#header .inner {
+  max-width: 120rem;
+  width: 100%;
+  margin: 0 auto;
+  height: 7.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#header .logo .logo-wh {
+  display: inline-block;
+  width: 11rem;
+  height: 2.9rem;
+  background: url("../img/common/logo_wh.png") no-repeat center;
+  background-size: auto 100%;
+}
+#header .right-area {
+  display: flex;
+  gap: 1.5rem;
+}
+#header .right-area .ico {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+#header .right-area .ico:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 1rem;
+  background: rgba(124, 27, 255, 0.05);
+  opacity: 0;
+}
+#header .right-area .ico:hover:after {
+  opacity: 1;
+}
+
+.menu-all {
+  position: fixed;
+  top: 8rem;
+  right: 50%;
+  transform: translateX(60rem);
+  z-index: 9991;
+  width: 34rem;
+  padding: 2rem 0 0 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+  display: none;
+}
+.menu-all.active {
+  display: block;
+}
+.menu-all .btn-wrap {
+  padding: 0 2rem;
+}
+.menu-all .btn-wrap .btn-login {
+  height: 5rem;
+}
+.menu-all .btn-wrap .btn-login:hover {
+  font-weight: 700;
+}
+.menu-all .profile-wrap {
+  padding: 0 2rem;
+}
+.menu-all .profile-wrap .link {
+  border-radius: 10px;
+  /*background:rgba(172, 104, 249, 0.10);*/
+  display: flex;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  padding: 1.2rem 1rem;
+  position: relative;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+}
+.menu-all .profile-wrap .link::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: rgba(172, 104, 249, 0.03);
+  border-radius: 10px;
+  z-index: 0;
+}
+.menu-all .profile-wrap .link:after {
+  content: "";
+  display: block;
+  width: 1rem;
+  height: 1.8rem;
+  transform: translateX(-1.5rem);
+  background: url("../img/common/arr_right_gray.png") no-repeat center;
+  background-size: contain;
+  margin-left: auto;
+  transition: all 0.3s;
+}
+.menu-all .profile-wrap .link:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.menu-all .profile-wrap .link:hover::before {
+  background: rgba(255, 255, 255, 0.9);
+}
+.menu-all .profile-wrap .link:hover:after {
+  transform: translateX(-0.5rem);
+}
+.menu-all .profile-wrap .img {
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+.menu-all .profile-wrap .name {
+  color: #000;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: relative;
+  z-index: 1;
+}
+.menu-all .nav {
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-border-gray);
+}
+.menu-all .nav .depth1-ul {
+  padding: 0 3rem;
+}
+.menu-all .nav .depth1-ul .depth1-li .depth1 {
+  padding: 1rem 0;
+  display: block;
+  color: #000;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: relative;
+}
+.menu-all .nav .depth1-ul .depth1-li .depth1:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+  width: 0;
+  height: 1.5rem;
+  background: rgba(0, 0, 0, 0.1);
+  /*background: rgba(255,214,0,0.1);*/
+  /*background: rgba(211,36,255,0.1);*/
+  transition: all 0.3s;
+}
+.menu-all .nav .depth1-ul .depth1-li .depth1:hover {
+  font-weight: 500;
+}
+.menu-all .nav .depth1-ul .depth1-li .depth1:hover:before {
+  width: 100%;
+}
+.menu-all .nav:nth-of-type(1) {
+  border-top: none;
+}

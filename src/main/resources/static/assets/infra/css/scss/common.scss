@@ -1,0 +1,328 @@
+@mixin desktop1600 {
+  @media (max-width: 1600px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: 1170px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin mini {
+  @media (max-width: 359px) {
+    @content;
+  }
+}
+
+
+// * -------------------------------
+// * letter-spacing -> px에서 em 으로단위변환
+// * -------------------------------
+@function px-to-em($px, $base-font-size: 16) {
+  @return ($px / $base-font-size) * 1em;
+}
+
+
+// * -------------------------------
+// * 색상값
+// * -------------------------------
+:root {
+  --color-gradient: linear-gradient(103deg, #0E457B 9.89%, #075D5D 90.9%);
+
+  /* Primary Colors */
+  --color-primary-blue: #0E457B;
+  --color-primary-green: #075D5D;
+
+  /* Grayscale */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-sky: #79B1E9;
+
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-800: #323232;
+
+  --color-border-gray: #EBEBEB;
+
+  /* Text */
+  --text-main: #111;
+  --text-sub: #666;
+  --text-placeholder: #aaa;
+
+  /* Alert */
+  --color-error: #ff4d4f;
+  --color-success: #52c41a;
+
+}
+
+// * -------------------------------
+// * 공통 폰트, 사이즈, 자간 등 */
+// * -------------------------------
+html, body {
+  font-family: 'Pretendard', '돋움', dotum, sans-serif;
+  font-size: 62.5%;
+  line-height: 1.5;
+  color: #323232;
+
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#container {
+
+}
+
+
+// * -------------------------------
+// * 헤더 */
+// * -------------------------------
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9992;
+  background: rgba(255,255,255,0.3);
+
+  border-bottom: 1px solid var(--color-border-gray);
+
+  .inner {
+    max-width: 120rem;
+    width: 100%;
+    margin: 0 auto;
+    height: 7.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    .logo-wh {
+      display: inline-block;
+      width: 11rem;
+      height: 2.9rem;
+
+      background: url("../img/common/logo_wh.png") no-repeat center;
+      background-size: auto 100%;
+    }
+  }
+
+  .right-area {
+    display: flex;
+    gap: 1.5rem;
+
+    .ico {
+      position: relative;
+      width:4rem;
+      height: 4rem;
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        padding: 1rem;
+        background: rgba(124, 27, 255, 0.05);
+
+        opacity: 0;
+
+      }
+
+      &:hover {
+        &:after {
+          opacity: 1;
+        }
+      }
+
+    }
+  }
+}
+
+.menu-all {
+  position: fixed;
+  top: 8rem;
+  right: 50%;
+  transform: translateX(60rem);
+  z-index: 9991;
+  width: 34rem;
+  padding: 2rem 0 0 0;
+
+  background: #fff;
+  border-radius: 12px;
+
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+
+  .btn-wrap {
+    padding: 0 2rem;
+
+    .btn-login {
+      height: 5rem;
+
+      &:hover {
+        font-weight: 700;
+      }
+    }
+  }
+
+
+  .profile-wrap {
+    padding: 0 2rem;
+
+    .link {
+      border-radius: 10px;
+      /*background:rgba(172, 104, 249, 0.10);*/
+
+      display: flex;
+      gap: 1rem 1.5rem;
+      align-items: center;
+
+      padding: 1.2rem 1rem;
+
+      position: relative;
+      border: 1px solid transparent;
+
+
+      transition: all 0.3s;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: rgba(172, 104, 249, 0.03);
+        border-radius: 10px;
+        z-index: 0;
+      }
+
+
+      &:after {
+        content: '';
+        display: block;
+        width: 1rem;
+        height: 1.8rem;
+        transform: translateX(-1.5rem);
+
+        background: url("../img/common/arr_right_gray.png") no-repeat center;
+        background-size: contain;
+
+        margin-left: auto;
+
+        transition: all 0.3s;
+      }
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+        &::before {
+          background: rgba(255, 255, 255, 0.9);
+        }
+
+        &:after {
+          transform: translateX(-0.5rem);
+        }
+      }
+    }
+
+    .img {
+      width: 4.2rem;
+      height: 4.2rem;
+      border-radius: 50%;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .name {
+      color: #000;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .nav {
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-border-gray);
+
+    .depth1-ul {
+      padding: 0 3rem;
+
+      .depth1-li {
+        .depth1 {
+          padding: 1rem 0;
+          display: block;
+
+          color: #000;
+          font-size: 1.6rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+
+          position: relative;
+
+          &:before {
+            content: '';
+            display: inline-block;
+
+            position: absolute;
+            left: 0;
+            bottom: 1rem;
+
+            width: 0;
+            height: 1.5rem;
+            background: rgba(0, 0, 0, 0.1);
+
+            /*background: rgba(255,214,0,0.1);*/
+            /*background: rgba(211,36,255,0.1);*/
+
+            transition: all 0.3s;
+          }
+
+          &:hover {
+            &:before {
+              width: 100%;
+            }
+
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    &:nth-of-type(1) {
+      border-top: none;
+    }
+  }
+}
+

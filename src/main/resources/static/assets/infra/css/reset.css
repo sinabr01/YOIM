@@ -123,6 +123,10 @@ input[type=button] {
 	text-decoration: none;
 	cursor: pointer;
 }
+button {
+	border: none;
+	background: transparent;
+}
 ::-webkit-input-placeholder,
 :-ms-input-placeholder,
 ::-moz-placeholder,

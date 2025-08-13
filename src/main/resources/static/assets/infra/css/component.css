@@ -1,0 +1,95 @@
+/* -------------------------------------------------------------- */
+/* txt-color */
+/* -------------------------------------------------------------- */
+.txt-blue {
+  color: var(--color-primary-blue) !important;
+}
+
+.txt-green {
+  color: var(--color-primary-green) !important;
+}
+
+.txt-sky {
+  color: #79B1E9 !important;
+}
+
+.ico {
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+}
+.ico.like {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url("../img/common/ico_like.png") no-repeat center;
+  background-size: 3.5rem auto;
+}
+.ico.mypage {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url("../img/common/ico_mypage.png") no-repeat center;
+  background-size: 3.5rem auto;
+}
+.ico.menu {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url("../img/common/ico_menu.png") no-repeat center;
+  background-size: 3.5rem auto;
+}
+
+/* -------------------------------------------------------------- */
+/* btn-color */
+/* -------------------------------------------------------------- */
+.btn-wrap {
+  display: flex;
+  align-items: center;
+}
+.btn-wrap.center {
+  justify-content: center;
+  gap: 0 1rem;
+}
+
+.btn.btn-gradient {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
+}
+.btn.line-gray {
+  min-height: 5rem;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  color: #000;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.hover-line {
+  position: relative;
+}
+.hover-line:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+  width: 0;
+  height: 1.5rem;
+  background: rgba(0, 0, 0, 0.1);
+  /*background: rgba(255,214,0,0.1);*/
+  /*background: rgba(211,36,255,0.1);*/
+  transition: all 0.3s;
+}
+.hover-line:hover:before {
+  width: 100%;
+}
