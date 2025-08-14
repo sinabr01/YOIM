@@ -21,12 +21,9 @@ public class NaverOauthService {
 
     public String exchangeCodeForToken(String code, String state) {
         RestTemplate rt = new RestTemplate();
-        System.err.println("?");
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
-
-
         params.add("client_secret", clientSecret);
         params.add("code", code);
         params.add("state", state);
