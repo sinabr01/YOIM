@@ -124,16 +124,68 @@
     font-weight: 500;
     line-height: normal;
 
+    transition: all 0.25s;
+
     border: 1px solid transparent;
     background:
             linear-gradient(#fff, #fff) padding-box, /* 내부 흰색 */
             linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
+
+    &:hover {
+      font-size: 1.8rem;
+      color: #fff!important;
+      background:
+              linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
+    }
   }
 
   &.line-gray {
     border: 1px solid #aeaeae;
     color: #000;
     font-size: 1.6rem;
+
+    transition: all 0.25s;
+
+    &:hover {
+      font-size: 1.7rem;
+      font-weight: 500;
+      background: #F5F5F5;
+      border: 1px solid #eaeaea;
+      color: #000;
+    }
+  }
+
+  &.line-blue {
+    overflow: hidden;
+    position: relative;
+
+    border: 1px solid #5865F2;
+    color: #5865F2;
+
+    transition: all 0.3s;
+    background: #fff;
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    &:hover {
+      background: #315cfd;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+  }
+
+  &.inactive {
+    border-radius: 10px;
+    border: 1px solid #FAFAFA;
+    background: #FAFAFA;
+
+    color: #D6D6D6;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    pointer-events: none;
   }
 }
 
@@ -192,6 +244,172 @@ input[type="number"] {
   }
 }
 
+/* 커스텀 라디오 버튼 */
+.radio-group {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  flex: 1 0;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .fake-radio {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #D1D6DC;
+    border-radius: 50%;
+    background: #fff;
+    position: relative;
+    transition: all .2s;
+  }
+
+  input[type="radio"]:checked + .fake-radio {
+    border-color: #5865F2;
+    box-shadow: 0 0 0 2px rgba(88,101,242,0.12);
+  }
+
+  input[type="radio"]:checked + .fake-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: #5865F2;
+  }
+
+  input[type="radio"]:focus-visible + .fake-radio {
+    box-shadow: 0 0 0 3px rgba(88,101,242,0.25);
+  }
+
+  .txt {
+    color: #000;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  input[type="radio"]:disabled + .fake-radio {
+    border-color: #E2E5E9;
+    background: #F5F6F7;
+  }
+  input[type="radio"]:disabled ~ .txt {
+    color: #AEB4BA;
+    cursor: not-allowed;
+  }
+}
+
+
+/* 커스텀 셀렉트박스 */
+.custom-select-box {
+  position: relative;
+  width: 100%;
+  user-select: none;
+
+  .select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1.5rem;
+    min-height:4.8rem;
+
+    background: #FAFAFA;
+
+    border: 1px solid #FAFAFA;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+
+    &:after {
+      content: '';
+
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+
+      background: url('../img/common/arr_down_gray.png') no-repeat center;
+      background-size: auto 6px;
+    }
+
+    span {
+      flex-grow: 1;
+
+      color: #AEAEAE;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+
+      &.selected { color: #000; }
+    }
+
+    .chevron-down {
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .select-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    list-style: none;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    display: none;
+
+    font-size: 1.4rem;
+    color: #000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+  }
+
+  .select-option {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+
+  &.active {
+    .chevron-down {
+      transform: rotate(180deg);
+    }
+    .select-options {
+      display: block;
+    }
+    .select-btn {
+      &:after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+
+
 .id {
   border-radius: 10px;
   border: 1px solid #E5E8EB;
@@ -227,8 +445,7 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-top: 1rem;
+  gap: 1rem;
 
 
   input[type="text"],
@@ -244,8 +461,99 @@ input[type="number"] {
     display: inline-block;
     width: 2.5rem;
     height: 2.5rem;
+    flex: none;
 
     background: url('../img/common/ico_pw_on.png') no-repeat center;
     background-size: contain;
+
+    &.on {
+      background: url('../img/common/ico_pw.png') no-repeat center;
+      background-size: contain;
+    }
+  }
+}
+
+.birth {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+
+
+
+.form-area {}
+.form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+
+  &.col {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  & + .form {
+    margin-top: 2rem;
+  }
+
+  .form-tit-wrap {
+    .form-tit {
+      color: #707070;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    .required {
+      &:after {
+        content: '*';
+
+        color: var(--color-red);
+        font-size: 1.6rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+  .form-cont-wrap {
+    width: 100%;
+
+    input[type="text"],
+    input[type="password"] {
+      min-height:4.8rem;
+      padding: 0 1.5rem;
+      width: 100%;
+
+      border-radius: 12px;
+      border: 1px solid #FAFAFA;
+      background: #FAFAFA;
+
+      &::placeholder {
+        color: #AEAEAE;
+        font-size: 1.6rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+
+  .password {
+    min-height:4.8rem;
+    width: 100%;
+
+    border-radius: 12px;
+    border: 1px solid #FAFAFA;
+    background: #FAFAFA;
+
+    input[type="password"],
+    input[type="text"] {
+      background: #FAFAFA;
+    }
   }
 }

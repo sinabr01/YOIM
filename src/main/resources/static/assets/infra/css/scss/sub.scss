@@ -32,7 +32,7 @@
 
 
 #contents {
-  min-height: calc(100vh - 7.6rem - 17.2rem);
+  min-height: calc(100vh - 17.2rem);
   padding-top: 7.6rem;
 }
 
@@ -151,6 +151,10 @@
       }
     }
 
+
+    .password {
+      margin-top: 1rem;
+    }
     .btn-wrap {
       margin-top: 5rem;
       flex-wrap: wrap;
@@ -165,11 +169,11 @@
           font-size: 1.4rem;
         }
 
-        &:hover {
+        /*&:hover {
           font-weight: 700;
           text-decoration: line-through;
           transition: all 0.3s;
-        }
+        }*/
       }
 
       .btn-gradient {
@@ -321,3 +325,170 @@
     display: block;
   }
 }
+
+
+// * -------------------------------
+// * 회원가입
+// * -------------------------------
+.contents-wrap {
+
+
+  .inner-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width:90%;
+    margin: 5rem auto;
+
+    min-height: calc(100vh - 7.5rem - 17.2rem - 10.1rem);
+  }
+
+  .join {
+    max-width: 50rem;
+    width: 100%;
+
+  }
+
+  .join-tit-wrap {
+    .join-tit {
+      color: #000;
+      font-size: 3rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+
+      @include TABLET {
+        font-size: 3.4rem;
+      }
+
+      @include MOBILE {
+        font-size: 2.8rem;
+      }
+    }
+
+    .join-txt {
+      color: #999;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+      display: block;
+      margin-top: 1rem;
+    }
+  }
+
+  .join-wrap {
+    margin-top: 3.5rem;
+    padding: 4rem 6rem;
+
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
+
+    @include TABLET {
+      padding: 4rem;
+    }
+    @include MOBILE {
+      padding: 4rem 2.4rem;
+    }
+
+    .all-check {
+      padding: 1.25rem 1rem;
+      border-radius: 10px;
+      background: #F5F5F5;
+
+      .txt {
+        font-weight: 600;
+        font-size: 1.6rem;
+      }
+    }
+
+    .check-wrap {
+      margin-top: 3rem;
+      padding: 0 1.5rem;
+
+      .check + .check {
+        margin-top: 1.5rem;
+      }
+    }
+
+    .btn-wrap {
+      margin-top: 3rem;
+    }
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      gap: 8px;
+    }
+
+    /* 실제 체크박스 숨기기 */
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    /* 가짜 박스 */
+    .fake-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #D1D6DC;
+      border-radius: 4px;
+      background: #fff;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    /* 체크됐을 때 */
+    input[type="checkbox"]:checked + .fake-box {
+      background: #5865F2;
+      border-color: #5865F2;
+    }
+
+    /* 체크 아이콘 */
+    input[type="checkbox"]:checked + .fake-box::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 7px;
+      background: url("../img/common/ico_check_wh.png") no-repeat center;
+      background-size: contain;
+      transform: translate(-50%, -50%);
+    }
+
+    .txt {
+      color: #000;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 100%;
+    }
+
+
+    .arr-right {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      background: url("../img/common/arr_right_gray.png") no-repeat center;
+      background-size: auto 1rem;
+    }
+  }
+
+
+}
+
+
+

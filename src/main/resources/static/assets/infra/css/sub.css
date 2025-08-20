@@ -1,5 +1,6 @@
+@charset "UTF-8";
 #contents {
-  min-height: calc(100vh - 7.6rem - 17.2rem);
+  min-height: calc(100vh - 17.2rem);
   padding-top: 7.6rem;
 }
 
@@ -104,6 +105,9 @@
   font-weight: 400;
   line-height: normal;
 }
+.login .login-wrap .password {
+  margin-top: 1rem;
+}
 .login .login-wrap .btn-wrap {
   margin-top: 5rem;
   flex-wrap: wrap;
@@ -112,17 +116,17 @@
 .login .login-wrap .btn-wrap .btn {
   min-height: 5rem;
   flex: 1 1 47%;
+  /*&:hover {
+    font-weight: 700;
+    text-decoration: line-through;
+    transition: all 0.3s;
+  }*/
 }
 @media (max-width: 767px) {
   .login .login-wrap .btn-wrap .btn {
     min-height: 4.5rem;
     font-size: 1.4rem;
   }
-}
-.login .login-wrap .btn-wrap .btn:hover {
-  font-weight: 700;
-  text-decoration: line-through;
-  transition: all 0.3s;
 }
 .login .login-wrap .btn-wrap .btn-gradient {
   color: #000;
@@ -237,4 +241,137 @@
 }
 .login .login-group .group.active {
   display: block;
+}
+
+.contents-wrap .inner-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  margin: 5rem auto;
+  min-height: calc(100vh - 7.5rem - 17.2rem - 10.1rem);
+}
+.contents-wrap .join {
+  max-width: 50rem;
+  width: 100%;
+}
+.contents-wrap .join-tit-wrap .join-tit {
+  color: #000;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+@media (max-width: 1023px) {
+  .contents-wrap .join-tit-wrap .join-tit {
+    font-size: 3.4rem;
+  }
+}
+@media (max-width: 767px) {
+  .contents-wrap .join-tit-wrap .join-tit {
+    font-size: 2.8rem;
+  }
+}
+.contents-wrap .join-tit-wrap .join-txt {
+  color: #999;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: block;
+  margin-top: 1rem;
+}
+.contents-wrap .join-wrap {
+  margin-top: 3.5rem;
+  padding: 4rem 6rem;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
+}
+@media (max-width: 1023px) {
+  .contents-wrap .join-wrap {
+    padding: 4rem;
+  }
+}
+@media (max-width: 767px) {
+  .contents-wrap .join-wrap {
+    padding: 4rem 2.4rem;
+  }
+}
+.contents-wrap .join-wrap .all-check {
+  padding: 1.25rem 1rem;
+  border-radius: 10px;
+  background: #F5F5F5;
+}
+.contents-wrap .join-wrap .all-check .txt {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+.contents-wrap .join-wrap .check-wrap {
+  margin-top: 3rem;
+  padding: 0 1.5rem;
+}
+.contents-wrap .join-wrap .check-wrap .check + .check {
+  margin-top: 1.5rem;
+}
+.contents-wrap .join-wrap .btn-wrap {
+  margin-top: 3rem;
+}
+.contents-wrap .check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  /* 실제 체크박스 숨기기 */
+  /* 가짜 박스 */
+  /* 체크됐을 때 */
+  /* 체크 아이콘 */
+}
+.contents-wrap .check label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+.contents-wrap .check input[type=checkbox] {
+  display: none;
+}
+.contents-wrap .check .fake-box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #D1D6DC;
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.contents-wrap .check input[type=checkbox]:checked + .fake-box {
+  background: #5865F2;
+  border-color: #5865F2;
+}
+.contents-wrap .check input[type=checkbox]:checked + .fake-box::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 7px;
+  background: url("../img/common/ico_check_wh.png") no-repeat center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+}
+.contents-wrap .check .txt {
+  color: #000;
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+}
+.contents-wrap .check .arr-right {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url("../img/common/arr_right_gray.png") no-repeat center;
+  background-size: auto 1rem;
 }
