@@ -2,7 +2,7 @@
 :root {
   --color-gradient: linear-gradient(103deg, #0E457B 9.89%, #075D5D 90.9%);
   /* Primary Colors */
-  --color-primary-blue: #0E457B;
+  --color-primary-purple: #AC68F9;
   --color-primary-green: #075D5D;
   /* Grayscale */
   --color-black: #000;
@@ -43,8 +43,18 @@ html, body {
   top: 0;
   width: 100%;
   z-index: 9992;
-  background: rgba(255, 255, 255, 0.3);
   border-bottom: 1px solid var(--color-border-gray);
+}
+#header:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
 }
 #header .inner {
   max-width: 120rem;
@@ -54,6 +64,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 9991;
 }
 #header .logo .logo-wh {
   display: inline-block;
@@ -122,7 +134,7 @@ html, body {
 .menu-all.active {
   display: block;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1170px) {
   .menu-all {
     left: auto;
     right: 2rem;

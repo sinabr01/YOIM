@@ -63,7 +63,18 @@
   justify-content: center;
   gap: 0 1rem;
 }
+.btn-wrap.col {
+  flex-direction: column;
+}
 
+.btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  min-height: 4.2rem;
+}
 .btn.btn-gradient {
   width: 100%;
   padding: 1rem;
@@ -75,18 +86,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  border-radius: 10px;
   border: 1px solid transparent;
   background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
 }
 .btn.line-gray {
-  min-height: 5rem;
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid #eaeaea;
+  border: 1px solid #aeaeae;
   color: #000;
   font-size: 1.6rem;
-  font-weight: 400;
 }
 
 .hover-line {
@@ -107,4 +113,72 @@
 }
 .hover-line:hover:before {
   width: 100%;
+}
+
+input[type=text],
+input[type=password],
+input[type=number] {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  background: #FFF;
+  font-size: 1.6rem;
+  color: #000;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+input[type=text]::placeholder,
+input[type=password]::placeholder,
+input[type=number]::placeholder {
+  color: #6B7684;
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.id {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  overflow: hidden;
+  background: #FFF;
+  min-height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.id input[type=text] {
+  border-radius: 0;
+  border: 1px solid transparent;
+  min-height: 5rem;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+.password {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  overflow: hidden;
+  background: #FFF;
+  min-height: 5rem;
+  padding: 0 1.5rem 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.password input[type=text],
+.password input[type=password] {
+  border-radius: 0;
+  border: 1px solid transparent;
+  min-height: 5rem;
+  width: calc(100% - 3.5rem);
+  padding-left: 1.5rem;
+}
+.password .btn-pw-show {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url("../img/common/ico_pw_on.png") no-repeat center;
+  background-size: contain;
 }

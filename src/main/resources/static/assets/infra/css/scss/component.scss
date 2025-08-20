@@ -1,22 +1,23 @@
-@mixin desktop {
+// * -------------------------------
+// * mixin
+// * -------------------------------
+@mixin DESKTOP {
   @media (max-width:1170px) {
     @content;
   }
 }
-
-@mixin tablet {
-  @media (max-width: 1023px) {
+@mixin TABLET {
+  @media (max-width:1023px) {
+    @content;
+  }
+}
+@mixin MOBILE {
+  @media (max-width:767px) {
     @content;
   }
 }
 
-@mixin mobile {
-  @media (max-width: 767px) {
-    @content;
-  }
-}
-
-@mixin mini {
+@mixin MINI {
   @media (max-width: 359px) {
     @content;
   }
@@ -55,7 +56,7 @@
     background: url("../img/common/ico_like.png") no-repeat center;
     background-size: 3.5rem auto;
 
-    @include mobile {
+    @include MOBILE {
       background-size: 3rem auto;
     }
   }
@@ -66,7 +67,7 @@
     background: url("../img/common/ico_mypage.png") no-repeat center;
     background-size: 3.5rem auto;
 
-    @include mobile {
+    @include MOBILE {
       background-size: 3rem auto;
     }
   }
@@ -77,7 +78,7 @@
     background: url("../img/common/ico_menu.png") no-repeat center;
     background-size: 3.5rem auto;
 
-    @include mobile {
+    @include MOBILE {
       background-size: 3rem auto;
     }
   }
@@ -94,8 +95,22 @@
     justify-content: center;
     gap: 0 1rem;
   }
+
+  &.col {
+    flex-direction: column;
+  }
 }
+
+
 .btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  min-height:4.2rem;
+
+
   &.btn-gradient {
     width: 100%;
     padding: 1rem;
@@ -109,7 +124,6 @@
     font-weight: 500;
     line-height: normal;
 
-    border-radius: 10px;
     border: 1px solid transparent;
     background:
             linear-gradient(#fff, #fff) padding-box, /* 내부 흰색 */
@@ -117,15 +131,9 @@
   }
 
   &.line-gray {
-    min-height: 5rem;
-    width: 100%;
-
-    border-radius: 12px;
-    border: 1px solid #eaeaea;
-
+    border: 1px solid #aeaeae;
     color: #000;
     font-size: 1.6rem;
-    font-weight: 400;
   }
 }
 
@@ -156,4 +164,88 @@
     }
   }
 
+}
+
+
+
+// * -------------------------------
+// * form
+// * -------------------------------
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  background: #FFF;
+  font-size: 1.6rem;
+  color: #000;
+
+  padding: 0 1.5rem;
+  width: 100%;
+
+  &::placeholder {
+    color: #6B7684;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.id {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  overflow: hidden;
+
+  background: #FFF;
+  min-height:5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1rem;
+
+  input[type="text"] {
+    border-radius: 0;
+    border: 1px solid transparent;
+    min-height:5rem;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+}
+
+.password {
+  border-radius: 10px;
+  border: 1px solid #E5E8EB;
+  overflow: hidden;
+
+  background: #FFF;
+  min-height:5rem;
+  padding: 0 1.5rem 0 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1rem;
+
+
+  input[type="text"],
+  input[type="password"] {
+    border-radius: 0;
+    border: 1px solid transparent;
+    min-height:5rem;
+    width: calc(100% - 3.5rem);
+    padding-left: 1.5rem;
+  }
+
+  .btn-pw-show {
+    display: inline-block;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    background: url('../img/common/ico_pw_on.png') no-repeat center;
+    background-size: contain;
+  }
 }

@@ -22,52 +22,197 @@
   }
 }
 
+@mixin MINI {
+  @media (max-width: 359px) {
+    @content;
+  }
+}
+
 // * -------------------------------
 // * Margin
 // * -------------------------------
 @for $i from 0 through 150 {
-  .mt#{$i} {
+  .mt#{$i}-xl {
     margin-top: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .ml#{$i} {
+  .ml#{$i}-xl {
     margin-left: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .mr#{$i} {
+  .mr#{$i}-xl {
     margin-right: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .mb#{$i} {
+  .mb#{$i}-xl {
     margin-bottom: #{$i}px!important;
   }
 }
+
+@include DESKTOP {
+  @for $i from 0 through 150 {
+    .mt#{$i}-lg {
+      margin-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .ml#{$i}-lg {
+      margin-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mr#{$i}-lg {
+      margin-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mb#{$i}-lg {
+      margin-bottom: #{$i}px!important;
+    }
+  }
+}
+
+@include TABLET {
+  @for $i from 0 through 150 {
+    .mt#{$i}-md {
+      margin-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .ml#{$i}-md {
+      margin-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mr#{$i}-md {
+      margin-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mb#{$i}-md {
+      margin-bottom: #{$i}px!important;
+    }
+  }
+}
+
+@include MOBILE {
+  @for $i from 0 through 150 {
+    .mt#{$i}-sm {
+      margin-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .ml#{$i}-sm {
+      margin-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mr#{$i}-sm {
+      margin-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .mb#{$i}-sm {
+      margin-bottom: #{$i}px!important;
+    }
+  }
+}
+
 
 
 // * -------------------------------
 // * Padding
 // * -------------------------------
 @for $i from 0 through 150 {
-  .pt#{$i} {
+  .pt#{$i}-xl {
     padding-top: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .pl#{$i} {
+  .pl#{$i}-xl {
     padding-left: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .pr#{$i} {
+  .pr#{$i}-xl {
     padding-right: #{$i}px!important;
   }
 }
 @for $i from 0 through 150 {
-  .pb#{$i} {
+  .pb#{$i}-xl {
     padding-bottom: #{$i}px!important;
+  }
+}
+
+@include DESKTOP {
+  @for $i from 0 through 150 {
+    .pt#{$i}-lg {
+      padding-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pl#{$i}-lg {
+      padding-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pr#{$i}-lg {
+      padding-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pb#{$i}-lg {
+      padding-bottom: #{$i}px!important;
+    }
+  }
+}
+
+@include TABLET {
+  @for $i from 0 through 150 {
+    .pt#{$i}-md {
+      padding-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pl#{$i}-md {
+      padding-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pr#{$i}-md {
+      padding-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pb#{$i}-md {
+      padding-bottom: #{$i}px!important;
+    }
+  }
+}
+
+@include MOBILE {
+  @for $i from 0 through 150 {
+    .pt#{$i}-sm {
+      padding-top: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pl#{$i}-sm {
+      padding-left: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pr#{$i}-sm {
+      padding-right: #{$i}px!important;
+    }
+  }
+  @for $i from 0 through 150 {
+    .pb#{$i}-sm {
+      padding-bottom: #{$i}px!important;
+    }
   }
 }
 

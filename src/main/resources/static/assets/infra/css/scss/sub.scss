@@ -1,22 +1,23 @@
-@mixin desktop {
+// * -------------------------------
+// * mixin
+// * -------------------------------
+@mixin DESKTOP {
   @media (max-width:1170px) {
     @content;
   }
 }
-
-@mixin tablet {
-  @media (max-width: 1023px) {
+@mixin TABLET {
+  @media (max-width:1023px) {
+    @content;
+  }
+}
+@mixin MOBILE {
+  @media (max-width:767px) {
     @content;
   }
 }
 
-@mixin mobile {
-  @media (max-width: 767px) {
-    @content;
-  }
-}
-
-@mixin mini {
+@mixin MINI {
   @media (max-width: 359px) {
     @content;
   }
@@ -29,3 +30,294 @@
   @return ($px / $base-font-size) * 1em;
 }
 
+
+#contents {
+  min-height: calc(100vh - 7.6rem - 17.2rem);
+  padding-top: 7.6rem;
+}
+
+// * -------------------------------
+// * 로그인
+// * -------------------------------
+.login {
+  min-height: calc(100vh - 7.5rem - 17.2rem - 10.1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width:90%;
+  margin: 5rem auto;
+
+  .inner {
+    max-width: 48rem;
+    width: 100%;
+
+    @include TABLET {
+      max-width:42rem;
+    }
+  }
+
+  .login-tit-wrap {
+
+    .tit {
+      color: #000;
+      text-align: center;
+      font-size: 4.2rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+
+      display: block;
+
+      @include TABLET {
+        font-size: 3.4rem;
+      }
+
+      @include MOBILE {
+        font-size: 2.8rem;
+      }
+    }
+  }
+
+  .login-wrap {
+    margin-top: 3.5rem;
+    padding: 4rem 6rem;
+
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
+
+    @include TABLET {
+      padding: 4rem 3rem;
+    }
+    @include MOBILE {
+      padding: 4rem 1.6rem;
+    }
+
+    .login-type-wrap {
+      border-radius: 8px;
+      background: #E5E8EB;
+
+      .login-type {
+        display: flex;
+        padding: 5px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        position: relative;
+
+        .indicator {
+          position: absolute;
+          inset: 5px auto 5px 5px;
+          width: calc((100% - 20px) / 2);
+          border-radius: 8px;
+          background: #fff;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+          transition: transform .28s cubic-bezier(.2, .7, .2, 1);
+          z-index: 0;
+        }
+
+        &.move-1 .indicator {
+          transform: translateX(calc(100% + 10px));
+        }
+
+        .btn {
+          color: #6B7684;
+          text-align: center;
+          font-size: 1.6rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          height: 3.2rem;
+
+          flex: 1 0;
+
+          position: relative;
+          z-index: 1;
+
+          &.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #000;
+            text-align: center;
+            font-size: 1.6rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+      }
+    }
+
+    .btn-wrap {
+      margin-top: 5rem;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .btn {
+        min-height: 5rem;
+        flex: 1 1 47%;
+
+        @include MOBILE {
+          min-height:4.5rem;
+          font-size: 1.4rem;
+        }
+
+        &:hover {
+          font-weight: 700;
+          text-decoration: line-through;
+          transition: all 0.3s;
+        }
+      }
+
+      .btn-gradient {
+        color: #000;
+      }
+
+      .btn-txt {
+        color: #6B7684;
+        font-size: 1.4rem;
+        font-style: normal;
+        font-weight: 400;
+        text-decoration: underline;
+        margin-top: 2.5rem;
+
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        justify-content: center;
+
+
+        &:before {
+          content: '';
+
+          display: inline-block;
+          margin-right: 5px;
+
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+
+          background: #6B7684;
+
+        }
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .login-sns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 5rem;
+
+    .btn {
+      min-height:5.5rem;
+
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: -0.05em;
+
+      &:hover {
+        text-decoration: line-through;
+        transition: all 0.3s;
+      }
+
+      i {
+        margin-right: 1rem;
+      }
+
+      & + .btn {
+        margin-top: 1.5rem;
+      }
+
+      &.kakao-login {
+        background: #FFDE00;
+        border: 1px solid #FFDE00;
+        color: #3C1E1E;
+
+        i {
+          width: 2rem;
+          height: 1.7rem;
+
+          background: url("../img/common/ico_kakao.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      &.naver-login {
+        background: #00C73C;
+        border: 1px solid #00C73C;
+        color: #fff;
+
+        i {
+          width: 2rem;
+          height: 1.7rem;
+
+          background: url("../img/common/ico_naver.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      &.apple-login {
+        background: #000000;
+        border: 1px solid #000000;
+        color: #fff;
+
+        i {
+          width: 2rem;
+          height: 1.7rem;
+
+          background: url("../img/common/ico_apple.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      &.facebook-login {
+        background: #1877F2;
+        border: 1px solid #1877F2;
+        color: #fff;
+
+        i {
+          width: 2rem;
+          height: 1.7rem;
+
+          background: url("../img/common/ico_facebook.png") no-repeat center,;
+          background-size: contain;
+        }
+      }
+      &.google-login {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.16);
+        color: rgba(0, 0, 0, 0.56);
+
+        i {
+          width: 2rem;
+          height: 1.7rem;
+
+          background: url("../img/common/ico_google.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+
+    }
+  }
+
+  .login-group .group {
+    display: none;
+
+    margin-top: 3rem;
+  }
+
+  .login-group .group.active {
+    display: block;
+  }
+}

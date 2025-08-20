@@ -1,1 +1,240 @@
+#contents {
+  min-height: calc(100vh - 7.6rem - 17.2rem);
+  padding-top: 7.6rem;
+}
 
+.login {
+  min-height: calc(100vh - 7.5rem - 17.2rem - 10.1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  margin: 5rem auto;
+}
+.login .inner {
+  max-width: 48rem;
+  width: 100%;
+}
+@media (max-width: 1023px) {
+  .login .inner {
+    max-width: 42rem;
+  }
+}
+.login .login-tit-wrap .tit {
+  color: #000;
+  text-align: center;
+  font-size: 4.2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: block;
+}
+@media (max-width: 1023px) {
+  .login .login-tit-wrap .tit {
+    font-size: 3.4rem;
+  }
+}
+@media (max-width: 767px) {
+  .login .login-tit-wrap .tit {
+    font-size: 2.8rem;
+  }
+}
+.login .login-wrap {
+  margin-top: 3.5rem;
+  padding: 4rem 6rem;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
+}
+@media (max-width: 1023px) {
+  .login .login-wrap {
+    padding: 4rem 3rem;
+  }
+}
+@media (max-width: 767px) {
+  .login .login-wrap {
+    padding: 4rem 1.6rem;
+  }
+}
+.login .login-wrap .login-type-wrap {
+  border-radius: 8px;
+  background: #E5E8EB;
+}
+.login .login-wrap .login-type-wrap .login-type {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.login .login-wrap .login-type-wrap .login-type .indicator {
+  position: absolute;
+  inset: 5px auto 5px 5px;
+  width: calc((100% - 20px) / 2);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 0;
+}
+.login .login-wrap .login-type-wrap .login-type.move-1 .indicator {
+  transform: translateX(calc(100% + 10px));
+}
+.login .login-wrap .login-type-wrap .login-type .btn {
+  color: #6B7684;
+  text-align: center;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 3.2rem;
+  flex: 1 0;
+  position: relative;
+  z-index: 1;
+}
+.login .login-wrap .login-type-wrap .login-type .btn.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  text-align: center;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.login .login-wrap .btn-wrap {
+  margin-top: 5rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.login .login-wrap .btn-wrap .btn {
+  min-height: 5rem;
+  flex: 1 1 47%;
+}
+@media (max-width: 767px) {
+  .login .login-wrap .btn-wrap .btn {
+    min-height: 4.5rem;
+    font-size: 1.4rem;
+  }
+}
+.login .login-wrap .btn-wrap .btn:hover {
+  font-weight: 700;
+  text-decoration: line-through;
+  transition: all 0.3s;
+}
+.login .login-wrap .btn-wrap .btn-gradient {
+  color: #000;
+}
+.login .login-wrap .btn-wrap .btn-txt {
+  color: #6B7684;
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: underline;
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.login .login-wrap .btn-wrap .btn-txt:before {
+  content: "";
+  display: inline-block;
+  margin-right: 5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #6B7684;
+}
+.login .login-wrap .btn-wrap .btn-txt:hover {
+  color: #000;
+}
+.login .login-sns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
+}
+.login .login-sns .btn {
+  min-height: 5.5rem;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.05em;
+}
+.login .login-sns .btn:hover {
+  text-decoration: line-through;
+  transition: all 0.3s;
+}
+.login .login-sns .btn i {
+  margin-right: 1rem;
+}
+.login .login-sns .btn + .btn {
+  margin-top: 1.5rem;
+}
+.login .login-sns .btn.kakao-login {
+  background: #FFDE00;
+  border: 1px solid #FFDE00;
+  color: #3C1E1E;
+}
+.login .login-sns .btn.kakao-login i {
+  width: 2rem;
+  height: 1.7rem;
+  background: url("../img/common/ico_kakao.png") no-repeat center;
+  background-size: contain;
+}
+.login .login-sns .btn.naver-login {
+  background: #00C73C;
+  border: 1px solid #00C73C;
+  color: #fff;
+}
+.login .login-sns .btn.naver-login i {
+  width: 2rem;
+  height: 1.7rem;
+  background: url("../img/common/ico_naver.png") no-repeat center;
+  background-size: contain;
+}
+.login .login-sns .btn.apple-login {
+  background: #000000;
+  border: 1px solid #000000;
+  color: #fff;
+}
+.login .login-sns .btn.apple-login i {
+  width: 2rem;
+  height: 1.7rem;
+  background: url("../img/common/ico_apple.png") no-repeat center;
+  background-size: contain;
+}
+.login .login-sns .btn.facebook-login {
+  background: #1877F2;
+  border: 1px solid #1877F2;
+  color: #fff;
+}
+.login .login-sns .btn.facebook-login i {
+  width: 2rem;
+  height: 1.7rem;
+  background: url("../img/common/ico_facebook.png") no-repeat center;
+  background-size: contain;
+}
+.login .login-sns .btn.google-login {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  color: rgba(0, 0, 0, 0.56);
+}
+.login .login-sns .btn.google-login i {
+  width: 2rem;
+  height: 1.7rem;
+  background: url("../img/common/ico_google.png") no-repeat center;
+  background-size: contain;
+}
+.login .login-group .group {
+  display: none;
+  margin-top: 3rem;
+}
+.login .login-group .group.active {
+  display: block;
+}
