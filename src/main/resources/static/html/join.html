@@ -183,7 +183,7 @@
 
 
                 <!-- 회원가입(개인정보 입력) -->
-                <div class="join" style="display: none">
+                <div class="join" style="display: none;">
 
                     <div class="join-tit-wrap">
                         <h2 class="join-tit">
@@ -202,6 +202,10 @@
                                 </div>
                                 <div class="form-cont-wrap">
                                     <input type="text" placeholder="yomi@example.com">
+
+                                    <!--- 입력 안했을때 error 클래스 주면 됨. -->
+                                    <!--<input type="text" placeholder="yomi@example.com" class="error">-->
+                                    <span class="txt-error">이메일을 입력해주세요.</span>
                                 </div>
                             </div>
 
@@ -210,11 +214,14 @@
                                     <span class="form-tit required">비밀번호</span>
                                 </div>
                                 <div class="form-cont-wrap">
-                                    <div class="password">
+                                    <div class="password"> <!-- 비밀번호 입력안했을때, 오류일때 error 클래스(password 에 넣어주세요.) -->
                                         <input type="password" name="" id="" placeholder="비밀번호를 입력하세요.">
 
                                         <button type="button" class="btn-pw-show"></button>
                                     </div>
+
+                                    <span class="txt-success">사용가능 : 안전한 비밀번호 입니다.</span>
+                                    <span class="txt-error">사용불가 : 최소 8자 이상 입력</span>
                                 </div>
                             </div>
 
@@ -228,6 +235,8 @@
 
                                         <button type="button" class="btn-pw-show"></button>
                                     </div>
+
+                                    <span class="txt-error">비밀번호가 일치하지 않습니다.</span>
                                 </div>
                             </div>
 
@@ -237,7 +246,8 @@
                                 </div>
                                 <div class="form-cont-wrap">
 
-                                    <div class="birth">
+
+                                    <div class="birth"> <!-- 생년월일 입력 안했을 시, error 클래스 부여 -->
 
                                         <div class="custom-select-box" data-type="year">
                                             <button type="button" class="select-btn">
@@ -267,7 +277,9 @@
                                         </div>
                                     </div>
 
+                                    <span class="txt-error">생년월일을 입력해주세요.</span>
                                 </div>
+
                             </div>
 
                             <div class="form col">
@@ -288,6 +300,8 @@
                                             <span class="txt">남자</span>
                                         </label>
                                     </div>
+
+                                    <span class="txt-error">성별을 선택해주세요.</span>
                                 </div>
                             </div>
 
@@ -296,7 +310,10 @@
                                     <span class="form-tit required">닉네임</span>
                                 </div>
                                 <div class="form-cont-wrap">
+                                    <!-- 닉네임 입력 안했을 시 error 클래스 부여 -->
                                     <input type="text" placeholder="닉네임을 입력하세요">
+
+                                    <span class="txt-error">닉네임을 입력해주세요.</span>
                                 </div>
                             </div>
                         </div>

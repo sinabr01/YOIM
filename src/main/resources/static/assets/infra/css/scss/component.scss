@@ -41,6 +41,9 @@
 .txt-green {color: var(--color-primary-green)!important;}
 .txt-sky {color: #79B1E9!important;}
 
+.txt-error {color: #FF2C46!important;font-size: 1.3rem;display: block;letter-spacing: -0.05em;margin-top:0.5rem}
+.txt-success {color: #4D8DFF!important;font-size: 1.3rem;display: block;letter-spacing: -0.05em;margin-top:0.5rem}
+
 
 
 
@@ -241,6 +244,13 @@ input[type="number"] {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+}
+
+input[type="text"],
+input[type="number"] {
+  &.error {
+    border: 1px solid var(--color-red) !important;
   }
 }
 
@@ -477,6 +487,14 @@ input[type="number"] {
   display: flex;
   gap: 1rem;
   align-items: center;
+
+  &.error {
+    .custom-select-box {
+      .select-btn {
+        border: 1px solid var(--color-red);
+      }
+    }
+  }
 }
 
 
@@ -550,6 +568,10 @@ input[type="number"] {
     border-radius: 12px;
     border: 1px solid #FAFAFA;
     background: #FAFAFA;
+
+    &.error {
+      border: 1px solid var(--color-red);
+    }
 
     input[type="password"],
     input[type="text"] {

@@ -14,6 +14,22 @@
   color: #79B1E9 !important;
 }
 
+.txt-error {
+  color: #FF2C46 !important;
+  font-size: 1.3rem;
+  display: block;
+  letter-spacing: -0.05em;
+  margin-top: 0.5rem;
+}
+
+.txt-success {
+  color: #4D8DFF !important;
+  font-size: 1.3rem;
+  display: block;
+  letter-spacing: -0.05em;
+  margin-top: 0.5rem;
+}
+
 .ico {
   display: inline-flex;
   position: relative;
@@ -175,6 +191,11 @@ input[type=number]::placeholder {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+input[type=text].error,
+input[type=number].error {
+  border: 1px solid var(--color-red) !important;
 }
 
 /* 커스텀 라디오 버튼 */
@@ -370,6 +391,9 @@ input[type=number]::placeholder {
   gap: 1rem;
   align-items: center;
 }
+.birth.error .custom-select-box .select-btn {
+  border: 1px solid var(--color-red);
+}
 
 .form {
   display: flex;
@@ -426,6 +450,9 @@ input[type=number]::placeholder {
   border-radius: 12px;
   border: 1px solid #FAFAFA;
   background: #FAFAFA;
+}
+.form .password.error {
+  border: 1px solid var(--color-red);
 }
 .form .password input[type=password],
 .form .password input[type=text] {
