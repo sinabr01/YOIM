@@ -16,7 +16,8 @@
                 if($("input[name=param2]").val() != ""){
                 	login();
                 }else{
-                	alert("비밀번호를 입력해주세요.");
+                	$("#login_error").html("비밀번호를 입력해주세요.");
+    				$("#login_error").show();
                 	$("input[name=param2]").focus();
                 	return false;
                 }
@@ -29,11 +30,13 @@
 		});
 		$("#login").click(function(event) {
 			if ($("input[name=param1]").val() == "") {
-				alert("아이디를 입력해주세요.");
+				$("#login_error").html("아이디를 입력해주세요.");
+				$("#login_error").show();
 				return;
 			}
 			if ($("input[name=param2]").val() == "") {
-				alert("비밀번호를 입력해주세요.");
+				$("#login_error").html("비밀번호를 입력해주세요.");
+				$("#login_error").show();
 				return;
 			}
 			login();
@@ -47,11 +50,15 @@
 					if(JSON.parse(data).result) {
 						location.href = "/main/nv_main";
 					} else {
-						alert("계정정보를 확인해주세요.");
+						$("#login_error").html("아이디 또는 비밀번호가 일치하지 않습니다.");
+						$("#login_error").show();
+// 						alert("계정정보를 확인해주세요.");
 					}
 				},
 				error : function() {
-					alert("계정정보를 확인해주세요.");
+					$("#login_error").html("아이디 또는 비밀번호가 일치하지 않습니다.");
+					$("#login_error").show();
+// 					alert("계정정보를 확인해주세요.");
 				}
 			});
 		}
@@ -100,8 +107,8 @@
                                     <button type="button" class="btn-pw-show"></button>
                                 </div>
                             </div>
-
-                            <div class="btn-wrap col center">
+                            <div class="btn-wrap col center" style="margin-top: 14px;">
+                            	<span id="login_error" style="font-size:15px; line-height:1.4; margin:0; color: red; display: none;"></span>
                                 <button type="button" id="login" class="btn btn-gradient">로그인</button>
                                 <a href="javascript:location.href='/main/nv_userJoin';" type="button" class="btn line-gray">회원가입</a>
                             </div>
