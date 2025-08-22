@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoim.www.model.ResultDto;
 
 @Component
 public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -27,24 +28,14 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException {
-//		HttpSession session = request.getSession();
-//		session.setAttribute("session_id", authentication.getName());
-//		String ip = request.getRemoteAddr();
-//		session.setAttribute("session_ip", ip);
-//		ObjectMapper om = new ObjectMapper();
-//		String id = request.getParameter("param1");
-//		HashMap<String, Object> param1 = new HashMap<>();
-//		param1.put("MEM_ID", id);
-//		List<Member> users = ms.getLogin(param1);
-//		HashMap<String, Object> param = new HashMap<>();
-//		param.put("LOGIN_ID", id);
-//		param.put("LOGIN_NM", users.get(0).getMEM_NM());
-//		param.put("L_FLAG", "L");
-//		param.put("IP", ip);
-////		lService.setInsert(param);
-//		session.setMaxInactiveInterval(1800);
-//		response.setStatus(HttpServletResponse.SC_OK);
-//		response.getWriter().print(om.writeValueAsString(ResultDto.success()));
+		ObjectMapper om = new ObjectMapper();
+		HttpSession session = request.getSession();
+		session.setAttribute("session_id", authentication.getName());
+		String ip = request.getRemoteAddr();
+		session.setAttribute("session_ip", ip);
+		session.setMaxInactiveInterval(1800);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.getWriter().print(om.writeValueAsString(ResultDto.success()));
 		response.getWriter().flush();
 	}
 

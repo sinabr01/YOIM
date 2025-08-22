@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAuth {
-	private Long userAuthSeq;
+	private Long userAuthId;
 	private String providerId;
 	private String providerType;
 	private String providerName;

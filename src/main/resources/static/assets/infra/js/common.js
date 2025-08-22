@@ -44,41 +44,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // --- 약관 전체동의 ---
-    const allCheck = document.querySelector('.all-check input[type="checkbox"]');
-    const subChecks = document.querySelectorAll('.check-wrap .check input[type="checkbox"]');
-    const requiredChecks = document.querySelectorAll('.check-wrap .check:nth-child(-n+3) input[type="checkbox"]');
-    const authButton = document.querySelector('.btn.line-blue');
+	// --- 약관 전체동의 ---
+	const $ = (sel, root = document) => root.querySelector(sel);
+	const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-    allCheck.addEventListener('change', (e) => {
-        const isChecked = e.target.checked;
-        subChecks.forEach(checkbox => {
-            checkbox.checked = isChecked;
-        });
-        checkAllRequired();
-    });
+	const allCheck       = $('.all-check input[type="checkbox"]');                 // 없을 수 있음
+	const subChecks      = $$('.check-wrap .check input[type="checkbox"]');
+	const requiredChecks = $$('.check-wrap .check:nth-child(-n+3) input[type="checkbox"]');
+	const authButton     = $('.btn.line-blue');
 
-    subChecks.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const allChecked = Array.from(subChecks).every(c => c.checked);
-            allCheck.checked = allChecked;
-            // 필수 항목 체크 상태를 확인
-            checkAllRequired();
-        });
-    });
+	// 필수 항목 모두 체크됐는지 확인 → 버튼 활성/비활성
+	function checkAllRequired() {
+	  if (!authButton || requiredChecks.length === 0) return;
+	  const ok = requiredChecks.every(c => c.checked);
+	  authButton.classList.toggle('inactive', !ok);
+	  authButton.disabled = !ok;
+	}
 
-    const checkAllRequired = () => {
-        const allRequiredChecked = Array.from(requiredChecks).every(c => c.checked);
-        if (allRequiredChecked) {
-            authButton.classList.remove('inactive');
-            authButton.disabled = false;
-        } else {
-            authButton.classList.add('inactive');
-            authButton.disabled = true;
-        }
-    };
+	// 전체동의가 있을 때만 바인딩
+	if (allCheck) {
+	  allCheck.addEventListener('change', (e) => {
+	    const isChecked = e.target.checked;
+	    subChecks.forEach(cb => { cb.checked = isChecked; });
+	    checkAllRequired();
+	  });
+	}
 
-    checkAllRequired();
+	// 개별 체크 변경 시 전체동의 상태 동기화 + 버튼 상태 갱신
+	subChecks.forEach(cb => {
+	  cb.addEventListener('change', () => {
+	    if (allCheck) {
+	      allCheck.checked = subChecks.length > 0 && subChecks.every(c => c.checked);
+	    }
+	    checkAllRequired();
+	  });
+	});
+
+	// 초기 상태 반영
+	checkAllRequired();
 
 
     // --- 커스텀 셀렉트 박스 ---

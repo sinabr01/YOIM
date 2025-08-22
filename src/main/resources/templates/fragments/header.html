@@ -2,76 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <meta charset="utf-8">
-<div class="header" th:fragment="headerFragment">
-<nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
-                <li class="nav-header">
-                    <div class="profile-element">
-                        <span>
-                            <img alt="image" class="img-circle" th:src="@{/resource/assets/img/admin.png}" />
-                        </span>
-                        <span class="clear">
-                            <span class="block m-t-xs">
-                                <strong class="font-bold" th:text="${#authentication.details.username}" id="mem_id" ></strong> 님
-                            </span>
-                        </span>
-                        
-                    </div>
-                    <div class="logo-element">
-                        <img alt="image" class="img-circle" th:src="@{/resource/assets/img/admin.png}" />
-                    </div>
-                </li>
-                <li>
-                    <a href="#"><span class="nav-label"><i class="fas fa-door-open"></i> 조회 </span> <i class="fas fa-angle-down"></i></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-<!--                        th:text="${#authentication.details.room[roomStat.index]}"
+<!-- header -->
+    <header id="header" th:fragment="headerFragment">
+        <div class="inner">
+            <h1 class="logo"><a href="javascript:void(0);" class="logo-wh"></a></h1>
 
--->
-<!--                         class="active" -->
-                            <a href="#">객실 번호 선택</a>
-                            <ul class="nav nav-third-level">
-                                <li th:each="room : ${#authentication.details.room}"> 
-                                    <a th:href="@{'/room/room_select?room_num='}+${roomStat.index}+'&room_index='+${#uris.escapeQueryParam(#authentication.details.room[roomStat.index])}" th:text="${#authentication.details.room[roomStat.index]}"
-                                    th:class="${#strings.startsWith(#httpServletRequest.queryString==null?'':#httpServletRequest.queryString, 'room_num='+roomStat.index+'&')}?'active':''"><i class="fab fa-vuejs"></i></a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><span class="nav-label"><i class="fas fa-users"></i> 단체</span> <i class="fas fa-angle-down"></i></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="/group/group_register" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/group/group_register')}?'active':''">등록</a>
-                            <a href="/group/group_search" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/group/group_search')}?'active':''">조회</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><span class="nav-label"><i class="fas fa-cog"></i>관리</span> <i class="fas fa-angle-down"></i></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="/admin/call_history" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/call_history')}?'active':''" >Call이력조회</a>
-                            <a href="/admin/work_history" th:if="${#authentication.details.LEVEL eq'1'}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/work_history')}?'active':''">작업 이력 관리</a>
-                            <a href="/admin/login_history" th:if="${#authentication.details.LEVEL eq'1'}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/login_history')}?'active':''">로그인 이력</a>
-                            <a href="/admin/user_set" th:if="${#authentication.details.LEVEL eq'1'}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/user_set')}?'active':''">사용자 관리</a>
-                            <a href="/admin/change_password" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/change_password')}?'active':''">비밀번호 변경</a>
-                            <a href="/admin/system_set" th:if="${#authentication.details.LEVEL eq'1'}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/system_set')}?'active':''">시스템 설정</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                	<button class="btn btn-primary" type="button" onclick="location.href='/menu_down'" style="margin: 15px; margin-left: 40px;"><i class="fa fa-book" aria-hidden="true"></i><span>매뉴얼 다운로드</span></button>
-                </li>
-            </ul>
-            <div class="responsible_logout">
-                <a href="/user_logout" class="btn-primary btn">
-                    로그아웃
-                </a>
+            <div class="right-area">
+                <button type="button" class="ico like"></button>
+                <button type="button" class="ico mypage"></button>
+                <button type="button" class="ico menu"></button>
             </div>
         </div>
-    </nav>
-</div>
+    </header>
+
+    <!--// header -->
 </html>

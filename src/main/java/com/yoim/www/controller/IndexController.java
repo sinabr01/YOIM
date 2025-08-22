@@ -54,13 +54,13 @@ public class IndexController {
 	
 	private static Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
-	@RequestMapping(value = "/", method= {RequestMethod.GET, RequestMethod.POST})
-    public String index(Model model,HttpServletRequest request,
-			HttpServletResponse response) throws IOException{
-		model.addAttribute("kakaoApiKey", kakaoApi.getKakaoApiKey());
-        model.addAttribute("redirectUri", kakaoApi.getKakaoRedirectUri());
-		return "yoim/index";
-    }
+//	@RequestMapping(value = "/", method= {RequestMethod.GET, RequestMethod.POST})
+//    public String index(Model model,HttpServletRequest request,
+//			HttpServletResponse response) throws IOException{
+//		model.addAttribute("kakaoApiKey", kakaoApi.getKakaoApiKey());
+//        model.addAttribute("redirectUri", kakaoApi.getKakaoRedirectUri());
+//		return "yoim/index";
+//    }
 	
 	@RequestMapping(value = "/test", method= {RequestMethod.GET, RequestMethod.POST})
     public String test(Model model,HttpServletRequest request,

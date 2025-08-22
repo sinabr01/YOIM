@@ -6,7 +6,7 @@
 <mapper namespace="com.yoim.www.mapper.UserAuthMapper">
 	
 	<resultMap type="userAuth" id="getSelectMap">
-		<result property="userAuthSeq" column="user_auth_seq"/>
+		<result property="userAuthId" column="user_auth_id"/>
 		<result property="providerId" column="provider_id"/>
 		<result property="providerType" column="provider_type"/>
 		<result property="providerName" column="provider_name"/>

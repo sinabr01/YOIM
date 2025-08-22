@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class Company {
-	private Long companySeq;          // BIGINT → Long
-	private Long ownerUserSeq;        // BIGINT → Long
+	private Long companyId;          // BIGINT → Long
+	private Long ownerUserId;        // BIGINT → Long
 	private String companyCode;       // VARCHAR
 	private String companyName;       // VARCHAR
 	private String companyType;       // VARCHAR

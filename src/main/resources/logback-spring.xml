@@ -9,7 +9,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${APP_HOME}/yoim.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${APP_HOME}/yoim.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${APP_HOME}/yoim-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>300</maxHistory>
         </rollingPolicy>
         <encoder>

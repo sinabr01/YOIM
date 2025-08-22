@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+
+<head>
+<script th:inline="javascript">
+	
+	$(document).ready(function() {
+		
+		
+		$("input[name=param1]").focus();
+		$("#id").keydown(function(key) {
+            if (key.keyCode == 13) {
+                if($("input[name=param2]").val() != ""){
+                	login();
+                }else{
+                	alert("비밀번호를 입력해주세요.");
+                	$("input[name=param2]").focus();
+                	return false;
+                }
+            }
+        });
+		$("#pw").keydown(function(key) {
+			 if (key.keyCode == 13) {
+				 login();
+			 }
+		});
+		$("#login").click(function(event) {
+			if ($("input[name=param1]").val() == "") {
+				alert("아이디를 입력해주세요.");
+				return;
+			}
+			if ($("input[name=param2]").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
+			login();
+		});
+		function login(){
+			$.ajax({
+				type : "POST",
+				url : "/doLogin",
+				data : $("#loginFrm").serialize(),
+				success : function(data) {
+					if(JSON.parse(data).result) {
+						location.href = "/main/nv_main";
+					} else {
+						alert("계정정보를 확인해주세요.");
+					}
+				},
+				error : function() {
+					alert("계정정보를 확인해주세요.");
+				}
+			});
+		}
+	});
+	</script>
+</head>
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+
+
+
+    <main id="contents">
+
+        <!-- 로그인 -->
+        <div class="login">
+            <div class="inner">
+                <div class="login-tit-wrap">
+                    <h2 class="tit">로그인</h2>
+                </div>
+
+                <div class="login-wrap">
+
+                    <div class="login-type-wrap">
+                        <div class="login-type">
+                            <span class="indicator"></span>
+                            <button type="button" class="btn active">로그인</button>
+                            <button type="button" class="btn">간편 로그인</button>
+                        </div>
+                    </div>
+
+                    <div class="login-group">
+
+
+                        <!-- 그냥 로그인 -->
+                        <div class="group active">
+                        <form class="login-form" id="loginFrm">
+                            <div class="input-wrap">
+                                <div class="id">
+                                    <input type="text" name="param1" id="id" placeholder="아이디를 입력하세요.">
+                                </div>
+                                <div class="password">
+                                    <input type="password" name="param2" id="pw" placeholder="비밀번호를 입력하세요.">
+
+                                    <button type="button" class="btn-pw-show"></button>
+                                </div>
+                            </div>
+
+                            <div class="btn-wrap col center">
+                                <button type="button" id="login" class="btn btn-gradient">로그인</button>
+                                <a href="javascript:location.href='/main/nv_userJoin';" type="button" class="btn line-gray">회원가입</a>
+                            </div>
+                            <div class="btn-wrap mt10-xl">
+                                <button type="button" class="btn-txt">비밀번호찾기</button>
+                            </div>
+                        </form>
+                        </div>
+
+                        <!-- 소셜 로그인 -->
+                        <div class="group">
+                            <div class="login-sns">
+                                <button type="button" class="btn kakao-login">
+                                    <i></i>
+                                    카카오로 시작하기
+                                </button>
+                                <button type="button" class="btn naver-login">
+                                    <i></i>
+                                    네이버로 시작하기
+                                </button>
+                                <button type="button" class="btn apple-login">
+                                    <i></i>
+                                    Apple로 시작하기
+                                </button>
+                                <button type="button" class="btn facebook-login">
+                                    <i></i>
+                                    페이스북으로 시작하기
+                                </button>
+                                <button type="button" class="btn google-login">
+                                    <i></i>
+                                    구글로 시작하기
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!--// 로그인 -->
+
+
+    </main>
+
+
+   
+
+
+</div>
+<!-- //wrap -->
+</body>
+</html>

@@ -9,14 +9,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.yoim.www.model.CustomUserDetails;
+import com.yoim.www.serviceImpl.UserService;
+import com.yoim.www.serviceImpl.UsersDetailsService;
+
 
 
 
 @Component("authProvider")
 public class AuthProvider implements AuthenticationProvider {
 
-//	@Autowired
-//	MemberDetailsService uService;
+	@Autowired
+	UsersDetailsService usersDetailsService;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,15 +28,14 @@ public class AuthProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.err.println(passwordEncoder.encode(password));
-//        Session users = (Session) uService.loadUserByUsername(id);
-//        if (!passwordEncoder.matches(password, users.getPassword())) {
-//			throw new UsernameNotFoundException("USER NOT FOUND OR NOT MATCH PASSWORD");
-//		}
-//        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), users.getPassword(), users.getAuthorities());
-//        result.setDetails(users);
-//        System.out.println(result.getDetails());
-//        return result;
-        return null;
+        CustomUserDetails users = (CustomUserDetails) usersDetailsService.loadUserByUsername(id);
+        if (!passwordEncoder.matches(password, users.getPassword())) {
+			throw new UsernameNotFoundException("USER NOT FOUND OR NOT MATCH PASSWORD");
+		}
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), users.getPassword(), users.getAuthorities());
+        result.setDetails(users);
+        System.out.println(result.getDetails());
+        return result;
 	}
 
 

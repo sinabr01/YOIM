@@ -9,5 +9,6 @@ import com.yoim.www.model.User;
 @Mapper
 public interface UserMapper {
 	public User providerLogin(HashMap<String, Object> param);
+	public User userLogin(HashMap<String, Object> param);
 	public void upsert(HashMap<String, Object> param);
 }
