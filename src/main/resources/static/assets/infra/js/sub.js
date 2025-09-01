@@ -66,44 +66,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    //회원가입 개인정보입력 버튼 활성화
-    const joinForm = document.querySelector('.join-wrap.join-info');
-    if (!joinForm) return;
+	// 회원가입 개인정보입력 버튼 활성화
+	const joinForm = document.querySelector('.join-wrap.join-info');
+	if (joinForm) {
+	  const completeBtn = joinForm.querySelector('.btn.line-blue');
 
-    const completeBtn = joinForm.querySelector('.btn.line-blue');
+	  // 전역에서도 호출 가능하게
+	  window.checkJoinForm = function checkForm() {
+	    const isSso = (joinForm.closest('form')?.dataset.sso === '1');
 
-    function checkForm() {
-        const email    = joinForm.querySelector('input[placeholder="yomi@example.com"]')?.value.trim();
-        const pw1      = joinForm.querySelector('input[placeholder="비밀번호를 입력하세요."]')?.value.trim();
-        const pw2      = joinForm.querySelector('input[placeholder="위 비밀번호와 동일하게 입력"]')?.value.trim();
-        const year     = joinForm.querySelector('[data-type="year"] .select-btn')?.dataset.value;
-        const month    = joinForm.querySelector('[data-type="month"] .select-btn')?.dataset.value;
-        const day      = joinForm.querySelector('[data-type="day"] .select-btn')?.dataset.value;
-        const gender   = joinForm.querySelector('input[name="agree"]:checked')?.value;
-        const nickname = joinForm.querySelector('input[placeholder="닉네임을 입력하세요"]')?.value.trim();
+	    const email    = joinForm.querySelector('#email')?.value.trim();
+	    const pw1      = joinForm.querySelector('#loginPw')?.value.trim();
+	    const pw2      = joinForm.querySelector('#loginPwChk')?.value.trim();
+	    const year     = joinForm.querySelector('[data-type="year"] .select-btn')?.dataset.value;
+	    const month    = joinForm.querySelector('[data-type="month"] .select-btn')?.dataset.value;
+	    const day      = joinForm.querySelector('[data-type="day"] .select-btn')?.dataset.value;
+	    const gender   = joinForm.querySelector('input[name="gender"]:checked')?.value;
+	    const nickname = joinForm.querySelector('#nickNm')?.value.trim();
 
-        const allFilled = email && pw1 && pw2 && year && month && day && gender && nickname;
+	    const baseOk  = !!(year && month && day && gender && nickname);
+	    const localOk = !!(email && pw1 && pw2 && pw1.length >= 8 && pw1 === pw2);
 
-        if (allFilled) {
-            completeBtn.classList.remove('inactive');
-            completeBtn.disabled = false;
-        } else {
-            completeBtn.classList.add('inactive');
-            completeBtn.disabled = true;
-        }
-    }
+	    const allFilled = isSso ? baseOk : (baseOk && localOk);
 
-    // input, password, text, radio 모두 감지
-    joinForm.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', checkForm);
-        input.addEventListener('change', checkForm);
-    });
+	    completeBtn.classList.toggle('inactive', !allFilled);
+	    completeBtn.disabled = !allFilled;
+	  };
 
-    // 커스텀 셀렉트박스도 감지
-    joinForm.querySelectorAll('.custom-select-box').forEach(sb => {
-        sb.addEventListener('select:change', checkForm);
-    });
+	  // input, radio
+	  joinForm.querySelectorAll('input').forEach(input => {
+	    input.addEventListener('input', window.checkJoinForm);
+	    input.addEventListener('change', window.checkJoinForm);
+	  });
 
-    // 초기 상태
-    checkForm();
+	  // 커스텀 셀렉트 변경 감지 (li[data-value] 클릭 시 select-btn.dataset.value 세팅하는 코드가 따로 있어야 함)
+	  joinForm.querySelectorAll('.custom-select-box').forEach(sb => {
+	    sb.addEventListener('select:change', window.checkJoinForm);
+	  });
+
+	  // 초기 상태
+	  window.checkJoinForm();
+	}
 });

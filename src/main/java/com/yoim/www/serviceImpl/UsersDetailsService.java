@@ -38,6 +38,7 @@ public class UsersDetailsService implements UserDetailsService{
 		principal.setUserType(user.getUserType());
 		principal.setEmail(user.getEmail());
 		principal.setPassword(user.getLoginPw());
+		principal.setUserImg(user.getUserImg());
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
 		grantedAuthorityList.add(new SimpleGrantedAuthority(user.getUserType()));
 		principal.setAuthorities(grantedAuthorityList);

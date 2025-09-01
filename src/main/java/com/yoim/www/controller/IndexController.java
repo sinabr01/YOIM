@@ -54,14 +54,6 @@ public class IndexController {
 	
 	private static Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
-//	@RequestMapping(value = "/", method= {RequestMethod.GET, RequestMethod.POST})
-//    public String index(Model model,HttpServletRequest request,
-//			HttpServletResponse response) throws IOException{
-//		model.addAttribute("kakaoApiKey", kakaoApi.getKakaoApiKey());
-//        model.addAttribute("redirectUri", kakaoApi.getKakaoRedirectUri());
-//		return "yoim/index";
-//    }
-	
 	@RequestMapping(value = "/test", method= {RequestMethod.GET, RequestMethod.POST})
     public String test(Model model,HttpServletRequest request,
     		@AuthenticationPrincipal UserDetails user,
@@ -134,14 +126,22 @@ public class IndexController {
 	}
 
 	
-	@RequestMapping(value = "/login", method= {RequestMethod.GET, RequestMethod.POST})
-    public String login(Model model,HttpServletRequest request,
+	@RequestMapping(value = "/kakaoLogin", method= {RequestMethod.GET, RequestMethod.POST})
+    public String kakaoLogin(Model model,HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam String code) throws IOException{
+		if (code == null) {
+	        return "redirect:/";
+	    }
 		// 1. 인가 코드 받기 (@RequestParam String code)
 
         // 2. 토큰 받기
         String accessToken = kakaoApi.getAccessToken(code);
+        
+        if(accessToken==null) {
+//        	ra.addFlashAttribute("toast", "카카오 인증 실패. 다시 시도해주세요.");
+            return "redirect:/";
+        }
 
         // 3. 사용자 정보 받기
         Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
@@ -167,7 +167,7 @@ public class IndexController {
         	//기존 회원 → 로그인
         	User user = userService.providerLogin(param);
         	securityLoginUtil.login(request, response, user);
-        	return "yoim/login";
+        	return "/";
         }else {
         	//가입을 할때 폰번호 받고 그거 인증 하나만 쓰기로하기
         	//이미 가입된아디있으면 가입한 아이디 알려주기 ㅇㅇ
@@ -176,8 +176,9 @@ public class IndexController {
         	
         	//신규 → 가입 페이지로
         	request.getSession().setAttribute("providerId", id);
+        	request.getSession().setAttribute("providerNickNm", nickname);
         	request.getSession().setAttribute("providerType", "kakao");
-        	return "yoim/signup";
+        	return "yoim/main/nv_userJoin";
         }
     }
 	

@@ -45,6 +45,7 @@ public class SecurityLoginUtil {
 	 principal.setUsername(user.getUserNm());
 	 principal.setNickname(user.getNickNm());
 	 principal.setUserType(user.getUserType());
+	 principal.setUserImg(user.getUserImg());
 	 principal.setEmail(user.getEmail());
 	 principal.setAuthorities(authorities);
 

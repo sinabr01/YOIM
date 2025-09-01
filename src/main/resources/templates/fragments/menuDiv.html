@@ -1,54 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <meta charset="utf-8">
-    <div class="menu-all" th:fragment="menuDivFragment">
-        <div class="inner">
-            <!-- 로그인 안했을 때 -->
-            <div class="btn-wrap center">
-                <a href="javascript:void(0);" class="btn btn-gradient btn-login">로그인 / 회원가입</a>
-            </div>
-            <!--// 로그인 안했을 때 -->
-
-            <!-- 로그인 했을 때 -->
-            <div class="profile-wrap">
-                <a href="javascript:void(0);" class="link btn btn-gradient">
-                    <div class="img"
-                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"
-                    ></div>
-                    <span class="name">고먐미흑미</span>
-                </a>
-            </div>
-            <!--// 로그인 했을 때 -->
-
-            <nav class="nav">
-                <ul class="depth1-ul">
-                    <li class="depth1-li">
-                        <a href="javascript:void(0);" class="depth1">모임</a>
-                        <a href="javascript:void(0);" class="depth1">라운지</a>
-                        <a href="javascript:void(0);" class="depth1">카테고리</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <nav class="nav">
-                <ul class="depth1-ul">
-                    <li class="depth1-li">
-                        <a href="javascript:void(0);" class="depth1">찜목록</a>
-                        <a href="javascript:void(0);" class="depth1">예약내역</a>
-                        <a href="javascript:void(0);" class="depth1">고객센터</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <nav class="nav">
-                <ul class="depth1-ul">
-                    <li class="depth1-li">
-                        <a href="javascript:void(0);" class="depth1">로그아웃</a>
-                    </li>
-                </ul>
-            </nav>
-
-        </div>
-    </div>
+<div class="menu-all" th:fragment="menuDivFragment">
+	<div class="inner">
+		<!-- 로그인 안했을 때 -->
+		<div class="btn-wrap center" sec:authorize="isAnonymous()">
+			<a href="/main/nv_login" class="btn btn-gradient btn-login">로그인 | 회원가입</a>
+		</div>
+		<!--// 로그인 안했을 때 -->
+		<!-- 로그인 했을 때 -->
+		<div class="profile-wrap" sec:authorize="isAuthenticated()">
+			<a href="javascript:void(0);" class="link btn btn-gradient">
+				<div class="img" style="background: url('/resource/assets/infra/img/@temp/profile.png') no-repeat center; background-size: 100% auto;"></div>
+				<span class="name" th:text="${#authentication.details.nickname}"></span>
+			</a>
+		</div>
+		<!--// 로그인 했을 때 -->
+		<nav class="nav">
+			<ul class="depth1-ul">
+				<li class="depth1-li">
+					<a href="javascript:void(0);"class="depth1">모임</a> 
+					<a href="javascript:void(0);" class="depth1">라운지</a>
+					<a href="javascript:void(0);" class="depth1">카테고리</a>
+				</li>
+			</ul>
+		</nav>
+		<nav class="nav" sec:authorize="isAuthenticated()">
+			<ul class="depth1-ul">
+				<li class="depth1-li">
+					<a href="javascript:void(0);" class="depth1">찜목록</a> 
+					<a href="javascript:void(0);" class="depth1">예약내역</a>
+					<a href="javascript:void(0);" class="depth1">고객센터</a>
+				</li>
+			</ul>
+		</nav>
+		<nav class="nav" sec:authorize="isAuthenticated()">
+			<ul class="depth1-ul">
+				<li class="depth1-li">
+					<a href="/main/ts_logout"class="depth1">로그아웃</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
 </html>

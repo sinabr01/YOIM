@@ -3,20 +3,64 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{layouts/default}">
+<head>
+<script th:inline="javascript">
+
+
+
+
+	$(document).ready(function() {
+
+		
+		const sessionData = {
+		    providerId:   /*[[${session.providerId}]]*/ null,
+			providerType: /*[[${session.providerType}]]*/ null,
+			providerNick: /*[[${session.providerNickNm}]]*/ null
+		};
+		const isSso = !!sessionData.providerId;
+	    if (isSso) {
+	      // 이메일/비번 필드 숨김 + 전송 제외(disabled)
+	      $('#emailDiv, #loginPwDiv, #loginPwChkDiv')
+	        .hide()
+	        .find('input').prop('disabled', true).val('');
+
+	      // 닉네임 비어있으면 카카오 닉네임 채워줌(있으면 유지)
+	      if (!$('#nickNm').val() && sessionData.providerNick) {
+	        $('#nickNm').val(sessionData.providerNick);
+	      }
+
+	      // 폼에 sso 플래그
+	      $('#registerForm').attr('data-sso', '1');
+	    } else {
+	      $('#registerForm').attr('data-sso', '0');
+	    }
+
+	    // 처음 진입 시 버튼 상태 한 번 계산
+	    if (typeof window.checkJoinForm === 'function') window.checkJoinForm();
+		
+	});
+	
+	function nextHost(){
+		$("#joinDiv1").hide();
+		$("#joinDiv2").show();
+	}
+	
+	</script>
+</head>
 <body>
 
 <!-- wrap -->
 <div id="container" layout:fragment="content">
-
-
-
     <main id="contents">
-
+	<form id="registerForm" name="registerForm" action="/main/ts_signup" method="post">
+	<input type="hidden" name="providerId" id="providerId" th:value="${session.providerId}" >
+	<input type="hidden" name="providerNickNm" id="providerNickNm" th:value="${session.providerNickNm}" >
+	<input type="hidden" name="providerType" id="providerType" th:value="${session.providerType}" >
         <div class="contents-wrap">
             <div class="inner-flex">
 
                 <!-- 회원가입(개인정보 처리방침) -->
-                <div class="join">
+                <div class="join" id="joinDiv1">
 
                     <div class="join-tit-wrap">
                         <h2 class="join-tit">
@@ -81,7 +125,7 @@
                         </div>
 
                         <div class="btn-wrap">
-                            <button type="button" class="btn line-blue inactive">본인 인증하기</button>
+                            <button type="button" class="btn line-blue inactive" onclick="nextHost()">본인 인증하기</button>
                         </div>
                     </div>
 
@@ -90,7 +134,7 @@
 
 
                 <!-- 회원가입(개인정보 입력) -->
-                <div class="join" style="display: none;">
+                <div class="join" id="joinDiv2" style="display: none;">
 
                     <div class="join-tit-wrap">
                         <h2 class="join-tit">
@@ -103,47 +147,44 @@
                     <div class="join-wrap join-info">
                         <div class="form-area">
 
-                            <div class="form col">
+                            <div class="form col" id="emailDiv">
                                 <div class="form-tit-wrap">
                                     <span class="form-tit required">이메일</span>
                                 </div>
                                 <div class="form-cont-wrap">
-                                    <input type="text" placeholder="yomi@example.com">
+                                    <input type="text" id="email" name="email" placeholder="yomi@example.com">
 
                                     <!--- 입력 안했을때 error 클래스 주면 됨. -->
                                     <!--<input type="text" placeholder="yomi@example.com" class="error">-->
-                                    <span class="txt-error">이메일을 입력해주세요.</span>
+                                    <span class="txt-error" id="email_text_error" style="display: none;">이메일을 입력해주세요.</span>
                                 </div>
                             </div>
 
-                            <div class="form col">
+                            <div class="form col" id="loginPwDiv">
                                 <div class="form-tit-wrap">
                                     <span class="form-tit required">비밀번호</span>
                                 </div>
                                 <div class="form-cont-wrap">
                                     <div class="password"> <!-- 비밀번호 입력안했을때, 오류일때 error 클래스(password 에 넣어주세요.) -->
-                                        <input type="password" name="" id="" placeholder="비밀번호를 입력하세요.">
-
+                                        <input type="password" name="loginPw" id="loginPw" placeholder="비밀번호를 입력하세요.">
                                         <button type="button" class="btn-pw-show"></button>
                                     </div>
-
-                                    <span class="txt-success">사용가능 : 안전한 비밀번호 입니다.</span>
-                                    <span class="txt-error">사용불가 : 최소 8자 이상 입력</span>
+                                    <span class="txt-success" style="display: none;">사용가능 : 안전한 비밀번호 입니다.</span>
+                                    <span class="txt-error" style="display: none;">사용불가 : 최소 8자 이상 입력</span>
                                 </div>
                             </div>
 
-                            <div class="form col">
+                            <div class="form col" id="loginPwChkDiv">
                                 <div class="form-tit-wrap">
                                     <span class="form-tit required">비밀번호 확인</span>
                                 </div>
                                 <div class="form-cont-wrap">
                                     <div class="password">
-                                        <input type="password" name="" id="" placeholder="위 비밀번호와 동일하게 입력">
-
+                                        <input type="password" name="loginPwChk" id="loginPwChk" placeholder="위 비밀번호와 동일하게 입력">
                                         <button type="button" class="btn-pw-show"></button>
                                     </div>
 
-                                    <span class="txt-error">비밀번호가 일치하지 않습니다.</span>
+                                    <span class="txt-error" style="display: none;">비밀번호가 일치하지 않습니다.</span>
                                 </div>
                             </div>
 
@@ -152,15 +193,13 @@
                                     <span class="form-tit required">생년월일</span>
                                 </div>
                                 <div class="form-cont-wrap">
-
-
                                     <div class="birth"> <!-- 생년월일 입력 안했을 시, error 클래스 부여 -->
 
                                         <div class="custom-select-box" data-type="year">
                                             <button type="button" class="select-btn">
                                                 <span>년도</span>
                                             </button>
-                                            <ul class="select-options">
+                                            <ul class="select-options" id="yearUl">
 
                                             </ul>
                                         </div>
@@ -169,7 +208,7 @@
                                             <button type="button" class="select-btn">
                                                 <span>월</span>
                                             </button>
-                                            <ul class="select-options">
+                                            <ul class="select-options" id="monthUl">
 
                                             </ul>
                                         </div>
@@ -178,13 +217,13 @@
                                             <button type="button" class="select-btn">
                                                 <span>일</span>
                                             </button>
-                                            <ul class="select-options">
+                                            <ul class="select-options" id="dayUl">
 
                                             </ul>
                                         </div>
                                     </div>
 
-                                    <span class="txt-error">생년월일을 입력해주세요.</span>
+                                    <span class="txt-error" style="display: none;">생년월일을 입력해주세요.</span>
                                 </div>
 
                             </div>
@@ -195,20 +234,43 @@
                                 </div>
                                 <div class="form-cont-wrap">
                                     <div class="radio-group">
-                                        <label class="radio">
-                                            <input type="radio" name="agree" value="women" checked>
-                                            <span class="fake-radio"></span>
-                                            <span class="txt">여자</span>
-                                        </label>
 
                                         <label class="radio">
-                                            <input type="radio" name="agree" value="man">
+                                            <input type="radio" name="gender" value="M" checked>
                                             <span class="fake-radio"></span>
                                             <span class="txt">남자</span>
                                         </label>
+                                        <label class="radio">
+                                            <input type="radio" name="gender" value="W" >
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">여자</span>
+                                        </label>
                                     </div>
 
-                                    <span class="txt-error">성별을 선택해주세요.</span>
+                                    <span class="txt-error" style="display: none;">성별을 선택해주세요.</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form col">
+                                <div class="form-tit-wrap">
+                                    <span class="form-tit required">회원 유형</span>
+                                </div>
+                                <div class="form-cont-wrap">
+                                    <div class="radio-group">
+                                        <label class="radio">
+                                            <input type="radio" name="userType" value="ROLE_USER" checked>
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">사용자</span>
+                                        </label>
+
+                                        <label class="radio">
+                                            <input type="radio" name="userType" value="ROLE_HOST">
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">호스트</span>
+                                        </label>
+                                    </div>
+
+                                    <span class="txt-error" style="display: none;">성별을 선택해주세요.</span>
                                 </div>
                             </div>
 
@@ -218,15 +280,15 @@
                                 </div>
                                 <div class="form-cont-wrap">
                                     <!-- 닉네임 입력 안했을 시 error 클래스 부여 -->
-                                    <input type="text" placeholder="닉네임을 입력하세요">
+                                    <input type="text" placeholder="닉네임을 입력하세요" id="nickNm" name="nickNm" >
 
-                                    <span class="txt-error">닉네임을 입력해주세요.</span>
+                                    <span class="txt-error" style="display: none;">닉네임을 입력해주세요.</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="btn-wrap mt50-xl">
-                            <button type="button" class="btn line-blue inactive">입력 완료</button>
+                            <button type="submit" class="btn line-blue inactive">입력 완료</button>
                         </div>
                     </div>
 
@@ -237,6 +299,7 @@
             </div>
         </div>
 
+	</form>
 
     </main>
 

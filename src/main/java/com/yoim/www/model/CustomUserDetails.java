@@ -16,6 +16,7 @@ public class CustomUserDetails implements UserDetails{
     private String nickname;
     private String email;
     private String userType;
+    private String userImg;
     private boolean isEnabled;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;

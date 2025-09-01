@@ -48,7 +48,7 @@
 				data : $("#loginFrm").serialize(),
 				success : function(data) {
 					if(JSON.parse(data).result) {
-						location.href = "/main/nv_main";
+						location.href = "/";
 					} else {
 						$("#login_error").html("아이디 또는 비밀번호가 일치하지 않습니다.");
 						$("#login_error").show();
@@ -121,10 +121,13 @@
                         <!-- 소셜 로그인 -->
                         <div class="group">
                             <div class="login-sns">
-                                <button type="button" class="btn kakao-login">
-                                    <i></i>
-                                    카카오로 시작하기
-                                </button>
+                                <a class="btn kakao-login"
+									   th:href="@{https://kauth.kakao.com/oauth/authorize(
+									              client_id=${kakaoApiKey},
+									              redirect_uri=${redirectUri},
+									              response_type='code')}">
+									  <i></i>카카오로 시작하기
+									</a>
                                 <button type="button" class="btn naver-login">
                                     <i></i>
                                     네이버로 시작하기

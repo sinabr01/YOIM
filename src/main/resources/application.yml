@@ -15,7 +15,7 @@ spring:
 
 kakao:
   api_key: b8ccc970905ff026a227b142e6834570
-  redirect_uri: http://localhost:8200/login
+  redirect_uri: http://localhost:8200/kakaoLogin
 
 naver:
   client-id: bRewgblVZHuMpJPLh7X1
