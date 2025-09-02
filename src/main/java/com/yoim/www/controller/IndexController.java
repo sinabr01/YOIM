@@ -167,7 +167,7 @@ public class IndexController {
         	//기존 회원 → 로그인
         	User user = userService.providerLogin(param);
         	securityLoginUtil.login(request, response, user);
-        	return "/";
+        	return "yoim/main/nv_main";
         }else {
         	//가입을 할때 폰번호 받고 그거 인증 하나만 쓰기로하기
         	//이미 가입된아디있으면 가입한 아이디 알려주기 ㅇㅇ

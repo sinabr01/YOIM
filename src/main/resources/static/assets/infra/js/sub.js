@@ -22,39 +22,42 @@ document.addEventListener('DOMContentLoaded', () => {
         li.dataset.value = y;
         yearUl.appendChild(li);
     }
+	
+	// 2자리 zero-padding
+	const pad2 = n => String(n).padStart(2, '0');
 
     for (let m = 1; m <= 12; m++) {
         const li = document.createElement('li');
         li.className = 'select-option';
         li.textContent = `${m}월`;
-        li.dataset.value = m;
+        li.dataset.value = pad2(m);
         monthUl.appendChild(li);
     }
 
-    function rebuildDays() {
-        const y = Number(yearSB.querySelector('.select-btn').dataset.value || currentYear);
-        const m = Number(monthSB.querySelector('.select-btn').dataset.value || 1);
+	function rebuildDays() {
+	  const y = Number(yearSB.querySelector('.select-btn').dataset.value || currentYear);
+	  const m = Number(monthSB.querySelector('.select-btn').dataset.value || 1);
 
-        dayUl.innerHTML = '';
-        const lastDay = new Date(y, m, 0).getDate(); // 윤년 포함 자동 계산
-        for (let d = 1; d <= lastDay; d++) {
-            const li = document.createElement('li');
-            li.className = 'select-option';
-            li.textContent = `${d}일`;
-            li.dataset.value = d;
-            dayUl.appendChild(li);
-        }
+	  dayUl.innerHTML = '';
+	  const lastDay = new Date(y, m, 0).getDate(); // 윤년 포함 자동계산
+	  for (let d = 1; d <= lastDay; d++) {
+	    const li = document.createElement('li');
+	    li.className = 'select-option';
+	    li.textContent = `${d}일`;
+	    li.dataset.value = pad2(d);        // ← 여기 (01~31)
+	    dayUl.appendChild(li);
+	  }
 
-        // 현재 선택된 '일'이 범위를 벗어나면 placeholder로 리셋
-        const dayBtn = daySB.querySelector('.select-btn');
-        const curDay = Number(dayBtn.dataset.value || 0);
-        const span = dayBtn.querySelector('span');
-        if (!curDay || curDay > lastDay) {
-            dayBtn.dataset.value = '';
-            span.textContent = '일';
-            span.classList.remove('selected');
-        }
-    }
+	  // 현재 선택된 '일'이 범위를 벗어나면 placeholder로 리셋
+	  const dayBtn = daySB.querySelector('.select-btn');
+	  const curDay = Number(dayBtn.dataset.value || 0);
+	  const span = dayBtn.querySelector('span');
+	  if (!curDay || curDay > lastDay) {
+	    dayBtn.dataset.value = '';
+	    span.textContent = '일';
+	    span.classList.remove('selected');
+	  }
+	}
 
     // 초기 1월 기준 생성
     rebuildDays();

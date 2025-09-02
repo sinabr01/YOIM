@@ -40,24 +40,50 @@
 	</select>
 	
 	<insert id="upsert" parameterType="hashmap">
-		insert into tb_user_auth
+		insert into tb_user
 		(
-		provider_id, 
-		provider_type, 
-		provider_name, 
+		login_id, 
+		login_pw, 
+		user_nm, 
+		nick_nm,
+		email,
+		birth_date,
+		gender,
+		intro,
+		interests,
+		phone,
+		provider_id,
+		provider_type,
+		user_del_yn,
+		user_del_date,
+		user_img,
+		user_type,
 		regist_id,
 		regist_dt
 		)
 		values(
+		#{loginId}, 
+		#{loginPw}, 
+		#{userNm}, 
+		#{nickNm},
+		#{email},
+		#{birthDate},
+		#{gender},
+		#{intro},
+		#{interests},
+		#{phone},
 		#{providerId},
-		#{providerType}, 
-		#{providerName}, 
+		#{providerType},
+		#{userDelYn},
+		#{userDelDate},
+		#{userImg},
+		#{userType}, 
 		'SYSTEM',
 		now()
 		)
 		ON DUPLICATE KEY UPDATE
-	    provider_type = VALUES(provider_type),
-	    provider_name = VALUES(provider_name),
+	    login_pw = VALUES(login_pw),
+	    user_nm = VALUES(user_nm),
 	    updusr_id = 'SYSTEM',
 	    updt_dt = NOW();
 	</insert>

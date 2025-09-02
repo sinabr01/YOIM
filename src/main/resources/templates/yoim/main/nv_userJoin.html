@@ -17,6 +17,8 @@
 			providerType: /*[[${session.providerType}]]*/ null,
 			providerNick: /*[[${session.providerNickNm}]]*/ null
 		};
+		
+		console.log(providerId);
 		const isSso = !!sessionData.providerId;
 	    if (isSso) {
 	      // 이메일/비번 필드 숨김 + 전송 제외(disabled)
@@ -37,7 +39,30 @@
 
 	    // 처음 진입 시 버튼 상태 한 번 계산
 	    if (typeof window.checkJoinForm === 'function') window.checkJoinForm();
-		
+	    
+	    
+	    $('.custom-select-box .select-options').on('click', 'li', function(){
+	        const value = $(this).data('value');                       // 예: 1995, 09, 07
+	        const $box  = $(this).closest('.custom-select-box');       // year | month | day
+	        const type  = $box.data('type');                           // "year"|"month"|"day"
+	        const $btn  = $box.find('.select-btn');
+
+	        // 버튼 표시/데이터값 업데이트
+	        $btn.find('span').text($(this).text());
+	        $btn.attr('data-value', value); // dataset.value 대용
+
+	        // hidden 업데이트
+	        if (type === 'year')  $('#birthY').val(value);
+	        if (type === 'month') $('#birthM').val(value);
+	        if (type === 'day')   $('#birthD').val(value);
+
+	        // (선택) YYYY-MM-DD 조합값
+	        const y = $('#birthY').val(), m = $('#birthM').val(), d = $('#birthD').val();
+	        if (y && m && d) $('#birthDate').val(`${y}-${m}-${d}`);
+
+	        // 네가 쓰던 폼 활성화 체크 호출
+	        if (typeof window.checkJoinForm === 'function') window.checkJoinForm();
+	      });
 	});
 	
 	function nextHost(){
@@ -56,6 +81,11 @@
 	<input type="hidden" name="providerId" id="providerId" th:value="${session.providerId}" >
 	<input type="hidden" name="providerNickNm" id="providerNickNm" th:value="${session.providerNickNm}" >
 	<input type="hidden" name="providerType" id="providerType" th:value="${session.providerType}" >
+	<!-- 생년월일 전송용 hidden -->
+	<input type="hidden" name="birthY" id="birthY">
+	<input type="hidden" name="birthM" id="birthM">
+	<input type="hidden" name="birthD" id="birthD">
+	<input type="hidden" name="birthDate" id="birthDate">
         <div class="contents-wrap">
             <div class="inner-flex">
 

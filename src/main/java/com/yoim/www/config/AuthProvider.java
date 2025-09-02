@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.yoim.www.model.CustomUserDetails;
-import com.yoim.www.serviceImpl.UserService;
 import com.yoim.www.serviceImpl.UsersDetailsService;
 
 
@@ -33,6 +32,8 @@ public class AuthProvider implements AuthenticationProvider {
 			throw new UsernameNotFoundException("USER NOT FOUND OR NOT MATCH PASSWORD");
 		}
         UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), users.getPassword(), users.getAuthorities());
+        
+        //setDetails을 함으로써 html에서 th:text="${#authentication.details.nickname}" 이런걸 사용할수있는거임
         result.setDetails(users);
         System.out.println(result.getDetails());
         return result;
