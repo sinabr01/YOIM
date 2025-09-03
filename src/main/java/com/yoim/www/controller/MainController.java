@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yoim.www.model.KakaoApi;
+import com.yoim.www.model.User;
 import com.yoim.www.serviceImpl.NaverOauthService;
 import com.yoim.www.serviceImpl.UserAuthService;
 import com.yoim.www.serviceImpl.UserService;
@@ -121,6 +122,18 @@ public class MainController {
 		
 		userAuthService.upsert(param);
 		userService.upsert(param);
+		
+		User user = new User();
+		user.setProviderId(providerId);
+		user.setLoginId(providerId);
+		user.setGender(gender);
+		user.setUserType(userType);
+		user.setProviderType(providerType);
+		user.setUserNm(providerNickNm);
+		user.setNickNm(nickNm);
+		user.setBirthDate(birthDate);
+		securityLoginUtil.login(request, response, user);
+		
 		
 		//회원가입 완료 페이지로 수정해야됨
 		return "yoim/main/nv_main";

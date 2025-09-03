@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,11 @@ public class IndexController {
 	NaverProfileParser naverProfileParser;
 	
 	private static Logger logger = LoggerFactory.getLogger(IndexController.class);
+	
+	@GetMapping("/.well-known/appspecific/com.chrome.devtools.json")
+	public ResponseEntity<Void> quiet() {
+	  return ResponseEntity.noContent().build(); // 204
+	}
 	
 	@RequestMapping(value = "/test", method= {RequestMethod.GET, RequestMethod.POST})
     public String test(Model model,HttpServletRequest request,
