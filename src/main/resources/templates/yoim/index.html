@@ -1,250 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      layout:decorate="~{layouts/default}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>요임</title>
+
+    <!-- pubfile -->
+    <link rel="stylesheet" href="/resource/assets/libs/jquery-ui/jquery-ui.min.css">
+<!--     <link rel="stylesheet" href="/resource/assets/site/theme/basic/css/reset.css"> -->
+<!--     <link rel="stylesheet" href="/resource/assets/site/theme/basic/css/component.css"> -->
+<!--     <link rel="stylesheet" href="/resource/assets/site/theme/basic/css/utility.css"> -->
+<!--     <link rel="stylesheet" href="/resource/assets/site/theme/basic/css/common.css"> -->
+
+    <script src="/resource/assets/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/resource/assets/libs/jquery-ui/jquery-ui.min.js"></script>
+<!--     <script src="/resource/assets/site/theme/basic/js/links.js"></script> sns / 헤더상단 연결홈페이지 링크 -->
+    <!-- //pubfile -->
+
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+</head>
 <body>
 
 <!-- wrap -->
-<div id="container" layout:fragment="content">
-
-
-
-    <main id="contents">
-
-        <div class="contents-wrap">
-            <div class="inner-flex">
-
-                <!-- 회원가입(개인정보 처리방침) -->
-                <div class="join">
-
-                    <div class="join-tit-wrap">
-                        <h2 class="join-tit">
-                            처음 뵙겠습니다! <br>
-                            약관 동의 후 인증해 주세요.
-                        </h2>
-                    </div>
-
-
-                    <div class="join-wrap">
-                        <div class="all-check">
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">약관 전체동의</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="check-wrap">
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">(필수) 이용약관</span>
-                                </label>
-                                <a href="javascript:void(0);" class="arr-right"></a>
-                            </div>
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">(필수) 만 14세 이상 확인 </span>
-                                </label>
-                                <a href="javascript:void(0);" class="arr-right"></a>
-                            </div>
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">(필수) 개인정보 수집 및 이용 동의</span>
-                                </label>
-                                <a href="javascript:void(0);" class="arr-right"></a>
-                            </div>
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">(선택) 개인정보 수집 및 이용 동의</span>
-                                </label>
-                                <a href="javascript:void(0);" class="arr-right"></a>
-                            </div>
-                            <div class="check">
-                                <label>
-                                    <input type="checkbox" name="" id="">
-                                    <span class="fake-box"></span>
-                                    <span class="txt">(선택) 위치기반 서비스 이용약관 동의</span>
-                                </label>
-                                <a href="javascript:void(0);" class="arr-right"></a>
-                            </div>
-                        </div>
-
-                        <div class="btn-wrap">
-                            <button type="button" class="btn line-blue inactive">본인 인증하기</button>
-                        </div>
-                    </div>
-
-                </div>
-                <!--// 회원가입(개인정보 처리방침) -->
-
-
-                <!-- 회원가입(개인정보 입력) -->
-                <div class="join" style="display: none;">
-
-                    <div class="join-tit-wrap">
-                        <h2 class="join-tit">
-                            필수 정보 입력
-                        </h2>
-                        <span class="join-txt">가입을 위해 필수 정보를 입력해 주세요.</span>
-                    </div>
-
-
-                    <div class="join-wrap join-info">
-                        <div class="form-area">
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">이메일</span>
-                                </div>
-                                <div class="form-cont-wrap">
-                                    <input type="text" placeholder="yomi@example.com">
-
-                                    <!--- 입력 안했을때 error 클래스 주면 됨. -->
-                                    <!--<input type="text" placeholder="yomi@example.com" class="error">-->
-                                    <span class="txt-error">이메일을 입력해주세요.</span>
-                                </div>
-                            </div>
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">비밀번호</span>
-                                </div>
-                                <div class="form-cont-wrap">
-                                    <div class="password"> <!-- 비밀번호 입력안했을때, 오류일때 error 클래스(password 에 넣어주세요.) -->
-                                        <input type="password" name="" id="" placeholder="비밀번호를 입력하세요.">
-
-                                        <button type="button" class="btn-pw-show"></button>
-                                    </div>
-
-                                    <span class="txt-success">사용가능 : 안전한 비밀번호 입니다.</span>
-                                    <span class="txt-error">사용불가 : 최소 8자 이상 입력</span>
-                                </div>
-                            </div>
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">비밀번호 확인</span>
-                                </div>
-                                <div class="form-cont-wrap">
-                                    <div class="password">
-                                        <input type="password" name="" id="" placeholder="위 비밀번호와 동일하게 입력">
-
-                                        <button type="button" class="btn-pw-show"></button>
-                                    </div>
-
-                                    <span class="txt-error">비밀번호가 일치하지 않습니다.</span>
-                                </div>
-                            </div>
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">생년월일</span>
-                                </div>
-                                <div class="form-cont-wrap">
-
-
-                                    <div class="birth"> <!-- 생년월일 입력 안했을 시, error 클래스 부여 -->
-
-                                        <div class="custom-select-box" data-type="year">
-                                            <button type="button" class="select-btn">
-                                                <span>년도</span>
-                                            </button>
-                                            <ul class="select-options">
-
-                                            </ul>
-                                        </div>
-
-                                        <div class="custom-select-box" data-type="month">
-                                            <button type="button" class="select-btn">
-                                                <span>월</span>
-                                            </button>
-                                            <ul class="select-options">
-
-                                            </ul>
-                                        </div>
-
-                                        <div class="custom-select-box" data-type="day">
-                                            <button type="button" class="select-btn">
-                                                <span>일</span>
-                                            </button>
-                                            <ul class="select-options">
-
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <span class="txt-error">생년월일을 입력해주세요.</span>
-                                </div>
-
-                            </div>
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">성별</span>
-                                </div>
-                                <div class="form-cont-wrap">
-                                    <div class="radio-group">
-                                        <label class="radio">
-                                            <input type="radio" name="agree" value="women" checked>
-                                            <span class="fake-radio"></span>
-                                            <span class="txt">여자</span>
-                                        </label>
-
-                                        <label class="radio">
-                                            <input type="radio" name="agree" value="man">
-                                            <span class="fake-radio"></span>
-                                            <span class="txt">남자</span>
-                                        </label>
-                                    </div>
-
-                                    <span class="txt-error">성별을 선택해주세요.</span>
-                                </div>
-                            </div>
-
-                            <div class="form col">
-                                <div class="form-tit-wrap">
-                                    <span class="form-tit required">닉네임</span>
-                                </div>
-                                <div class="form-cont-wrap">
-                                    <!-- 닉네임 입력 안했을 시 error 클래스 부여 -->
-                                    <input type="text" placeholder="닉네임을 입력하세요">
-
-                                    <span class="txt-error">닉네임을 입력해주세요.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="btn-wrap mt50-xl">
-                            <button type="button" class="btn line-blue inactive">입력 완료</button>
-                        </div>
-                    </div>
-
-                </div>
-                <!--// 회원가입(개인정보 입력) -->
-
-
-            </div>
-        </div>
-
-
-    </main>
-
-
-   
-
-
+<div id="contents">
+   <h1>hello world</h1>
 </div>
+
+<div class="text-center">
+    <a href="https://kauth.kakao.com/oauth/authorize"
+       th:href="@{https://kauth.kakao.com/oauth/authorize(client_id=${kakaoApiKey}, redirect_uri=${redirectUri}, response_type='code')}">
+        <img th:src="@{/resource/assets/infra/img/kakao_login_medium_narrow.png}">
+    </a>
+</div>
+<ul>
+    <li>
+        <!-- 아래와같이 아이디를 꼭 써준다. -->
+        <a id="naverIdLogin_loginButton" href="javascript:void(0)">
+            <span>네이버 로그인</span>
+        </a>
+    </li>
+    <li onclick="naverLogout(); return false;">
+        <a href="javascript:void(0)">
+            <span>네이버 로그아웃</span>
+        </a>
+    </li>
+</ul>
+
+<script>
+
+	
+
+    var naverLogin = new naver.LoginWithNaverId(
+        {
+            clientId: "bRewgblVZHuMpJPLh7X1", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
+            callbackUrl: "http://localhost:8200/naverLogin", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+            isPopup: false,
+            callbackHandle: true
+        }
+    );
+
+    naverLogin.init();
+
+    window.addEventListener('load', function () {
+        naverLogin.getLoginStatus(function (status) {
+            if (status) {
+                var email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
+
+                console.log(naverLogin.user);
+
+                if( email == undefined || email == null) {
+                    alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+                    naverLogin.reprompt();
+                    return;
+                }
+            } else {
+                console.log("callback 처리에 실패하였습니다.");
+            }
+        });
+    });
+
+
+    var testPopUp;
+    function openPopUp() {
+        testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+    }
+    function closePopUp(){
+        testPopUp.close();
+    }
+
+    function naverLogout() {
+        openPopUp();
+        setTimeout(function() {
+            closePopUp();
+        }, 1000);
+
+
+    }
+</script>
 <!-- //wrap -->
 </body>
 </html>

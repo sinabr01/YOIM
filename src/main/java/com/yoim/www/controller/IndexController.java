@@ -126,7 +126,7 @@ public class IndexController {
 	        request.getSession().setAttribute("email", email);
 	        request.getSession().setAttribute("nickname", nickname);
 
-	        resBody.put("next", "/signup?social=naver");
+	        resBody.put("next", "/main/nv_userJoin");
 	        return ResponseEntity.ok(resBody);
 	    }
 	}
@@ -164,7 +164,7 @@ public class IndexController {
         HashMap<String, Object> param = new HashMap<>();
         param.put("providerId", id);
 //        param.put("providerType", "kakao");
-//        param.put("providerName", nickname);
+//        param.put("providerName", nickname); 
 //        userAuthService.upsert(param);
         
         

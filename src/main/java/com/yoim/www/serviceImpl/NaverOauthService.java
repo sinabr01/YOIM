@@ -13,11 +13,15 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.Data;
+
 @Service
+@Data
 public class NaverOauthService {
 	
     @Value("${naver.client-id}") String clientId;
     @Value("${naver.client-secret}") String clientSecret;
+    @Value("${naver.redirect-uri}") String redirectUri;
 
     public String exchangeCodeForToken(String code, String state) {
         RestTemplate rt = new RestTemplate();
