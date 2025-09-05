@@ -85,13 +85,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // --- 커스텀 셀렉트 박스 ---
-    // --- 커스텀 셀렉트 박스 ---
+// --- 커스텀 셀렉트 박스 ---
     document.querySelectorAll('.custom-select-box').forEach(selectBox => {
         const selectBtn = selectBox.querySelector('.select-btn');
         const selectOptions = selectBox.querySelector('.select-options');
         const selectedSpan = selectBtn.querySelector('span');
 
-        // 초기 placeholder 색
+        const initOption =
+            selectOptions.querySelector('.select-option.is-selected') ||
+            selectOptions.querySelector('.select-option'); // 없으면 첫 항목
+        if (initOption) {
+            const initValue = initOption.dataset.value ?? initOption.textContent.trim();
+            selectedSpan.textContent = initOption.textContent.trim();
+            selectedSpan.classList.add('selected');     // placeholder와 구분 용도
+            selectBtn.dataset.value = initValue;
+        }
+
+        // 2) (선택) placeholder 처리 유지시
         if (!selectedSpan.textContent.trim() || /^(년도|월|일)$/.test(selectedSpan.textContent.trim())) {
             selectedSpan.classList.remove('selected');
         }
@@ -107,22 +117,28 @@ document.addEventListener('DOMContentLoaded', function () {
             const option = e.target.closest('.select-option');
             if (!option) return;
 
-            const selectedValue = option.dataset.value ?? option.textContent; // ✅ 값 확정
+            const selectedValue = option.dataset.value ?? option.textContent.trim();
 
-            // UI 반영
-            selectedSpan.textContent = option.textContent;
+            // 기존 선택 해제/현재 선택 추가
+            selectOptions.querySelectorAll('.select-option.is-selected')
+                .forEach(opt => opt.classList.remove('is-selected'));
+            option.classList.add('is-selected');
+
+            // 버튼 UI 반영
+            selectedSpan.textContent = option.textContent.trim();
             selectedSpan.classList.add('selected');
             selectBox.classList.remove('active');
 
-            // 🌟 선택값 저장 (sub.js에서 읽음)
+            // 값 저장
             selectBtn.dataset.value = selectedValue;
 
-            // 🔧 이벤트 detail 변수명 수정
+            // 커스텀 이벤트
             selectBox.dispatchEvent(new CustomEvent('select:change', {
-                detail: { value: selectedValue, text: option.textContent }
+                detail: { value: selectedValue, text: option.textContent.trim() }
             }));
         });
     });
+
 
 // 바깥 클릭 시 닫기
     document.addEventListener('click', () => {

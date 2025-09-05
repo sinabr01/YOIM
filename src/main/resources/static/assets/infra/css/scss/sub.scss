@@ -33,7 +33,7 @@
 
 #contents {
   min-height: calc(100vh - 17.2rem);
-  padding-top: 7.6rem;
+  padding-top: 12rem;
 }
 
 // * -------------------------------
@@ -416,6 +416,94 @@
     .btn-wrap {
       margin-top: 3rem;
     }
+
+
+
+  }
+
+  .join-complete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .complete-icon {
+      .ico-check {
+        display: inline-block;
+        width: 55px;
+        height: 55px;
+
+        background: url("../img/sub/join_complete_icon.png") no-repeat center;
+        background-size: cover;
+
+        @include MOBILE {
+          width: 45px;
+          height: 45px;
+        }
+      }
+    }
+
+    .join-complete-tit {
+      color: #000;
+      text-align: center;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: px-to-em(-1.2, 24);
+
+      display: block;
+      margin-top: 20px;
+
+      @include MOBILE {
+        font-size: 20px;
+      }
+    }
+    .join-complete-txt {
+      color: #C2C2C2;
+      text-align: center;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%;
+      letter-spacing: px-to-em(-0.8, 16);
+
+      display: block;
+      margin-top: 30px;
+
+      @include MOBILE {
+        font-size: 14px;
+      }
+    }
+
+    .admin-info {
+      margin-top: 30px;
+      padding: 15px 30px;
+      border-radius: 6px;
+      background: #f8f8f8;
+      /*width: 100%;*/
+
+      .user-id {
+        color: #000;
+        display: block;
+        text-align: center;
+
+        .label {
+          font-size: 15px;
+          font-weight: 400;
+        }
+        .id-txt {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
+
+
+    .btn-wrap {
+      .btn {
+        width: 100%;
+      }
+    }
   }
 
   .check {
@@ -487,8 +575,57 @@
     }
   }
 
+}
+
+
+// * -------------------------------
+// * 게시판
+// * -------------------------------
+
+// * -------------------------------
+// * 검색박스
+// * -------------------------------
+.search-area {
+  width: 100%;
+
+
+  .search-area-wrap {
+    padding:5rem;
+    max-width:120rem;
+    margin: 0 auto;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+
+    .tit-wrap {
+      .tit {
+        color: #000;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+      }
+    }
+
+    .form-area {
+      margin-top: 30px;
+
+      .flex-wrap {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .form {
+
+      }
+    }
+
+  }
+
 
 }
+
 
 
 

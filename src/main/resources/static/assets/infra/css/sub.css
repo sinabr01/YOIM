@@ -1,7 +1,7 @@
 @charset "UTF-8";
 #contents {
   min-height: calc(100vh - 17.2rem);
-  padding-top: 7.6rem;
+  padding-top: 12rem;
 }
 
 .login {
@@ -317,6 +317,79 @@
 .contents-wrap .join-wrap .btn-wrap {
   margin-top: 3rem;
 }
+.contents-wrap .join-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contents-wrap .join-complete .complete-icon .ico-check {
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  background: url("../img/sub/join_complete_icon.png") no-repeat center;
+  background-size: cover;
+}
+@media (max-width: 767px) {
+  .contents-wrap .join-complete .complete-icon .ico-check {
+    width: 45px;
+    height: 45px;
+  }
+}
+.contents-wrap .join-complete .join-complete-tit {
+  color: #000;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.05em;
+  display: block;
+  margin-top: 20px;
+}
+@media (max-width: 767px) {
+  .contents-wrap .join-complete .join-complete-tit {
+    font-size: 20px;
+  }
+}
+.contents-wrap .join-complete .join-complete-txt {
+  color: #C2C2C2;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.05em;
+  display: block;
+  margin-top: 30px;
+}
+@media (max-width: 767px) {
+  .contents-wrap .join-complete .join-complete-txt {
+    font-size: 14px;
+  }
+}
+.contents-wrap .join-complete .admin-info {
+  margin-top: 30px;
+  padding: 15px 30px;
+  border-radius: 6px;
+  background: #f8f8f8;
+  /*width: 100%;*/
+}
+.contents-wrap .join-complete .admin-info .user-id {
+  color: #000;
+  display: block;
+  text-align: center;
+}
+.contents-wrap .join-complete .admin-info .user-id .label {
+  font-size: 15px;
+  font-weight: 400;
+}
+.contents-wrap .join-complete .admin-info .user-id .id-txt {
+  font-size: 16px;
+  font-weight: 500;
+}
+.contents-wrap .join-complete .btn-wrap .btn {
+  width: 100%;
+}
 .contents-wrap .check {
   display: flex;
   align-items: center;
@@ -374,4 +447,30 @@
   height: 2.5rem;
   background: url("../img/common/arr_right_gray.png") no-repeat center;
   background-size: auto 1rem;
+}
+
+.search-area {
+  width: 100%;
+}
+.search-area .search-area-wrap {
+  padding: 5rem;
+  max-width: 120rem;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+.search-area .search-area-wrap .tit-wrap .tit {
+  color: #000;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+.search-area .search-area-wrap .form-area {
+  margin-top: 30px;
+}
+.search-area .search-area-wrap .form-area .flex-wrap {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }

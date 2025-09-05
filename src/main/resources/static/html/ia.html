@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>다한정보기술cms - IA</title>
+
+    <!-- pubfile -->
+    <link rel="stylesheet" href="../assets/libs/jquery-ui/jquery-ui.min.css">
+
+    <link rel="stylesheet" href="../assets/infra/fonts/NotoSansKr/NotoSansKr.css">
+
+    <link rel="stylesheet" href="../assets/infra/css/reset.css">
+    <link rel="stylesheet" href="../assets/infra/css/utility.css">
+
+    <script src="../assets/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
+    <!-- //pubfile -->
+
+</head>
+
+<style>
+    #contents {
+        padding: 10px;
+        font-size: 14px;
+        max-width:1600px;
+        margin: 30px auto;
+    }
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    table {
+        width: 100%;
+
+    }
+
+    table th,
+    table td {
+        border: 1px solid #eeeeee;
+        text-align: center;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    table th {
+        background: #eeeeee
+    }
+
+    .link a {color: #1F93FF;text-decoration: underline;text-underline-offset: 3px;}
+    .guide {color: #1F93FF;text-decoration: underline;text-underline-offset: 3px;font-size: 18px;display: block;text-align: right}
+    .red {background-color: rgba(255,0,6,0.13);}
+    .red a {color: #ff3f38;text-decoration: none;font-weight: 500;}
+    .red a:before {content: '추후작업예정';}
+    .not {background-color: #eee;color: #fff}
+    .not .link a {color: #fff;}
+</style>
+
+
+<body>
+
+<!-- wrap -->
+<div id="contents">
+    <h1>HTML FILE GUIDE </h1>
+
+    <!--<div style="display: flex;align-items: center;justify-content: flex-end;gap: 10px;margin-bottom: 10px;">
+        <a href="../../user/_pub/ia.html" class="guide">사용자사이트</a>
+        <span>/</span>
+        <a href="guide.html" class="guide" target="_blank">스타일가이드 열기</a>
+    </div>-->
+
+    <table>
+        <colgroup>
+            <col style="width:10%">
+            <col style="width:15%">
+            <col style="width:15%">
+            <col style="width:15%">
+            <col style="width:25%">
+            <col style="width:20%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>1depth</th>
+            <th>2depth</th>
+            <th>3depth</th>
+            <th>4depth</th>
+            <th>url</th>
+            <th>비고</th>
+        </tr>
+        </thead>
+        <tbody id="iaTableBody"></tbody>
+    </table>
+
+</div>
+<!-- //wrap -->
+
+
+<script src="iaData.js"></script>
+<script>
+    function renderIATable(data) {
+        const tbody = document.getElementById("iaTableBody");
+        const levels = ["depth1", "depth2", "depth3", "depth4"];
+        const n = data.length;
+
+        // span[lvl][i]: i번째 행의 lvl depth 셀에 대한 표시 상태
+        //  > -1 = 이 행에서는 셀 생략
+        //  >  0 = (초기값)
+        //  >  1 이상 = 이 행이 그룹의 시작이며 rowspan 값
+        const span = levels.map(() => Array(n).fill(0));
+
+        for (let i = 0; i < n; i++) {
+            for (let lvl = 0; lvl < levels.length; lvl++) {
+                if (span[lvl][i] !== 0) continue; // 이미 결정된 셀은 패스
+
+                const key = levels[lvl];
+                const val = (data[i][key] ?? "");
+
+                // 빈 값은 합치지 않고 개별 표시 (원하면 rowspan 하려면 아래 if 블록을 주석 처리하고 바로 count 로직으로 가세요)
+                if (val === "") {
+                    span[lvl][i] = 1;
+                    continue;
+                }
+
+                // 부모 depth가 동일한 범위 내에서 같은 값이 연속되는 길이 count
+                let count = 1;
+                for (let j = i + 1; j < n; j++) {
+                    // 부모(depth 0..lvl-1)들이 같아야 같은 그룹
+                    let sameParents = true;
+                    for (let p = 0; p < lvl; p++) {
+                        const parentKey = levels[p];
+                        if ((data[j][parentKey] ?? "") !== (data[i][parentKey] ?? "")) {
+                            sameParents = false;
+                            break;
+                        }
+                    }
+                    if (!sameParents) break;
+
+                    if ((data[j][key] ?? "") === val) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+
+                span[lvl][i] = count;
+                // 그룹 내 뒤쪽 행들은 해당 셀을 생략 처리
+                for (let k = 1; k < count; k++) {
+                    span[lvl][i + k] = -1;
+                }
+            }
+        }
+
+        // 테이블 렌더링
+        for (let i = 0; i < n; i++) {
+            const row = data[i];
+            const tr = document.createElement("tr");
+
+            // depth1~4
+            for (let lvl = 0; lvl < levels.length; lvl++) {
+                const s = span[lvl][i];
+                if (s === -1) continue; // 이 행에서는 셀 생략
+
+                const key = levels[lvl];
+                const val = row[key] || "";
+                const td = document.createElement("td");
+                if (val !== "" && s > 1) td.rowSpan = s; // 빈 값은 합치지 않음 (원하면 조건에서 val !== "" 제거)
+                td.textContent = val;
+                tr.appendChild(td);
+            }
+
+            // 링크
+            const linkTd = document.createElement("td");
+            linkTd.className = "link";
+            if (row.url) {
+                const a = document.createElement("a");
+                a.href = row.url;
+                a.target = "_blank";
+                a.textContent = row.url;
+                linkTd.appendChild(a);
+            }
+            tr.appendChild(linkTd);
+
+            // 비고
+            const noteTd = document.createElement("td");
+            noteTd.textContent = row.note || "";
+            tr.appendChild(noteTd);
+
+            tbody.appendChild(tr);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        renderIATable(iaData);
+    });
+</script>
+
+
+</body>
+</html>
