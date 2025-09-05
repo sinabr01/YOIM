@@ -105,47 +105,72 @@
 
     <main id="contents">
 
-        <div class="board">
+        <div class="sub">
+            <div class="sub-tit-area">
+                <div class="sub-tit-wrap">
+                    <span class="tit">카테고리</span>
+                </div>
+            </div>
 
-            <!-- 검색박스 -->
-            <div class="search-area">
-                <div class="search-area-wrap">
-                    <div class="tit-wrap">
-                        <span class="tit">어떤 모임을 찾고 계신가요? <br> 지역이나 카테고리로 쉽게 검색해보세요</span>
-                    </div>
+            <div class="board">
 
-                    <div class="form-area">
-                        <div class="flex-wrap">
-                            <div class="form">
-                                <div class="custom-select-box">
-                                    <button type="button" class="select-btn">
-                                        <span></span>
-                                    </button>
-                                    <ul class="select-options">
-                                        <li class="select-option is-selected" data-value="전체">전체</li>
-                                        <li class="select-option" data-value="지역">지역</li>
-                                        <li class="select-option" data-value="모임">모임</li>
-                                        <li class="select-option" data-value="호스트">호스트</li>
-                                    </ul>
+                <!-- 검색박스 -->
+                <div class="search-area">
+                    <div class="search-area-wrap">
+                        <div class="tit-wrap">
+                            <span class="tit">어떤 모임을 찾고 계신가요? <br> 지역이나 카테고리로 쉽게 검색해보세요</span>
+                        </div>
+
+                        <div class="category-group">
+                            <ul class="category-list">
+                                <li class="active"><button type="button" class="btn line-blue">전체</button></li>
+                                <li><button type="button" class="btn line-blue">액티비티</button></li>
+                                <li><button type="button" class="btn line-blue">연애</button></li>
+                                <li><button type="button" class="btn line-blue">클래스</button></li>
+                                <li><button type="button" class="btn line-blue">여행</button></li>
+                                <li><button type="button" class="btn line-blue">문화</button></li>
+                                <li><button type="button" class="btn line-blue">친목</button></li>
+                                <li><button type="button" class="btn line-blue">스터디</button></li>
+                                <li><button type="button" class="btn line-blue">기타</button></li>
+                            </ul>
+
+                            <div class="detail-btn-area">
+                                <button class="btn line-blue detail-btn">상세검색 <i class="icon arr-down_purple"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="form-area">
+                            <div class="flex-wrap">
+                                <div class="form">
+                                    <div class="custom-select-box">
+                                        <button type="button" class="select-btn">
+                                            <span></span>
+                                        </button>
+                                        <ul class="select-options">
+                                            <li class="select-option is-selected" data-value="전체">전체</li>
+                                            <li class="select-option" data-value="지역">지역</li>
+                                            <li class="select-option" data-value="모임">모임</li>
+                                            <li class="select-option" data-value="호스트">호스트</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form">
-                                <input type="text" placeholder="yomi@example.com">
-                            </div>
+                                <div class="form">
+                                    <input type="text" placeholder="yomi@example.com">
+                                </div>
 
-                            <div class="btn-wrap">
-                                <button type="button">검색</button>
+                                <div class="btn-wrap">
+                                    <button type="button">검색</button>
 
-                                <button type="button">초기화</button>
+                                    <button type="button">초기화</button>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            <!--// 검색박스 -->
         </div>
-        <!--// 검색박스 -->
-
 </div>
 
 </main>

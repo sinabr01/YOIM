@@ -163,8 +163,8 @@
     overflow: hidden;
     position: relative;
 
-    border: 1px solid #5865F2;
-    color: #5865F2;
+    border: 1px solid var(--color-primary-purple);
+    color: var(--color-primary-purple);
 
     transition: all 0.3s;
     background: #fff;
@@ -172,7 +172,7 @@
     font-weight: 500;
 
     &:hover {
-      background: #5865F2;
+      background: var(--color-primary-purple);
       color: #fff;
       font-size: 1.5rem;
     }
@@ -223,6 +223,19 @@
 }
 
 
+
+
+.icon {
+  display: inline-block;
+
+  &.arr-down_purple {
+    width: 1rem;
+    height: 0.6rem;
+
+    background: url("../img/common/arr_down_purple.png") no-repeat center;
+    background-size: cover;
+  }
+}
 
 // * -------------------------------
 // * form
@@ -288,7 +301,7 @@ input[type="number"] {
   }
 
   input[type="radio"]:checked + .fake-radio {
-    border-color: #5865F2;
+    border-color: var(--color-primary-purple);
     box-shadow: 0 0 0 2px rgba(88,101,242,0.12);
   }
 
@@ -297,7 +310,7 @@ input[type="number"] {
     position: absolute;
     inset: 3px;
     border-radius: 50%;
-    background: #5865F2;
+    background: var(--color-primary-purple);
   }
 
   input[type="radio"]:focus-visible + .fake-radio {

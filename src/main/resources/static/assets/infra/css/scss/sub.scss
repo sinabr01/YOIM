@@ -2,17 +2,19 @@
 // * mixin
 // * -------------------------------
 @mixin DESKTOP {
-  @media (max-width:1170px) {
+  @media (max-width: 1170px) {
     @content;
   }
 }
+
 @mixin TABLET {
-  @media (max-width:1023px) {
+  @media (max-width: 1023px) {
     @content;
   }
 }
+
 @mixin MOBILE {
-  @media (max-width:767px) {
+  @media (max-width: 767px) {
     @content;
   }
 }
@@ -44,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width:90%;
+  max-width: 90%;
   margin: 5rem auto;
 
   .inner {
@@ -52,7 +54,7 @@
     width: 100%;
 
     @include TABLET {
-      max-width:42rem;
+      max-width: 42rem;
     }
   }
 
@@ -155,6 +157,7 @@
     .password {
       margin-top: 1rem;
     }
+
     .btn-wrap {
       margin-top: 5rem;
       flex-wrap: wrap;
@@ -165,7 +168,7 @@
         flex: 1 1 47%;
 
         @include MOBILE {
-          min-height:4.5rem;
+          min-height: 4.5rem;
           font-size: 1.4rem;
         }
 
@@ -225,7 +228,7 @@
     margin-top: 5rem;
 
     .btn {
-      min-height:5.5rem;
+      min-height: 5.5rem;
 
       font-size: 1.6rem;
       font-style: normal;
@@ -259,6 +262,7 @@
           background-size: contain;
         }
       }
+
       &.naver-login {
         background: #00C73C;
         border: 1px solid #00C73C;
@@ -272,6 +276,7 @@
           background-size: contain;
         }
       }
+
       &.apple-login {
         background: #000000;
         border: 1px solid #000000;
@@ -285,6 +290,7 @@
           background-size: contain;
         }
       }
+
       &.facebook-login {
         background: #1877F2;
         border: 1px solid #1877F2;
@@ -298,9 +304,10 @@
           background-size: contain;
         }
       }
+
       &.google-login {
         background: #fff;
-        border: 1px solid rgba(0,0,0,0.16);
+        border: 1px solid rgba(0, 0, 0, 0.16);
         color: rgba(0, 0, 0, 0.56);
 
         i {
@@ -337,7 +344,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width:90%;
+    max-width: 90%;
     margin: 5rem auto;
 
     min-height: calc(100vh - 7.5rem - 17.2rem - 10.1rem);
@@ -418,7 +425,6 @@
     }
 
 
-
   }
 
   .join-complete {
@@ -458,6 +464,7 @@
         font-size: 20px;
       }
     }
+
     .join-complete-txt {
       color: #C2C2C2;
       text-align: center;
@@ -491,6 +498,7 @@
           font-size: 15px;
           font-weight: 400;
         }
+
         .id-txt {
           font-size: 16px;
           font-weight: 500;
@@ -540,8 +548,8 @@
 
     /* 체크됐을 때 */
     input[type="checkbox"]:checked + .fake-box {
-      background: #5865F2;
-      border-color: #5865F2;
+      background: var(--color-primary-purple);
+      border-color: var(--color-primary-purple);
     }
 
     /* 체크 아이콘 */
@@ -579,8 +587,28 @@
 
 
 // * -------------------------------
-// * 게시판
+// * 서브
 // * -------------------------------
+.sub {
+  max-width: 120rem;
+  margin: 0 auto
+}
+
+.sub-tit-area {
+
+  .sub-tit-wrap {
+    .tit {
+      display: block;
+      font-size: 4.2rem;
+      font-weight: 600;
+      color: #000;
+    }
+  }
+
+  & + * {
+    margin-top: 3.5rem;
+  }
+}
 
 // * -------------------------------
 // * 검색박스
@@ -590,19 +618,19 @@
 
 
   .search-area-wrap {
-    padding:5rem;
-    max-width:120rem;
+    padding: 5rem;
+    max-width: 120rem;
     margin: 0 auto;
     border-radius: 12px;
 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     .tit-wrap {
       .tit {
         color: #000;
-        font-size: 36px;
+        font-size: 2.8rem;
         font-style: normal;
-        font-weight: 800;
+        font-weight: 600;
         line-height: normal;
       }
     }
@@ -621,11 +649,57 @@
       }
     }
 
+
   }
 
 
 }
 
 
+.category-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
 
+  .detail-btn-area {
+    .detail-btn {
+      height: 4.2rem;
+      padding: 0 20px;
+
+      .arr-down_purple {
+        margin-left: 0.5rem;
+      }
+
+      &:hover {
+        .arr-down_purple {
+          background: url("../img/common/arr_down_wh.png") no-repeat center;
+          background-size: cover;
+        }
+      }
+    }
+  }
+
+  .category-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+
+    li {
+      .btn {
+        padding: 0 20px;
+        border-radius: 20px;
+      }
+
+      &.active {
+        .btn {
+          background: var(--color-primary-purple);
+          color: #fff;
+
+        }
+      }
+    }
+  }
+
+}
 
