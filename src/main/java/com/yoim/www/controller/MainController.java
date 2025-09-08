@@ -136,7 +136,7 @@ public class MainController {
 		
 		
 		//회원가입 완료 페이지로 수정해야됨
-		return "yoim/main/nv_main";
+		return "yoim/main/nv_userJoinComplete";
     }
 	
 	
