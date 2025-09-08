@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+<head>
+<script th:inline="javascript">
+	$(document).ready(function() {
+		
+		
+	});
+	
+	</script>
+</head>
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+    <main id="contents">
+        <div class="contents-wrap">
+            <div class="inner-flex">
+
+                <!-- 회원가입(완료) -->
+                <div class="join">
+
+                    <div class="join-wrap join-complete">
+                        <div class="complete-icon">
+                            <i class="ico ico-check"></i>
+                        </div>
+                        <span class="join-complete-tit">
+                            회원가입이 완료되었습니다
+                        </span>
+
+
+<!--                         <div class="admin-info"> -->
+<!--                             <div class="user-id"> -->
+<!--                                 <span class="label">아이디 : </span> <span class="id-txt">test01test01</span> -->
+<!--                             </div> -->
+<!--                         </div> -->
+
+                        <span class="join-complete-txt">
+                            새로운 만남과 경험, 요기에서 모임! <br>
+                            지금 요임에서 함께하세요.
+                        </span>
+
+
+                        <div class="btn-wrap mt50-xl">
+                            <a type="button" class="btn line-blue" href="/">홈으로</a>
+                        </div>
+                    </div>
+
+                </div>
+                <!--// 회원가입(완료) -->
+
+
+
+
+            </div>
+        </div>
+
+    </main>
+
+
+   
+
+
+</div>
+<!-- //wrap -->
+</body>
+</html>
