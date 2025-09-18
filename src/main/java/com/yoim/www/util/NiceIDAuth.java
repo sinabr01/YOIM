@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import NiceID.Check.CPClient;
+
 public class NiceIDAuth {
 
     private static String sSiteCode = "CE722"; // NICE로부터 부여받은 사이트 코드
@@ -21,7 +23,7 @@ public class NiceIDAuth {
         Map<String, Object> returnMap = new HashMap<String, Object>();
 
 
-        NiceID.Check.CPClient niceCheck = new NiceID.Check.CPClient();
+        CPClient niceCheck = new CPClient();
 
         String sRequestNumber = "REQ0000000001";        	// 요청 번호, 이는 성공/실패후에 같은 값으로 되돌려주게 되므로
         // 업체에서 적절하게 변경하여 쓰거나, 아래와 같이 생성한다.

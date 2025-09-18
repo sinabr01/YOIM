@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yoim.www.mapper.FileUploadMapper">
+
+	<resultMap type="fileUpload" id="getSelectMap">
+		<result property="fileUploadId" column="file_upload_id" />
+		<result property="uploadCode" column="upload_code" />
+		<result property="status" column="status" />
+		<result property="registId" column="regist_id" />
+		<result property="registDt" column="regist_dt" />
+		<result property="updusrId" column="updusr_id" />
+		<result property="updtDt" column="updt_dt" />
+	</resultMap>
+
+	<insert id="insert" parameterType="fileUpload" 
+		useGeneratedKeys="true" keyProperty="fileUploadId"
+		keyColumn="file_upload_id">
+		INSERT INTO tb_file_upload
+		(upload_code,status,regist_id,regist_dt)
+		VALUES (#{uploadCode},
+		#{status}, #{registId}, NOW())
+	</insert>
+
+	<update id="updateStatus">
+		UPDATE tb_file_upload
+		SET status=#{status},
+		updusr_id=#{updusrId}, updt_dt=NOW()
+		WHERE file_upload_id =
+		#{fileUploadId}
+	</update>
+
+	<select id="findById" resultType="fileUpload">
+		SELECT * FROM tb_file_upload
+		WHERE file_upload_id = #{fileUploadId}
+	</select>
+
+
+
+
+</mapper>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.yoim.www.model.KakaoApi;
 import com.yoim.www.model.User;
@@ -64,8 +65,16 @@ public class MainController {
 	@RequestMapping(value = "/main/nv_login", method= {RequestMethod.GET, RequestMethod.POST})
     public String nv_login(Model model,HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
+		
+		String origin = ServletUriComponentsBuilder
+		        .fromCurrentRequestUri()
+		        .replacePath(null)
+		        .build()
+		        .toUriString();
+		
 		model.addAttribute("kakaoApiKey", kakaoApi.getKakaoApiKey());
-	    model.addAttribute("redirectUri", kakaoApi.getKakaoRedirectUri());
+	    model.addAttribute("redirectUri", origin+kakaoApi.getKakaoRedirectUri());
+	    model.addAttribute("navberRedirectUri", origin+naverOauthService.getRedirectUri());
 		return "yoim/main/nv_login";
     }
 	

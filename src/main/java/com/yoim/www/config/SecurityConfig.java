@@ -87,28 +87,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")
             .deleteCookies("JSESSIONID")
             .invalidateHttpSession(true)
-            .logoutSuccessUrl("/")
-        .and()
-
-        .headers()
-            .contentSecurityPolicy("default-src 'self'; " +
-                    "script-src 'self' https://static.nid.naver.com 'unsafe-inline'; " +
-                    "connect-src 'self' https://nid.naver.com https://static.nid.naver.com; " +
-                    "frame-src https://nid.naver.com; " +
-                    "style-src 'self' 'unsafe-inline'; " +
-                    "img-src 'self' data:; " +
-                    "font-src 'self' data:; " +
-                    "object-src 'none'; " +
-                    "base-uri 'self'; " +
-                    "frame-ancestors 'none'")
-        .and()
-            .referrerPolicy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)
-        .and()
-            .contentTypeOptions()
-        .and()
-            .frameOptions().deny()
-            .addHeaderWriter(new org.springframework.security.web.header.writers.StaticHeadersWriter(
-                    "Permissions-Policy", "geolocation=(), microphone=(), camera=()"))
-            .cacheControl();
+            .logoutSuccessUrl("/");
     }
 }

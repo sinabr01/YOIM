@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+<head>
+      <script src="/resource/assets/js/fileUpload.js"></script>
+<script>
+$(document).ready(function() {
+    const uploader = YoimFiles.createUploader({
+      uploadCode: 'PROFILE',
+      input: '#filesProfile',
+      button: '#btnUploadProfile',
+      // userId: 'yoimUser1', // 필요시
+      onCreated: (id) => {
+        console.log('group created:', id);
+        $('#profileFileUploadId').val(id); // 도메인 테이블 insert/update에 쓰기 좋음
+      },
+      onSuccess: (resp) => {
+        console.log('업로드 성공:', resp);
+        alert('업로드 완료!');
+        // 필요하면 완료 후 finalize
+        uploader.finalize();
+      },
+      onError: (e) => {
+        console.error(e);
+        alert(e.message);
+      }
+    });
+
+    // 다른 시나리오에서 미리 그룹 생성하고 싶으면:
+    // uploader.ensureGroup();
+  });
+</script>
+</head>
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+
+    <main id="contents" style="height: 70vh;background: #fff;display: flex;align-items: center;justify-content: center;font-size: 3rem;">파일테스트</main>
+
+	<input type="file" id="filesProfile" multiple>
+	<button id="btnUploadProfile">업로드</button>
+	<input type="hidden" id="profileFileUploadId">
+
+
+
+
+</div>
+<!-- //wrap -->
+
+
+
+</body>
+</html>

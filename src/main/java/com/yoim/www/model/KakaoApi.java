@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -39,11 +40,18 @@ public class KakaoApi {
 
     /** access_token 없으면 null 반환(컨트롤러에서 redirect:/ 처리 용이) */
     public String getAccessToken(String code) {
+    	
+    	String origin = ServletUriComponentsBuilder
+		        .fromCurrentRequestUri()
+		        .replacePath(null)
+		        .build()
+		        .toUriString();
+    	
         String result = null;
         try {
             String body = "grant_type=authorization_code"
                     + "&client_id="   + enc(kakaoApiKey)
-                    + "&redirect_uri=" + enc(kakaoRedirectUri)
+                    + "&redirect_uri=" + enc(origin+kakaoRedirectUri)
                     + "&code="        + enc(code);
 
             HttpURLConnection conn = (HttpURLConnection) new URL(TOKEN_URL).openConnection();

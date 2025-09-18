@@ -19,7 +19,7 @@ public class User {
 	private String providerType;
 	private String userDelYn;
 	private String userDelDate;
-	private String userImg;
+	private Long userImgId;
 	private String userType;
 	private String registId;
 	private String registDt;

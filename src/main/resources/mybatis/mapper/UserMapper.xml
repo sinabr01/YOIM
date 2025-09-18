@@ -21,7 +21,7 @@
 		<result property="providerType" column="provider_type"/>
 		<result property="userDelYn" column="user_del_yn"/>
 		<result property="userDelDate" column="user_del_date"/>
-		<result property="userImg" column="user_img"/>
+		<result property="userImgId" column="user_img_id"/>
 		<result property="userType" column="user_type"/>
 		<result property="registId" column="regist_id"/>
 		<result property="registDt" column="regist_dt"/>
@@ -56,7 +56,7 @@
 		provider_type,
 		user_del_yn,
 		user_del_date,
-		user_img,
+		user_img_id,
 		user_type,
 		regist_id,
 		regist_dt
@@ -76,7 +76,7 @@
 		#{providerType},
 		'N',
 		#{userDelDate},
-		#{userImg},
+		#{userImgId},
 		#{userType}, 
 		'SYSTEM',
 		now()

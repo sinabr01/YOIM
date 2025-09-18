@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,12 @@ public class IndexController {
 	public ResponseEntity<Void> quiet() {
 	  return ResponseEntity.noContent().build(); // 204
 	}
+	
+	@RequestMapping(value = "/fileTest", method = {RequestMethod.GET, RequestMethod.POST})
+	public String fileTest(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    return "yoim/fileTest";
+	}
+	
 	
 	@RequestMapping(value = "/test", method= {RequestMethod.GET, RequestMethod.POST})
     public String test(Model model,HttpServletRequest request,

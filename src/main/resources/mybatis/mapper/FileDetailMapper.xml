@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yoim.www.mapper.FileDetailMapper">
+
+	<resultMap type="fileDetail" id="getSelectMap">
+		<result property="fileId" column="file_id" />
+		<result property="fileUploadId" column="file_upload_id" />
+		<result property="fileStreCours" column="file_stre_cours" />
+		<result property="streFileNm" column="strefile_Nm" />
+		<result property="orginlFileNm" column="orginl_file_nm" />
+		<result property="fileExtsn" column="file_extsn" />
+		<result property="fileSize" column="file_size" />
+		<result property="isMain" column="is_main" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="registId" column="regist_id" />
+		<result property="registDt" column="regist_dt" />
+		<result property="updusrId" column="updusr_id" />
+		<result property="updtDt" column="updt_dt" />
+	</resultMap>
+
+	<insert id="insert" parameterType="fileDetail">
+		INSERT INTO tb_file_detail
+		(file_upload_id, file_stre_cours, stre_file_nm, orginl_file_nm,
+		file_extsn, file_size,
+		is_main, sort_order, regist_id, regist_dt)
+		VALUES
+		(#{fileUploadId}, #{fileStreCours}, #{streFileNm},
+		#{orginlFileNm}, #{fileExtsn},
+		#{fileSize},
+		#{isMain}, #{sortOrder},
+		#{registId}, NOW())
+	</insert>
+
+	<select id="findByUploadId" resultMap="getSelectMap">
+		SELECT *
+		FROM tb_file_detail
+		WHERE file_upload_id = #{uploadId}
+		ORDER BY
+		IFNULL(sort_order, 9999), file_id
+	</select>
+
+	<select id="findById" resultType="fileDetail">
+		SELECT * FROM tb_file_detail
+		WHERE file_id = #{fileId}
+	</select>
+
+	<delete id="deleteById">
+		DELETE FROM tb_file_detail WHERE file_id = #{fileId}
+	</delete>
+
+
+
+
+</mapper>

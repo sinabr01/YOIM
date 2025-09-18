@@ -12,12 +12,21 @@ spring:
       jdbc-url: jdbc:log4jdbc:mysql://localhost:3310/yoim?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=UTF-8
       username: root
       password: root
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 15MB
+      max-request-size: 20MB
 
 kakao:
   api_key: b8ccc970905ff026a227b142e6834570
-  redirect_uri: http://localhost:8200/kakaoLogin
+  redirect_uri: /kakaoLogin
 
 naver:
   client-id: bRewgblVZHuMpJPLh7X1
   client-secret: kc9c2QSLVt
-  redirect-uri: http://localhost:8200/naverLogin
+  redirect-uri: /naverLogin
+
+yoim:
+  upload:
+    base-dir: C:\home\yoim\uploads

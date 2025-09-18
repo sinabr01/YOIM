@@ -11,7 +11,12 @@
 
     	
 	$(document).ready(function() {
+
 		
+		/*<![CDATA[*/
+    	var navberRedirectUri = /*[[${navberRedirectUri}]]*/
+    	/*]]*/
+	  	
 		
 		$("#id").keydown(function(key) {
             if (key.keyCode == 13) {
@@ -65,9 +70,12 @@
 			});
 		}
 		
+		
+		
+		
 		var naverLogin = new naver.LoginWithNaverId({
 	        clientId: "bRewgblVZHuMpJPLh7X1",
-	        callbackUrl: "http://localhost:8200/naverLogin",
+	        callbackUrl: navberRedirectUri,
 	        isPopup: false,
 	        callbackHandle: true
 	    });
