@@ -5,6 +5,7 @@
       layout:decorate="~{layouts/default}">
 <head>
       <script src="/resource/assets/js/fileUpload.js"></script>
+      <script src="/resource/assets/js/fileDownload.js"></script>
 <script>
 $(document).ready(function() {
     const uploader = YoimFiles.createUploader({
@@ -27,9 +28,14 @@ $(document).ready(function() {
         alert(e.message);
       }
     });
+    
 
     // 다른 시나리오에서 미리 그룹 생성하고 싶으면:
     // uploader.ensureGroup();
+    
+    
+    //다운로드
+    YoimFile.wire(document);
   });
 </script>
 </head>
@@ -44,7 +50,17 @@ $(document).ready(function() {
 	<button id="btnUploadProfile">업로드</button>
 	<input type="hidden" id="profileFileUploadId">
 
-
+	<!-- 파일 리스트 예시 -->
+	<ul id="">
+	  <li>
+	    <span>설계서_v1.pdf</span>
+	    <button type="button" data-action="download" data-file-id="4">다운로드</button>
+	  </li>
+	  <li>
+	    <span>이미지.png</span>
+	    <button type="button" data-action="download" data-file-id="5">다운로드</button>
+	  </li>
+	</ul>
 
 
 </div>

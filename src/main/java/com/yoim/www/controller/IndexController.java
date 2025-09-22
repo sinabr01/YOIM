@@ -66,6 +66,11 @@ public class IndexController {
 	    return "yoim/fileTest";
 	}
 	
+	@RequestMapping(value = "/editorTest", method = {RequestMethod.GET, RequestMethod.POST})
+	public String editorTest(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    return "yoim/editorTest";
+	}
+	
 	
 	@RequestMapping(value = "/test", method= {RequestMethod.GET, RequestMethod.POST})
     public String test(Model model,HttpServletRequest request,

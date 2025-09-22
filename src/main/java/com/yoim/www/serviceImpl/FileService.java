@@ -119,7 +119,7 @@ public class FileService{
     }
 
     public Resource loadAsResource(Long fileId) throws IOException {
-        FileDetail d = detailMapper.findById(fileId);
+    	FileDetail d = detailMapper.findById(fileId);
         if (d == null) throw new FileNotFoundException("no file");
         Path p = Paths.get(baseDir + d.getFileStreCours()).resolve(d.getStreFileNm());
         return new UrlResource(p.toUri());
