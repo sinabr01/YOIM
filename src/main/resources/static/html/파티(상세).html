@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>YOIM</title>
+
+    <!-- pubfile -->
+    <link rel="stylesheet" href="../assets/libs/jquery-ui/jquery-ui.min.css">
+
+    <link rel="stylesheet" href="../assets/infra/fonts/Pretendard.css">
+    <link rel="stylesheet" href="../assets/infra/css/reset.css">
+    <link rel="stylesheet" href="../assets/infra/css/utility.css">
+    <link rel="stylesheet" href="../assets/infra/css/component.css">
+    <link rel="stylesheet" href="../assets/infra/css/common.css">
+
+    <script src="../assets/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
+
+    <script src="../assets/infra/js/common.js"></script>
+
+
+    <!-- 서브에만 들어가는 파일 -->
+    <link rel="stylesheet" href="../assets/infra/css/sub.css">
+    <script src="../assets/infra/js/sub.js"></script>
+    <!--// 서브에만 들어가는 파일 -->
+
+    <!-- //pubfile -->
+
+
+</head>
+<body>
+
+<!-- wrap -->
+<div id="container">
+
+
+    <!-- header -->
+    <header id="header">
+        <div class="inner">
+            <h1 class="logo"><a href="javascript:void(0);" class="logo-wh"></a></h1>
+
+            <div class="right-area">
+                <button type="button" class="ico like"></button>
+                <button type="button" class="ico mypage"></button>
+                <button type="button" class="ico menu"></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-all">
+        <div class="inner">
+            <!-- 로그인 안했을 때 -->
+            <div class="btn-wrap center">
+                <a href="javascript:void(0);" class="btn btn-gradient btn-login">로그인 / 회원가입</a>
+            </div>
+            <!--// 로그인 안했을 때 -->
+
+            <!-- 로그인 했을 때 -->
+            <div class="profile-wrap">
+                <a href="javascript:void(0);" class="link btn btn-gradient">
+                    <div class="img"
+                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"
+                    ></div>
+                    <span class="name">고먐미흑미</span>
+                </a>
+            </div>
+            <!--// 로그인 했을 때 -->
+
+            <nav class="nav">
+                <ul class="depth1-ul">
+                    <li class="depth1-li">
+                        <a href="javascript:void(0);" class="depth1">모임</a>
+                        <a href="javascript:void(0);" class="depth1">라운지</a>
+                        <a href="javascript:void(0);" class="depth1">카테고리</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav class="nav">
+                <ul class="depth1-ul">
+                    <li class="depth1-li">
+                        <a href="javascript:void(0);" class="depth1">찜목록</a>
+                        <a href="javascript:void(0);" class="depth1">예약내역</a>
+                        <a href="javascript:void(0);" class="depth1">고객센터</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav class="nav">
+                <ul class="depth1-ul">
+                    <li class="depth1-li">
+                        <a href="javascript:void(0);" class="depth1">로그아웃</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+    <!--// header -->
+
+
+    <main id="contents">
+
+        <div class="sub">
+
+
+            <!-- 제목 -->
+            <div class="view-tit-area">
+                <div class="like-info-area">
+                    <button type="button" class="ico like-vector_red like-btn"></button>
+                    <span class="like-num">35</span>
+                </div>
+                <div class="view-tit-wrap">
+                    <span class="view-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</span>
+                </div>
+            </div>
+            <!--// 제목 -->
+
+            <!-- sub-info-area -->
+            <div class="sub-info-area">
+                <div class="left-area">
+                    <div class="date-wrap">
+                        <i class="ico calendar_gray"></i>
+                        <span class="date">25.10.12(일) 오후 6:30</span>
+                    </div>
+                    <div class="review-wrap">
+                        <i class="ico review_yellow"></i>
+                        <span class="review-num">4.9 (1,539)</span>
+                    </div>
+                </div>
+
+                <div class="book-btn-area">
+                    <button type="button" class="btn md fill-red">신청하기</button>
+                </div>
+            </div>
+            <!--// sub-info-area -->
+
+
+            <!-- 탭 -->
+            <div class="tab-area v1">
+                <!-- 탭 버튼 영영 -->
+                <div class="tab-btn-area">
+                    <ul>
+                        <li>
+                            <button type="button" class="tab-btn active">파티정보</button>
+                        </li>
+                        <li>
+                            <button type="button" class="tab-btn">신청자 목록</button>
+                        </li>
+                        <li>
+                            <button type="button" class="tab-btn">후기</button>
+                        </li>
+                        <li>
+                            <button type="button" class="tab-btn">파티업체 정보</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// 탭 버튼 영영 -->
+
+                <div class="fixed-tit-area">
+                    <div class="fixed-tit-inner">
+                        <div class="flex-wrap">
+                            <div class="flex-colum">
+                                <!-- 제목 -->
+                                <div class="view-tit-area">
+                                    <div class="like-info-area">
+                                        <button type="button" class="ico like-vector_red like-btn"></button>
+                                        <span class="like-num">35</span>
+                                    </div>
+                                    <div class="view-tit-wrap">
+                                        <span class="view-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</span>
+                                    </div>
+                                </div>
+                                <!--// 제목 -->
+
+                                <!-- sub-info-area -->
+                                <div class="sub-info-area">
+                                    <div class="left-area">
+                                        <div class="date-wrap">
+                                            <i class="ico calendar_gray"></i>
+                                            <span class="date">25.10.12(일) 오후 6:30</span>
+                                        </div>
+                                        <div class="review-wrap">
+                                            <i class="ico review_yellow"></i>
+                                            <span class="review-num">4.9 (1,539)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// sub-info-area -->
+                            </div>
+
+                            <div class="book-btn-area">
+                                <button type="button" class="btn md fill-red">신청하기</button>
+                            </div>
+                        </div>
+
+                        <!-- 탭 버튼 영영 -->
+                        <div class="tab-btn-area">
+                            <ul>
+                                <li>
+                                    <button type="button" class="tab-btn active">파티정보</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="tab-btn">신청자 목록</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="tab-btn">후기</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="tab-btn">파티업체 정보</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--// 탭 버튼 영영 -->
+                    </div>
+                </div>
+
+                <!-- 탭 내용영역 -->
+                <div class="tab-cont-area">
+                    <!-- 탭 내용 -->
+                    <div class="tab">
+
+                        <!--// editor-wrap -->
+                        <div class="editor-wrap" style="height: 500px;">
+                            <!-- 에디터영역 -->
+                            <pre class="edit-box">
+
+
+
+
+“무해한 즐거움”
+
+
+
+
+
+
+
+
+
+
+
+🌟문토 파티가 처음이신 분!
+
+🌟어떤 모임에 갈지 고민이 많이 되시는분!
+
+🫱적극 추천합니다
+
+
+
+
+
+
+
+
+
+"파티는 도파민이 터져야 재미있는데"
+
+
+
+"무해한건 좋은데 지루하지 않을까??🤔"
+
+
+
+"나도 인연을 찾고 싶긴 한데..."
+
+
+
+
+
+
+
+
+
+많이들 하시는 걱정이에요
+
+하지만 저희는 건전하면서도
+
+텐션과 재미는 확실히 책임집니다
+
+한 번 와보시면 “아 이래서 평점이 만점이구나”
+
+바로 느끼실 거예요 ✌️😎
+
+
+
+
+
+
+
+
+
+부담되는 미션 ❌️
+
+스킨쉽 금지 ❌️
+
+헌팅포차 분위기 금지 ❌️
+
+술 강요 금지 ❌️
+
+여미새/남미새 출입금지 ❌️
+
+
+
+배려심과 매너가 있는 분들만 신청해주세요
+
+《 저희는 가벼운 태도에 민감합니다 》
+                            
+<img src="http://images.munto.kr/production-socialing/1759561093421-photo-hyyc5-530453-0" alt="">
+                        </pre>
+
+
+                            <div class="more-btn-wrap">
+                                <button type="button" class="more-btn">더보기 +</button>
+                            </div>
+                        </div>
+                        <!--// editor-wrap -->
+
+                        <!-- 안내사항 -->
+                        <div class="info-area">
+                            <div class="tit-wrap v2">
+                                <span class="tit">
+                                    안내사항
+                                </span>
+                                <span class="txt">자세한 정보를 알려드릴게요</span>
+                            </div>
+
+                            <div class="info-list">
+                                <dl>
+                                    <dt><i class="info-icon info-icon01"></i></dt>
+                                    <dd>파티 > 컨셉파티</dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon02"></i></dt>
+                                    <dd>모임형 소셜링 · 승인제 · 공개 모집</dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon03"></i></dt>
+                                    <dd>최소 34 명 ~ 최대 59 명</dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon04"></i></dt>
+                                    <dd>40,000원</dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon05"></i></dt>
+                                    <dd>운영비 - 콘텐츠 제작비, 호스트 수고비 <br>
+                                        모임비 - 노쇼방지비, 대관료, 재료비, 다과비 <br>
+                                        기타 - 안주 / 음료
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon06"></i></dt>
+                                    <dd>모임날짜 · 25.10.18(토) 오후 8:00</dd>
+                                </dl>
+                                <dl>
+                                    <dt><i class="info-icon info-icon07"></i></dt>
+                                    <dd>홍대입구역 2호선(서울 마포구 동교동 165)</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <!--//안내사항 -->
+
+
+                    </div>
+                    <!--// 탭 내용 -->
+
+
+                    <!-- 탭 내용 -->
+                    <div class="tab" style="height: 100vh">
+                        <div class="tit-wrap v2">
+                        <span class="tit">
+                            신청자 목록
+                        </span>
+                            <span class="txt">함께하는 멤버들을 알려드릴게요</span>
+                        </div>
+
+
+                        <div class="tb-search-area">
+                            <div class="search-input">
+                                <input type="text" name="" id="">
+                                <button type="button" class="submit-btn"></button>
+                            </div>
+                        </div>
+
+                        <div class="btn-wrap end mt10-xl">
+                            <button type="button" class="btn exeldown">신청자 정보 액셀 다운로드</button>
+                        </div>
+
+                        <div class="more-wrap mt5-xl" style="height: 270px;">
+                            <div class="tb-wrap v1">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 10%;">
+                                        <col style="width: 14.28%;">
+                                        <col style="width: 16.28%;">
+                                        <col style="width: 14.28%;">
+                                        <col style="width: 14.28%;">
+                                        <col style="width: auto;">
+                                        <col style="width: 14.28%;">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>이미지</th>
+                                        <th>닉네임</th>
+                                        <th>ID</th>
+                                        <th>결제방법</th>
+                                        <th>결제금액</th>
+                                        <th>결제날짜</th>
+                                        <th>파티 참석</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="img"
+                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        </td>
+                                        <td>
+                                            홍길동
+                                        </td>
+                                        <td>testid</td>
+                                        <td>토스페이</td>
+                                        <td>34,500원</td>
+                                        <td>2025.06.17</td>
+                                        <td>
+                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="img"
+                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        </td>
+                                        <td>
+                                            홍길동
+                                        </td>
+                                        <td>testid</td>
+                                        <td>토스페이</td>
+                                        <td>34,500원</td>
+                                        <td>2025.06.17</td>
+                                        <td>
+                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="img"
+                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        </td>
+                                        <td>
+                                            홍길동
+                                        </td>
+                                        <td>testid</td>
+                                        <td>토스페이</td>
+                                        <td>34,500원</td>
+                                        <td>2025.06.17</td>
+                                        <td>
+                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                        </td>
+
+                                    <tr>
+                                        <td>
+                                            <div class="img"
+                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        </td>
+                                        <td>
+                                            홍길동
+                                        </td>
+                                        <td>testid</td>
+                                        <td>토스페이</td>
+                                        <td>34,500원</td>
+                                        <td>2025.06.17</td>
+                                        <td>
+                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="img"
+                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        </td>
+                                        <td>
+                                            홍길동
+                                        </td>
+                                        <td>testid</td>
+                                        <td>토스페이</td>
+                                        <td>34,500원</td>
+                                        <td>2025.06.17</td>
+                                        <td>
+                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="more-btn-wrap">
+                                <button type="button" class="more-btn">더보기 +</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 탭 내용영역 -->
+                    <!-- 탭 내용 -->
+                    <div class="tab" style="height: 100vh">
+                    </div>
+                    <!--// 탭 내용영역 -->
+                    <!-- 탭 내용 -->
+                    <div class="tab" style="height: 100vh">
+                    </div>
+                    <!--// 탭 내용영역 -->
+
+
+                </div>
+                <!--// 탭 내용영역 -->
+            </div>
+            <!--// 탭 -->
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- footer -->
+    <footer id="footer">
+        <div class="foot-top">
+            <ul class="link-area">
+                <li><a href="javascript:void(0);" class="link">이용약관</a></li>
+                <li><a href="javascript:void(0);" class="link privacy">개인정보 처리방침</a></li>
+                <li><a href="javascript:void(0);" class="link">이메일 무단수집거부</a></li>
+            </ul>
+        </div>
+        <div class="inner">
+            <address>
+                <span class="txt">우) 04554 서울 중구 퇴계로 173 남산스퀘어빌딩 20층 동반성장위원회</span>
+            </address>
+            <span class="copy">Copyright &copy; 2025 요임 All Rights Reserved</span>
+        </div>
+    </footer>
+    <!--// footer -->
+
+    <div class="top-btn-area">
+        <button type="button" class="top-btn"></button>
+    </div>
+
+</div>
+<!-- //wrap -->
+
+<script>
+
+    //탭버튼과 제목 나타나게 함.
+    $(function () {
+        const $fixedArea = $('.fixed-tit-area');
+        const $tabArea = $('.tab-area .tab-btn-area');
+        const fixedClass = 'visible';
+
+        // 처음엔 숨김
+        $fixedArea.hide();
+
+        $(window).on('scroll', function () {
+            const scrollTop = $(window).scrollTop();
+            const tabOffset = $tabArea.offset().top + $tabArea.outerHeight();
+
+            if (scrollTop > tabOffset) {
+                // 탭 버튼 영역을 지나가면 보이기
+                if (!$fixedArea.is(':visible')) {
+                    $fixedArea.stop(true, true).fadeIn(200).addClass(fixedClass);
+                }
+            } else {
+                // 다시 위로 올라가면 숨기기
+                if ($fixedArea.is(':visible')) {
+                    $fixedArea.stop(true, true).fadeOut(200).removeClass(fixedClass);
+                }
+            }
+        });
+    });
+
+    $(function () {
+        const $header = $('#header');
+        const $fixedTit = $('.fixed-tit-area');
+        let lastY = window.pageYOffset || 0;
+        const tolerance = 4;
+        const revealOffset = 220; // 이 값 이하에서는 항상 보이기
+        const headerHeight = 75;  // header 높이
+
+        $(window).on('scroll', function () {
+            const y = Math.max(window.pageYOffset || 0, 0);
+            const diff = y - lastY;
+
+            if (y <= revealOffset) {
+                // 맨 위 근처에서는 항상 보이게
+                $header.removeClass('is-hidden');
+                $fixedTit.css('top', headerHeight + 'px');
+            } else if (diff > tolerance) {
+                // 아래로 스크롤 → 헤더 숨김
+                $header.addClass('is-hidden');
+                $fixedTit.css('top', '0');
+            } else if (diff < -tolerance) {
+                // 위로 스크롤 → 헤더 표시
+                $header.removeClass('is-hidden');
+                $fixedTit.css('top', headerHeight + 'px');
+            }
+
+            lastY = y;
+        });
+    });
+
+
+</script>
+</body>
+</html>

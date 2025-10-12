@@ -50,7 +50,9 @@
   --color-black: #000;
   --color-white: #fff;
   --color-sky: #79B1E9;
-  --color-red: #FF2C46;
+  --color-red: #FF3B30;
+  --color-yellow:#FFC53D;
+  --color-txt: #383535;
 
 
   --color-gray-100: #f8f9fa;
@@ -78,6 +80,7 @@ html, body {
   font-family: 'Pretendard', '돋움', dotum, sans-serif;
   font-size: 62.5%;
   line-height: 1.5;
+  letter-spacing: -0.04em;
   color: #323232;
 
   word-break: keep-all;
@@ -86,7 +89,7 @@ html, body {
 }
 
 #container {
-
+  position: relative;
 }
 
 .inner {
@@ -106,7 +109,16 @@ html, body {
   z-index: 9992;
 
   border-bottom: 1px solid var(--color-border-gray);
+  background:#fff;
 
+  transition: transform .25s ease;
+  will-change: transform;
+
+  &.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  /*
   &:before {
     content: '';
     width: 100%;
@@ -120,10 +132,11 @@ html, body {
     top: 0;
     z-index: 0;
   }
+  */
 
   .inner {
     max-width: 120rem;
-    width: calc(100% - 4rem);
+    width: calc(100% - 12rem);
     margin: 0 auto;
     height: 7.5rem;
 
@@ -133,6 +146,10 @@ html, body {
 
     position: relative;
     z-index: 9991;
+
+    @include MOBILE {
+      width: calc(100% - 4rem);
+    }
   }
 
   .logo {
@@ -387,6 +404,7 @@ html, body {
   padding: 0 0 4rem 0;
   border-top: 1px solid #ddd;
   background: #f9fafb;
+  margin-top: 15rem;
 
   .inner {
 
@@ -466,3 +484,31 @@ html, body {
   }
 }
 
+.top-btn-area {
+  position: fixed;
+  right: 5rem;
+  bottom: 5rem;
+  z-index: 9995;
+
+  @include MOBILE {
+    right: 1.5rem;
+  }
+  .top-btn {
+    width: 4.5rem;
+    height: 4.5rem;
+    display: block;
+    background: url("../img/common/top_btn.png") no-repeat center;
+    background-size: 100%;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    &.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
+
+}

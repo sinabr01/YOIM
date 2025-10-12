@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    initTopButton(); //탑버튼 기능
+    
+    
     // --- 메뉴 열기/닫기 ---
     const mypageBtn = document.querySelector('#header .ico.menu');
     const menuAll = document.querySelector('.menu-all');
@@ -84,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	checkAllRequired();
 
 
-    // --- 커스텀 셀렉트 박스 ---
 // --- 커스텀 셀렉트 박스 ---
     document.querySelectorAll('.custom-select-box').forEach(selectBox => {
         const selectBtn = selectBox.querySelector('.select-btn');
@@ -141,11 +143,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // 바깥 클릭 시 닫기
-    document.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+        e.stopPropagation();
         document.querySelectorAll('.custom-select-box.active')
             .forEach(b => b.classList.remove('active'));
     });
 
 
-
 });
+
+
+function initTopButton() {
+    const btn = document.querySelector('.top-btn');
+    const showPoint = window.innerHeight * 0.7;
+
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('show', window.scrollY > showPoint);
+    });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
