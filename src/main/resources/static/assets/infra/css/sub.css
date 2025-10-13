@@ -684,6 +684,15 @@
     gap: 3rem 1.2rem;
   }
 }
+.grid-wrap .grid {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.grid-wrap .grid.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 .grid-wrap .grid .link {
   display: block;
   position: relative;

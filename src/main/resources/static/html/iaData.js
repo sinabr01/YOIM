@@ -26,21 +26,28 @@ const iaData = [
         depth2: "게시판",
         depth3: "1.목록",
         depth4: "",
-        url: "게시판(목록).html",
+        url: "파티(목록).html",
         note: ""
     },{
         depth1: "모임",
         depth2: "게시판",
         depth3: "2.등록",
         depth4: "",
-        url: "게시판(등록).html",
+        url: "파티(등록).html",
         note: ""
     },{
         depth1: "모임",
         depth2: "게시판",
-        depth3: "3.조회",
+        depth3: "3.조회(사용자)",
         depth4: "",
-        url: "게시판(조회).html",
+        url: "파티(상세).html",
+        note: ""
+    },{
+        depth1: "모임",
+        depth2: "게시판",
+        depth3: "4.조회(호스트)",
+        depth4: "",
+        url: "파티(상세-호스트).html",
         note: ""
     },
 

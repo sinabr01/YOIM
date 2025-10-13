@@ -332,6 +332,104 @@
                             </div>
                         </a>
                     </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <span class="tag">추천</span>
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test2.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test1.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test2.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <span class="tag">추천</span>
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test2.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test1.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid">
+                        <a href="javascript:void(0);" class="link">
+                            <div class="img-wrap">
+                                <button type="button" class="ico like-vector like-btn"></button>
+
+                                <img src="../assets/infra/img/@temp/test2.jpg" alt="" class="img">
+                            </div>
+
+                            <div class="cont-wrap">
+                                <span class="category-txt">서울 · 파티</span>
+                                <p class="cont-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</p>
+                                <span class="date"><i class="ico calendar_gray"></i>25.10.12(일) 오후 6:30</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -365,5 +463,40 @@
 
 </div>
 <!-- //wrap -->
+
+<script>
+    //그리드 하나씩 나타나게 하기
+    document.addEventListener('DOMContentLoaded', function() {
+        animateGridsOnScroll();
+    });
+
+    function animateGridsOnScroll(selector = '.grid', staggerIncrement = 0.1, threshold = 0.1) {
+        const animatedItems = document.querySelectorAll(selector);
+
+        const options = {
+            root: null, // 뷰포트
+            rootMargin: '0px',
+            threshold: threshold
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // 애니메이션 완료 후 관찰 중지
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, options);
+        animatedItems.forEach((item, index) => {
+            const delay = index * staggerIncrement;
+            item.style.transitionDelay = `${delay}s`;
+
+            observer.observe(item);
+        });
+    }
+</script>
 </body>
 </html>
