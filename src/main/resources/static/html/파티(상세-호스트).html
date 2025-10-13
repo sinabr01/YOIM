@@ -10,6 +10,7 @@
 
     <!-- pubfile -->
     <link rel="stylesheet" href="../assets/libs/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="../assets/libs/swiper/swiper.css"/>
 
     <link rel="stylesheet" href="../assets/infra/fonts/Pretendard.css">
     <link rel="stylesheet" href="../assets/infra/css/reset.css">
@@ -19,6 +20,7 @@
 
     <script src="../assets/libs/jquery/jquery-3.5.1.min.js"></script>
     <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/libs/swiper/swiper.js"></script>
 
     <script src="../assets/infra/js/common.js"></script>
 
@@ -225,7 +227,7 @@
                     <div class="tab">
 
                         <!--// editor-wrap -->
-                        <div class="editor-wrap" style="height: 500px;">
+                        <div class="editor-wrap" style="height: 1000px;">
                             <!-- 에디터영역 -->
                             <pre class="edit-box">
 
@@ -371,147 +373,394 @@
 
 
                     <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
-                        <div class="tit-wrap v2">
-                        <span class="tit">
-                            신청자 목록
-                        </span>
-                            <span class="txt">함께하는 멤버들을 알려드릴게요</span>
-                        </div>
+                    <div class="tab">
+                        <!-- 제목영역 -->
+                        <div class="tit-flex-wrap">
+                            <div class="tit-wrap v2">
+                            <span class="tit">
+                                신청자 목록
+                            </span>
+                                <span class="txt">함께하는 멤버들을 알려드릴게요</span>
+                            </div>
 
-
-                        <div class="tb-search-area">
-                            <div class="search-input">
-                                <input type="text" name="" id="">
-                                <button type="button" class="submit-btn"></button>
+                            <div class="tb-search-area">
+                                <div class="search-input">
+                                    <input type="text" name="" id="">
+                                    <button type="button" class="submit-btn"></button>
+                                </div>
                             </div>
                         </div>
+                        <!--// 제목영역 -->
 
-                        <div class="btn-wrap end mt10-xl">
+                        <div class="btn-wrap end mt30-xl">
                             <button type="button" class="btn exeldown">신청자 정보 액셀 다운로드</button>
                         </div>
 
-                        <div class="more-wrap mt5-xl" style="height: 270px;">
-                            <div class="tb-wrap v1">
-                                <table>
-                                    <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 14.28%;">
-                                        <col style="width: 16.28%;">
-                                        <col style="width: 14.28%;">
-                                        <col style="width: 14.28%;">
-                                        <col style="width: auto;">
-                                        <col style="width: 14.28%;">
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th>이미지</th>
-                                        <th>닉네임</th>
-                                        <th>ID</th>
-                                        <th>결제방법</th>
-                                        <th>결제금액</th>
-                                        <th>결제날짜</th>
-                                        <th>파티 참석</th>
-                                    </tr>
-                                    </thead>
+                        <div class="mt5-xl more-area">
+                            <div class="more-wrap" style="height: 270px;">
+                                <div class="tb-wrap v1">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width: 10%;">
+                                            <col style="width: 14.28%;">
+                                            <col style="width: 16.28%;">
+                                            <col style="width: 14.28%;">
+                                            <col style="width: 14.28%;">
+                                            <col style="width: auto;">
+                                            <col style="width: 14.28%;">
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th>이미지</th>
+                                            <th>닉네임</th>
+                                            <th>ID</th>
+                                            <th>결제방법</th>
+                                            <th>결제금액</th>
+                                            <th>결제날짜</th>
+                                            <th>파티 참석</th>
+                                        </tr>
+                                        </thead>
 
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="img"
-                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        </td>
-                                        <td>
-                                            홍길동
-                                        </td>
-                                        <td>testid</td>
-                                        <td>토스페이</td>
-                                        <td>34,500원</td>
-                                        <td>2025.06.17</td>
-                                        <td>
-                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="img"
-                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        </td>
-                                        <td>
-                                            홍길동
-                                        </td>
-                                        <td>testid</td>
-                                        <td>토스페이</td>
-                                        <td>34,500원</td>
-                                        <td>2025.06.17</td>
-                                        <td>
-                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="img"
-                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        </td>
-                                        <td>
-                                            홍길동
-                                        </td>
-                                        <td>testid</td>
-                                        <td>토스페이</td>
-                                        <td>34,500원</td>
-                                        <td>2025.06.17</td>
-                                        <td>
-                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
-                                        </td>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                            </td>
+                                            <td>
+                                                홍길동
+                                            </td>
+                                            <td>testid</td>
+                                            <td>토스페이</td>
+                                            <td>34,500원</td>
+                                            <td>2025.06.17</td>
+                                            <td>
+                                                <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                            </td>
+                                            <td>
+                                                홍길동
+                                            </td>
+                                            <td>testid</td>
+                                            <td>토스페이</td>
+                                            <td>34,500원</td>
+                                            <td>2025.06.17</td>
+                                            <td>
+                                                <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                            </td>
+                                            <td>
+                                                홍길동
+                                            </td>
+                                            <td>testid</td>
+                                            <td>토스페이</td>
+                                            <td>34,500원</td>
+                                            <td>2025.06.17</td>
+                                            <td>
+                                                <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                            </td>
 
-                                    <tr>
-                                        <td>
-                                            <div class="img"
-                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        </td>
-                                        <td>
-                                            홍길동
-                                        </td>
-                                        <td>testid</td>
-                                        <td>토스페이</td>
-                                        <td>34,500원</td>
-                                        <td>2025.06.17</td>
-                                        <td>
-                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="img"
-                                                 style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        </td>
-                                        <td>
-                                            홍길동
-                                        </td>
-                                        <td>testid</td>
-                                        <td>토스페이</td>
-                                        <td>34,500원</td>
-                                        <td>2025.06.17</td>
-                                        <td>
-                                            <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        <tr>
+                                            <td>
+                                                <div class="img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                            </td>
+                                            <td>
+                                                홍길동
+                                            </td>
+                                            <td>testid</td>
+                                            <td>토스페이</td>
+                                            <td>34,500원</td>
+                                            <td>2025.06.17</td>
+                                            <td>
+                                                <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                            </td>
+                                            <td>
+                                                홍길동
+                                            </td>
+                                            <td>testid</td>
+                                            <td>토스페이</td>
+                                            <td>34,500원</td>
+                                            <td>2025.06.17</td>
+                                            <td>
+                                                <button type="button" class="btn sm fill-gray out-btn">내보내기</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                             <div class="more-btn-wrap">
-                                <button type="button" class="more-btn">더보기 +</button>
+                                <button type="button" class="more-btn" data-height="270">더보기 +</button>
                             </div>
                         </div>
                     </div>
                     <!--// 탭 내용영역 -->
+
                     <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
+                    <div class="tab">
+
+                        <!-- 제목영역 -->
+                        <div class="tit-flex-wrap">
+                            <div class="tit-wrap v2">
+                            <span class="tit">
+                                후기
+                            </span>
+                                <span class="txt">참가자들의 후기를 구경하세요.</span>
+                            </div>
+
+                            <div class="tb-search-area">
+                                <div class="search-input">
+                                    <input type="text" name="" id="">
+                                    <button type="button" class="submit-btn"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 제목영역 -->
+
+
+                        <div class="btn-wrap end mt30-xl">
+                            <button type="button" class="btn exeldown">후기 정보 액셀 다운로드</button>
+                        </div>
+
+                        <div class="user-review-area">
+                            <div class="top-review-box gray-box">
+                                <p class="top-review-txt">
+                                    슈퍼 그레잇 냥파티의 모임을 <br>
+                                    <span class="txt-yellow">99%</span>멤버들이 만족하고 있어요!
+                                </p>
+
+                                <div class="review-info-wrap">
+                                    <div class="review-score">
+                                        <span class="score-tit">호스트 평점</span>
+                                        <span class="score">4.9</span>
+                                        <div class="like-num">
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_gray"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="review-score-detail">
+                                        <div class="score-cont">
+                                            <span class="grade">5</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 90%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">129</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">4</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 5%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">4</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">3</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 4%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">2</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">2</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 0;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">0</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">1</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 1%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">1</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-info">
+                                        <span class="group-tit">진행한 모임</span>
+                                        <span class="group-num">60</span>
+                                        <span class="group-review">136명 평가</span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="mt30-xl more-area">
+                                <div class="more-wrap" style="height: 500px;">
+
+                                    <div class="review-detail">
+                                        <div class="gray-box">
+                                            <div class="box-inner">
+
+                                                <div class="user-info">
+                                                    <div class="user-img"
+                                                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                    <span class="user-name">
+                                                        김흑미
+                                                    </span>
+                                                </div>
+
+                                                <div class="give-like">
+                                                    <div class="like-num">
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_gray"></i>
+                                                    </div>
+
+                                                    <span class="date">25.10.13</span>
+                                                </div>
+
+                                                <div class="review-cont-wrap">
+                                                    <div class="img-wrap">
+                                                        <div class="img">
+                                                            <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                                                        </div>
+                                                        <div class="img">
+                                                            <img src="../assets/infra/img/@temp/test2.jpg" alt="">
+                                                        </div>
+                                                    </div>
+
+                                                    <pre class="review-txt">
+복잡해보여도 친절하게 설명해주셔서 재미있게
+원 없이 즐길 수 있었어요!
+                                                </pre>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="gray-box">
+                                            <div class="box-inner">
+
+                                                <div class="user-info">
+                                                    <div class="user-img"
+                                                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                    <span class="user-name">
+                                                김흑미
+                                            </span>
+                                                </div>
+
+                                                <div class="give-like">
+                                                    <div class="like-num">
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_gray"></i>
+                                                    </div>
+
+                                                    <span class="date">25.10.13</span>
+                                                </div>
+
+                                                <div class="review-cont-wrap">
+
+                                                <pre class="review-txt">복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!
+                                                </pre>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="more-btn-wrap">
+                                    <button type="button" class="more-btn" data-height="500">더보기 +</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--// 탭 내용영역 -->
+
                     <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
+                    <div class="tab">
+
+                        <div class="tit-wrap v2">
+                                <span class="tit">
+                                    파티업체 정보
+                                </span>
+                            <span class="txt">함께할 호스트를 소개합니다.</span>
+                        </div>
+
+                        <div class="party-owner-info">
+                            <div class="gray-box host-group">
+                                <div class="left">
+
+                                    <div class="host-info">
+                                        <div class="user-img"
+                                             style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        <span class="user-name">슈퍼 그뤠잇 냥파티</span>
+                                    </div>
+                                    <div class="host-intro">
+                                    <pre class="intro-txt">
+안녕하세요, 사진매체로 작업하는 시각예술가 입니다.
+사진 관련 클래스를 주로 진행하고 있습니다. 개인적인 수업 문의 외 초대 DM 거절합니다.
+                                    </pre>
+                                    </div>
+
+                                    <div class="host-tag-wrap">
+                                        <span class="tag">독서</span>
+                                        <span class="tag">사진</span>
+                                        <span class="tag">연애</span>
+                                        <span class="tag">게임</span>
+                                        <span class="tag">대화</span>
+                                        <span class="tag">소통</span>
+                                    </div>
+                                </div>
+
+                                <div class="right">
+                                    <div class="common-sd">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="../assets/infra/img/@temp/test2.jpg" alt="">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="../assets/infra/img/@temp/profile.png" alt="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Pagination -->
+                                        <div class="swiper-pagination"></div>
+
+                                        <!-- Navigation buttons -->
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--// 탭 내용영역 -->
 
@@ -612,6 +861,38 @@
         });
     });
 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.common-sd', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+
+            // 페이지네이션
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true, \
+            },
+
+            // 이전/다음 버튼
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // 자동재생 (옵션)
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+
+            // 반응형 예시
+/*            breakpoints: {
+                768: {slidesPerView: 2},
+                1024: {slidesPerView: 3},
+            },*/
+        });
+    });
 
 </script>
 </body>

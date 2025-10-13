@@ -125,41 +125,53 @@ function likeBtn() {
 
 //더보기
 $(function () {
-    $('.more-btn').each(function () {
-        const $btn = $(this);
-        const $wrap = $btn.closest('.more-btn-wrap');
-        const $target = $wrap.closest('.editor-wrap, .more-wrap');
-        const isMoreWrap = $target.hasClass('more-wrap');
-        const originalHeight = isMoreWrap ? '270px' : '500px'; // 초기 높이
+    $('.more-btn').each(function(){
+        var $btn = $(this);
+        var $wrap = $btn.closest('.more-btn-wrap');
+        var $target = $wrap.siblings('.more-wrap');
+        var isMore = $target.length > 0;
+        if(!isMore) $target = $wrap.closest('.editor-wrap');
 
-        if ($target.length) {
-            $btn.off('click').on('click', function () {
-                const isExpanded = $btn.data('expanded') || false;
+        var collapsed = $btn.data('height');
+        if(!collapsed){
+            collapsed = parseInt($target.attr('data-collapsed'),10) || parseInt($target.css('height'),10) || 0;
+        }
+        $target.attr('data-collapsed', collapsed);
 
-                if (isMoreWrap) {
-                    // .more-wrap의 경우: 토글 동작
-                    if (!isExpanded) {
-                        $target.css('height', 'auto');
-                        $btn.text('접어두기 -').data('expanded', true);
-                    } else {
-                        $target.css('height', originalHeight);
-                        $btn.text('더보기 +').data('expanded', false);
-                    }
-                    $wrap.show(); // .more-btn-wrap 유지
-                } else {
-                    // .editor-wrap의 경우: 기존 동작
-                    $target.css('height', 'auto');
+        $btn.off('click').on('click', function(){
+            var expanded = $btn.data('expanded') === true;
+
+            if(!expanded){
+                if(isMore){
+                    var full = $target.get(0).scrollHeight;
+                    $target.stop().animate({height: full}, 250, function(){ $target.css('height','auto'); });
+                    $btn.text('접어두기 -').data('expanded', true);
+                    $wrap.closest('.more-area').addClass('open');
+                }else{
+                    $target.css('height','auto');
                     $wrap.fadeOut(200);
                 }
+            }else{
+                if(isMore){
+                    if($target.css('height') === 'auto'){
+                        $target.height($target.get(0).scrollHeight);
+                    }
+                    $target.stop().animate({height: collapsed}, 250);
+                    $btn.text('더보기 +').data('expanded', false);
+                    $wrap.closest('.more-area').removeClass('open');
+                }
+            }
 
-                // 스크롤 이벤트 방지
+            if(typeof isClickTriggered !== 'undefined'){
                 isClickTriggered = true;
-                setTimeout(() => {
+                setTimeout(function(){
                     isClickTriggered = false;
-                    setActive(currentIndexByScroll()); // 탭 상태 갱신
-                }, 300); // 애니메이션 시간과 동기화
-            });
-        }
+                    if(typeof currentIndexByScroll === 'function' && typeof setActive === 'function'){
+                        setActive(currentIndexByScroll());
+                    }
+                },300);
+            }
+        });
     });
 })
 
@@ -168,20 +180,19 @@ $(function () {
     const $btnAreas = $('.tab-area.v1 .tab-btn-area');
     const $allBtns = $btnAreas.find('.tab-btn');
     const $tabs = $('.tab-area.v1 .tab');
-    const OFFSET_MARGIN = 120; // 조정 가능한 여백
-    let isScrolling = false; // 스크롤 애니메이션 플래그
-    let isClickTriggered = false; // 클릭 이벤트 플래그
+
+    const ACTIVATION_THRESHOLD = 0.5;
+    let isScrolling = false;
+    let isClickTriggered = false;
 
     if ($tabs.length === 0 || $allBtns.length === 0) return;
 
-    // 헤더 + 고정영역 높이
     function headerHeights() {
         const h1 = $('#header').length ? $('#header').outerHeight() : 0;
         const h2 = $('.fixed-tit-area:visible').length ? $('.fixed-tit-area:visible').outerHeight() : 0;
         return h1 + h2;
     }
 
-    // 버튼 active 동기화
     function setActive(idx) {
         $allBtns.removeClass('active');
         $btnAreas.each(function () {
@@ -189,25 +200,30 @@ $(function () {
         });
     }
 
-    // 스크롤 위치에 따라 현재 섹션 계산
     function currentIndexByScroll() {
         const scrollTop = $(window).scrollTop();
-        const offsetTop = headerHeights() + OFFSET_MARGIN;
+        const windowHeight = $(window).height();
+
+        const activationPoint = scrollTop + (windowHeight * ACTIVATION_THRESHOLD);
+
         let current = 0;
 
         $tabs.each(function (i) {
-            const top = $(this).offset().top - offsetTop;
-            if (scrollTop >= top) current = i;
+            const tabTop = $(this).offset().top;
+
+            if (activationPoint >= tabTop) {
+                current = i;
+            }
         });
+
         return current;
     }
 
-    // 클릭 → 즉시 active 동기화 + 해당 섹션으로 스크롤
     $btnAreas.on('click', '.tab-btn', function (e) {
         e.preventDefault();
         if (isScrolling) return;
         isScrolling = true;
-        isClickTriggered = true; // 클릭 이벤트로 스크롤 중임을 표시
+        isClickTriggered = true;
 
         const idx = $(this).closest('li').index();
         if (idx < 0 || idx >= $tabs.length) {
@@ -218,18 +234,17 @@ $(function () {
 
         setActive(idx);
         const top = $tabs.eq(idx).offset().top - headerHeights() - 8;
+
         $('html, body').stop(true).animate({scrollTop: top}, 300, () => {
             isScrolling = false;
             isClickTriggered = false;
-            setActive(idx); // 애니메이션 완료 후 상태 고정
+            setActive(idx);
         });
     });
 
-    // rAF로 스크롤/리사이즈 최적화
     let ticking = false;
-
     function onScrollOrResize() {
-        if (!ticking && !isClickTriggered) { // 클릭으로 인한 스크롤은 무시
+        if (!ticking && !isClickTriggered) {
             ticking = true;
             requestAnimationFrame(() => {
                 setActive(currentIndexByScroll());
@@ -238,14 +253,9 @@ $(function () {
         }
     }
 
-    // 이벤트 바인딩
     const $window = $(window);
     $window.on('scroll resize', onScrollOrResize);
-
-    // 초기 상태
     setActive(currentIndexByScroll());
-
-    // --- like-vector 버튼 토글 ---
     function toggleActiveClass() {
         const buttons = document.querySelectorAll('.like-vector');
         if (buttons.length) {

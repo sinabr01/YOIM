@@ -10,6 +10,7 @@
 
     <!-- pubfile -->
     <link rel="stylesheet" href="../assets/libs/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="../assets/libs/swiper/swiper.css"/>
 
     <link rel="stylesheet" href="../assets/infra/fonts/Pretendard.css">
     <link rel="stylesheet" href="../assets/infra/css/reset.css">
@@ -19,6 +20,7 @@
 
     <script src="../assets/libs/jquery/jquery-3.5.1.min.js"></script>
     <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/libs/swiper/swiper.js"></script>
 
     <script src="../assets/infra/js/common.js"></script>
 
@@ -371,7 +373,7 @@
 
 
                     <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
+                    <div class="tab">
                         <div class="tit-wrap v2">
                         <span class="tit">
                             신청자 목록
@@ -381,29 +383,101 @@
 
 
                         <div class="more-wrap mt5-xl" style="height: 270px;">
-                            <div class="user-box">
-                                <div class="box-inner">
-                                    <div class="user-info">
-                                        <div class="img"
-                                             style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
-                                        <span class="user-name">홍길동</span>
-                                    </div>
-                                    <div class="user-intro">
-                                        <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
-                                    </div>
+                            <div class="user-slide">
+                                <div class="swiper-wrapper">
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test1.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">김우빈</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test2.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test1.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">김우빈</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test2.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
 
-                            <div class="more-btn-wrap">
-                                <button type="button" class="more-btn">더보기 +</button>
-                            </div>
+
                         </div>
                     </div>
                     <!--// 탭 내용영역 -->
+
                     <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
+                    <div class="tab">
+                        <div class="user-review-area">
+
+                        </div>
                     </div>
                     <!--// 탭 내용영역 -->
+
                     <!-- 탭 내용 -->
                     <div class="tab" style="height: 100vh">
                     </div>
@@ -506,6 +580,23 @@
         });
     });
 
+    $(function () {
+        const swiper = new Swiper(".user-slide", {
+
+            loop: true,
+            speed: 800,
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+
+
+            effect: 'slide', // 'slide', 'fade', 'cube', 'coverflow', 'flip' 중 선택
+        });
+    });
 
 </script>
 </body>
