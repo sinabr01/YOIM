@@ -137,7 +137,6 @@
 }
 
 .btn {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,9 +144,17 @@
   min-height: 4.2rem;
 }
 .btn.sm {
+  padding: 0 2.4rem;
   height: 3.8rem;
   min-height: 3.8rem;
   font-size: 1.4rem;
+}
+.btn.md {
+  height: 4.2rem;
+  padding: 0 2.4rem;
+  width: auto;
+  min-width: 10rem;
+  font-size: 1.6rem;
 }
 .btn.btn-gradient {
   width: 100%;
@@ -162,14 +169,12 @@
   line-height: normal;
   transition: all 0.25s;
   border: 1px solid transparent;
-  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #7F00FF 0%, #C6FF00 100%) border-box;
-  /*linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;*/
+  background: linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
 }
 .btn.btn-gradient:hover {
   font-size: 1.8rem;
   color: #fff !important;
-  background: linear-gradient(90deg, #7F00FF 0%, #C6FF00 100%) border-box;
-  /*linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;*/
+  background: linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
 }
 .btn.line-gray {
   border: 1px solid #aeaeae;
@@ -183,6 +188,11 @@
   background: #F5F5F5;
   border: 1px solid #eaeaea;
   color: #000;
+}
+.btn.fill-blue {
+  color: #fff;
+  background: var(--color-primary-purple);
+  border: 1px solid var(--color-primary-purple);
 }
 .btn.line-blue {
   overflow: hidden;
@@ -209,6 +219,13 @@
   font-weight: 500;
   line-height: normal;
   pointer-events: none;
+}
+.btn.line-red {
+  background: #fff;
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
+  font-size: 1.4rem;
+  text-align: center;
 }
 .btn.fill-red {
   background: var(--color-red);
@@ -259,6 +276,12 @@
   background: url("../img/common/arr_down_purple.png") no-repeat center;
   background-size: cover;
 }
+.icon.calendar_gray {
+  width: 2.4rem;
+  height: 2.4rem;
+  background: url("../img/common/ico_calendar_gray.png") no-repeat center;
+  background-size: cover;
+}
 
 .tit-wrap.v2 .tit {
   font-size: 2.4rem;
@@ -276,6 +299,20 @@
   color: rgb(153, 150, 150);
   display: block;
   margin-top: 1rem;
+}
+.tit-wrap.v3 .tit {
+  font-size: 2rem;
+  display: inline-block;
+}
+.tit-wrap.v3 .tit:before {
+  content: "·";
+  font-size: 2rem;
+}
+.tit-wrap.v3 .txt {
+  font-size: 1.4rem;
+  color: var(--color-gray-700);
+  display: inline-block;
+  margin-left: 0.5rem;
 }
 
 .tit-flex-wrap {

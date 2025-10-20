@@ -22,6 +22,10 @@
     <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
     <script src="../assets/libs/swiper/swiper.js"></script>
 
+    <!-- 스크롤 커스텀 -->
+    <link rel="stylesheet" href="../assets/libs/jquery-mCustomScrollbar/jquery.mCustomScrollbar.min.css">
+    <script src="../assets/libs/jquery-mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+
     <script src="../assets/infra/js/common.js"></script>
 
 
@@ -382,7 +386,7 @@
                         </div>
 
 
-                        <div class="more-wrap mt5-xl" style="height: 270px;">
+                        <div class="involved-user">
                             <div class="user-slide">
                                 <div class="swiper-wrapper">
                                     <a href="javascript:void(0);" class="swiper-slide user-box">
@@ -406,7 +410,8 @@
                                                 <span class="user-name">김우빈</span>
                                             </div>
                                             <div class="user-intro">
-                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.
+                                                    반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -472,16 +477,336 @@
 
                     <!-- 탭 내용 -->
                     <div class="tab">
-                        <div class="user-review-area">
 
+                        <!-- 제목영역 -->
+                        <div class="tit-flex-wrap">
+                            <div class="tit-wrap v2">
+                            <span class="tit">
+                                후기
+                            </span>
+                                <span class="txt">참가자들의 후기를 구경하세요.</span>
+                            </div>
+                        </div>
+                        <!--// 제목영역 -->
+
+
+                        <div class="user-review-area">
+                            <div class="top-review-box gray-box">
+                                <p class="top-review-txt">
+                                    <span class="host-name">슈퍼 그레잇 냥파티</span>의 모임을 <br>
+                                    <span class="txt-yellow">99%</span>멤버들이 만족하고 있어요!
+                                </p>
+
+                                <div class="review-info-wrap">
+                                    <div class="review-score">
+                                        <span class="score-tit">호스트 평점</span>
+                                        <span class="score">4.9</span>
+                                        <div class="like-num">
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_yellow"></i>
+                                            <i class="ico review_gray"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="review-score-detail">
+                                        <div class="score-cont">
+                                            <span class="grade">5</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 90%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">129</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">4</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 5%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">4</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">3</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 4%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">2</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">2</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 0;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">0</span>
+                                        </div>
+                                        <div class="score-cont">
+                                            <span class="grade">1</span>
+                                            <div class="bar">
+                                                <span class="now" style="width: 1%;"></span>
+                                                <span class="base"></span>
+                                            </div>
+                                            <span class="sum txt-yellow">1</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-info">
+                                        <span class="group-tit">진행한 모임</span>
+                                        <span class="group-num">60</span>
+                                        <span class="group-review">136명 평가</span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="mt30-xl more-area">
+                                <div class="more-wrap" style="height: 500px;" data-collapsed="500">
+
+                                    <div class="review-detail">
+                                        <div class="gray-box">
+                                            <div class="box-inner">
+
+                                                <div class="user-info">
+                                                    <div class="user-img"
+                                                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                    <span class="user-name">
+                                                        김흑미
+                                                    </span>
+                                                </div>
+
+                                                <div class="give-like">
+                                                    <div class="like-num">
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_gray"></i>
+                                                    </div>
+
+                                                    <span class="date">25.10.13</span>
+                                                </div>
+
+                                                <div class="review-cont-wrap">
+                                                    <div class="img-wrap">
+                                                        <div class="img">
+                                                            <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                                                        </div>
+                                                        <div class="img">
+                                                            <img src="../assets/infra/img/@temp/test2.jpg" alt="">
+                                                        </div>
+                                                    </div>
+
+                                                    <pre class="review-txt">복잡해보여도 친절하게 설명해주셔서 재미있게
+원 없이 즐길 수 있었어요!
+                                                </pre>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="gray-box">
+                                            <div class="box-inner">
+
+                                                <div class="user-info">
+                                                    <div class="user-img"
+                                                         style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                    <span class="user-name">
+                                                김흑미
+                                            </span>
+                                                </div>
+
+                                                <div class="give-like">
+                                                    <div class="like-num">
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_yellow"></i>
+                                                        <i class="ico review_gray"></i>
+                                                    </div>
+
+                                                    <span class="date">25.10.13</span>
+                                                </div>
+
+                                                <div class="review-cont-wrap">
+
+                                                <pre class="review-txt">복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!복잡해보여도 친절하게 설명해주셔서 재미있게 원 없이 즐길 수 있었어요!
+                                                </pre>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="more-btn-wrap">
+                                    <button type="button" class="more-btn" data-height="500">더보기 +</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--// 탭 내용영역 -->
 
-                    <!-- 탭 내용 -->
-                    <div class="tab" style="height: 100vh">
+                    <div class="tab">
+
+                        <div class="tit-wrap v2">
+                                <span class="tit">
+                                    파티업체 정보
+                                </span>
+                            <span class="txt">함께할 호스트를 소개합니다.</span>
+                        </div>
+
+                        <div class="party-owner-info">
+                            <div class="gray-box host-group">
+                                <div class="left">
+
+                                    <div class="host-info">
+                                        <div class="user-img"
+                                             style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                        <span class="user-name">슈퍼 그뤠잇 냥파티</span>
+                                    </div>
+                                    <div class="host-intro">
+                                    <pre class="intro-txt">안녕하세요, 사진매체로 작업하는 시각예술가 입니다.
+사진 관련 클래스를 주로 진행하고 있습니다. 개인적인 수업 문의 외 초대 DM 거절합니다.
+                                    </pre>
+                                    </div>
+
+                                    <div class="host-tag-wrap">
+                                        <span class="tag">독서</span>
+                                        <span class="tag">사진</span>
+                                        <span class="tag">연애</span>
+                                        <span class="tag">게임</span>
+                                        <span class="tag">대화</span>
+                                        <span class="tag">소통</span>
+                                    </div>
+                                </div>
+
+                                <div class="right">
+                                    <div class="common-sd swiper-initialized swiper-horizontal swiper-backface-hidden">
+                                        <div class="swiper-wrapper" id="swiper-wrapper-00e1a13b10a1045749"
+                                             aria-live="off"
+                                             style="transition-duration: 0ms; transform: translate3d(-840px, 0px, 0px); transition-delay: 0ms;">
+
+
+                                            <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 3"
+                                                 data-swiper-slide-index="1" style="width: 420px;">
+                                                <img src="../assets/infra/img/@temp/test2.jpg" alt="">
+                                            </div>
+                                            <div class="swiper-slide swiper-slide-prev" role="group" aria-label="3 / 3"
+                                                 data-swiper-slide-index="2" style="width: 420px;">
+                                                <img src="../assets/infra/img/@temp/profile.png" alt="">
+                                            </div>
+                                            <div class="swiper-slide swiper-slide-active" role="group"
+                                                 aria-label="1 / 3" data-swiper-slide-index="0" style="width: 420px;">
+                                                <!-- 이미지 사이즈 420 * 236 정도면 딱맞음 -->
+                                                <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <span class="swiper-notification" aria-live="assertive"
+                                              aria-atomic="true"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tit-wrap v3 mt30-xl">
+                                <span class="tit">
+                                    참여 호스트 정보
+                                </span>
+                            <span class="txt">(해당 파티에 참여하는 호스트 정보입니다.)</span>
+                        </div>
+
+                        <div class="involved-user">
+                            <div class="user-slide">
+                                <div class="swiper-wrapper">
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test1.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">김우빈</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.
+                                                    반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test2.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/profile.png') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test1.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">김우빈</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:void(0);" class="swiper-slide user-box">
+                                        <div class="box-inner">
+                                            <div class="user-info">
+                                                <div class="user-img"
+                                                     style="background: url('../assets/infra/img/@temp/test2.jpg') no-repeat center;background-size: 100% auto;"></div>
+                                                <span class="user-name">홍길동</span>
+                                            </div>
+                                            <div class="user-intro">
+                                                <p class="intro-txt">반복되는 일상을 특별하게 만들어 보고 싶어요.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+
                     </div>
-                    <!--// 탭 내용영역 -->
 
 
                 </div>
@@ -489,6 +814,10 @@
             </div>
             <!--// 탭 -->
 
+
+            <div class="btn-wrap center mt100-xl">
+                <button type="button" class="btn md fill-gray">목록</button>
+            </div>
 
         </div>
 

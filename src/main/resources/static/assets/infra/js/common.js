@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     initTopButton(); //탑버튼 기능
+    scrollX(); //가로스크롤
+    scrollY(); //세로스크롤
     
     
     // --- 메뉴 열기/닫기 ---
@@ -15,76 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // --- 비밀번호 보이기 ---
-    const pwWraps = document.querySelectorAll('.password');
 
-    pwWraps.forEach(pwWrap => {
-        const pwInput = pwWrap.querySelector('input');
-        const pwBtn = pwWrap.querySelector('.btn-pw-show');
-
-        if (pwInput && pwBtn) {
-            pwBtn.addEventListener('click', () => {
-                const isShow = pwInput.type === 'text';
-                pwInput.type = isShow ? 'password' : 'text';
-                pwBtn.classList.toggle('on', !isShow);
-            });
-        }
-    });
-
-    // --- 로그인 타입 탭 ---
-    const typeBox = document.querySelector('.login-type');
-    if (typeBox) {
-        const tabs = typeBox.querySelectorAll('.btn');
-        const groups = document.querySelectorAll('.login-group .group');
-        tabs.forEach((btn, i) => {
-            btn.addEventListener('click', () => {
-                tabs.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                typeBox.classList.toggle('move-1', i === 1);
-                groups.forEach((g, gi) => g.classList.toggle('active', gi === i));
-            });
-        });
-    }
-
-
-	// --- 약관 전체동의 ---
-	const $ = (sel, root = document) => root.querySelector(sel);
-	const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-	const allCheck       = $('.all-check input[type="checkbox"]');                 // 없을 수 있음
-	const subChecks      = $$('.check-wrap .check input[type="checkbox"]');
-	const requiredChecks = $$('.check-wrap .check:nth-child(-n+3) input[type="checkbox"]');
-	const authButton     = $('.btn.line-blue');
-
-	// 필수 항목 모두 체크됐는지 확인 → 버튼 활성/비활성
-	function checkAllRequired() {
-	  if (!authButton || requiredChecks.length === 0) return;
-	  const ok = requiredChecks.every(c => c.checked);
-	  authButton.classList.toggle('inactive', !ok);
-	  authButton.disabled = !ok;
-	}
-
-	// 전체동의가 있을 때만 바인딩
-	if (allCheck) {
-	  allCheck.addEventListener('change', (e) => {
-	    const isChecked = e.target.checked;
-	    subChecks.forEach(cb => { cb.checked = isChecked; });
-	    checkAllRequired();
-	  });
-	}
-
-	// 개별 체크 변경 시 전체동의 상태 동기화 + 버튼 상태 갱신
-	subChecks.forEach(cb => {
-	  cb.addEventListener('change', () => {
-	    if (allCheck) {
-	      allCheck.checked = subChecks.length > 0 && subChecks.every(c => c.checked);
-	    }
-	    checkAllRequired();
-	  });
-	});
-
-	// 초기 상태 반영
-	checkAllRequired();
 
 
 // --- 커스텀 셀렉트 박스 ---
@@ -166,3 +99,23 @@ function initTopButton() {
     });
 }
 
+
+// --- 테이블 가로 스크롤 ---
+function scrollX() {
+    $('.scroll-x').each(function () {
+        $(this).mCustomScrollbar({
+            axis: "x",
+            scrollInertia: 700
+        });
+    });
+}
+
+// --- 테이블/리스트 세로 스크롤 공통 ---
+function scrollY() {
+    $('.scroll-y').each(function () {
+        $(this).mCustomScrollbar({
+            axis: "x",
+            scrollInertia: 700
+        });
+    });
+}

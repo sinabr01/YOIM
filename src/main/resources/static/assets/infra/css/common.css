@@ -374,3 +374,74 @@ html, body {
   pointer-events: auto;
   transform: translateY(0);
 }
+
+/* 스크롤 커스텀 */
+.mCSB_scrollTools {
+  width: 7px;
+  margin: 10px auto;
+}
+
+.mCustomScrollbar.is-no-scroll .mCSB_scrollTools {
+  display: none !important;
+}
+
+.mCustomScrollbar.is-no-scroll .mCSB_container {
+  margin-right: 0 !important;
+}
+
+.mCSB_scrollTools .mCSB_draggerRail {
+  width: 5px !important;
+  background: #fff !important;
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  border-radius: 50px;
+  background: #CECECE !important;
+}
+
+/* 가로스크롤 */
+.scroll-x.mCustomScrollbar .mCSB_horizontal .mCSB_container {
+  margin-bottom: 0;
+}
+
+.scroll-x .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+  height: 8px;
+}
+
+.scroll-x .mCSB_scrollTools_horizontal .mCSB_draggerContainer {
+  width: calc(100% - 10px);
+  left: 5px;
+}
+
+.scroll-x .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.scroll-x .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar,
+.scroll-x .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
+.scroll-x .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.scroll-x .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #ddd;
+  height: 5px;
+  border-radius: 10px;
+  margin: 5px 0;
+  opacity: 1;
+}
+
+.scroll-x .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_draggerRail {
+  height: 0;
+  margin: 0;
+}
+
+/* 세로스크롤 */
+.scroll-y .mCSB_scrollTools {
+  margin: 10px 0;
+  width: 12px;
+}
+
+.scroll-y .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #999 !important;
+  border-radius: 50px;
+  width: 5px !important;
+}
+
+.scroll-y .mCSB_inside > .mCSB_container {
+  margin-right: 0;
+}

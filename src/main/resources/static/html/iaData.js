@@ -5,7 +5,7 @@ const iaData = [
         depth2: "메인",
         depth3: "메인화면",
         depth4: "",
-        url: "index.html",
+        url: "main.html",
         note: ""
     },{
         depth1: "공통",
@@ -20,6 +20,13 @@ const iaData = [
         depth3: "2.회원가입",
         depth4: "",
         url: "join.html",
+        note: ""
+    },{
+        depth1: "공통",
+        depth2: "서브",
+        depth3: "3.게시판",
+        depth4: "",
+        url: "공통게시판(목록).html",
         note: ""
     },{
         depth1: "모임",
