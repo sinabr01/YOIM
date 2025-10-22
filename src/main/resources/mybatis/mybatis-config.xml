@@ -17,6 +17,12 @@
 		<typeAlias alias="user" type="com.yoim.www.model.User"/>
 		<typeAlias alias="fileUpload" type="com.yoim.www.model.FileUpload"/>
 		<typeAlias alias="fileDetail" type="com.yoim.www.model.FileDetail"/>
+		<typeAlias alias="chatDm" type="com.yoim.www.model.ChatDm"/>
+		<typeAlias alias="chatMember" type="com.yoim.www.model.ChatMember"/>
+		<typeAlias alias="chatMsg" type="com.yoim.www.model.ChatMsg"/>
+		<typeAlias alias="chatRoom" type="com.yoim.www.model.ChatRoom"/>
+		<typeAlias alias="messageDto" type="com.yoim.www.model.MessageDto"/>
+		<typeAlias alias="messagePayload" type="com.yoim.www.model.MessagePayload"/>
 	</typeAliases>
 
 </configuration>

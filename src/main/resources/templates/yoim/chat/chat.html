@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8" />
+  <title>YOIM DM</title>
+  <style>
+    body{font-family:system-ui,apple sd gothic neo,Malgun Gothic,Arial,sans-serif;margin:0;display:flex;height:100vh}
+    aside{width:260px;border-right:1px solid #eee;padding:12px;overflow:auto}
+    main{flex:1;display:flex;flex-direction:column}
+    header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #eee}
+    .msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+    .input{display:flex;gap:8px;padding:12px;border-top:1px solid #eee}
+    .input input{flex:1;padding:10px;border:1px solid #ddd;border-radius:8px}
+    .input button{padding:10px 14px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer}
+    .msg{display:flex;flex-direction:column;gap:4px}
+    .bubble{display:inline-block;border:1px solid #eee;border-radius:12px;padding:8px 10px;max-width:70%}
+    .mine .bubble{border-color:#cfe3ff;background:#f6faff;align-self:flex-end}
+    .meta{font-size:12px;color:#888}
+    /* DM 모드에서 방 목록 숨김 */
+    .dm-only aside{display:none}
+  </style>
+</head>
+<body class="dm-only">
+  <aside id="sidebar">
+    <h3 style="margin:8px 0;">Rooms</h3>
+    <div id="rooms"></div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <b id="roomTitle">Direct Message</b>
+        <span id="peerInfo" style="color:#888;margin-left:6px;"></span>
+      </div>
+      <div id="meInfo" style="color:#666;"></div>
+    </header>
+
+    <div class="msgs" id="msgs"></div>
+
+    <div class="input">
+      <input id="msgInput" type="text" placeholder="메시지 입력…" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </main>
+
+  <!-- Thymeleaf에서 me/to 바인딩 -->
+  <script th:inline="javascript">
+    window.ME = /*[[${me}]]*/ 0;
+    window.TO = /*[[${to}]]*/ 0;
+  </script>
+
+  <!-- jQuery & SockJS/STOMP (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+  <script>
+    // ===== 상태 =====
+    let currentRoomId = null;
+    let stompClient = null;
+    let roomSub = null;       // 구독 핸들
+    let lastSeq = 0;
+
+    // ===== API 래퍼 =====
+    const api = {
+      // 내 방들(백업용; DM 모드에선 거의 안 씀)
+      myRooms: (userId) => $.getJSON(`/api/chat/rooms?userId=${userId}`),
+
+      // DM 생성(중복 허용: 서버가 기존 방 반환하도록 구성 권장)
+      createDm: (me, peer) => $.ajax({
+        url: '/api/chat/rooms',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ type:1, roomName:null, members:[me, peer], me })
+      }),
+
+      // (선택) DM 조회 엔드포인트가 있다면 사용
+      findDm: (me, peer) => $.getJSON(`/api/chat/dm?me=${me}&peer=${peer}`)
+        .catch(() => $.getJSON(`/api/chat/rooms/dm?me=${me}&peer=${peer}`)),
+
+      // 메시지
+      messages: (roomId, beforeSeq=null, limit=50) =>
+        $.getJSON(`/api/chat/rooms/${roomId}/messages`, { beforeSeq, limit }),
+
+      // 읽음
+      markRead: (roomId, userId, lastSeqVal) => $.ajax({
+        url: `/api/chat/rooms/${roomId}/read`,
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ userId, lastSeq: lastSeqVal })
+      }),
+    };
+
+    // ===== 유틸 =====
+    function escapeHtml(s) {
+      return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function scrollBottom(){
+      const el = document.getElementById('msgs');
+      el.scrollTop = el.scrollHeight;
+    }
+
+    // ===== 메시지 렌더 =====
+    function clearMessages(){ $('#msgs').empty(); lastSeq = 0; }
+    function addMessage(m, autoScroll=true){
+      const mine = Number(m.senderId) === Number(window.ME);
+      const $row = $(`
+        <div class="msg ${mine ? 'mine' : ''}">
+          <div class="meta">#${m.seq ?? ''} · ${m.senderId ?? 'SYS'} ${m.registDt ? '· '+m.registDt : ''}</div>
+          <div class="bubble">${escapeHtml(m.content||'')}</div>
+        </div>
+      `);
+      $('#msgs').append($row);
+      if (m.seq) lastSeq = Math.max(lastSeq, m.seq);
+      if (autoScroll) scrollBottom();
+    }
+    function renderMessages(msgs){
+      clearMessages();
+      msgs.forEach(m => addMessage(m, false));
+      scrollBottom();
+    }
+
+    // ===== WS =====
+    function connectWs(onConnected){
+      if (stompClient && stompClient.connected) { onConnected && onConnected(); return; }
+      const sock = new SockJS('/ws');
+      stompClient = Stomp.over(sock);
+      stompClient.debug = () => {}; // 로그 억제
+      stompClient.connect({}, () => onConnected && onConnected());
+    }
+    function unsubscribeRoom(){
+      if (roomSub) { try { roomSub.unsubscribe(); } catch(_e){} roomSub = null; }
+    }
+    function subscribeRoom(roomId){
+      unsubscribeRoom();
+      roomSub = stompClient.subscribe(`/topic/rooms/${roomId}`, (frame) => {
+        const dto = JSON.parse(frame.body);
+        addMessage(dto);
+        if (dto.seq) api.markRead(roomId, window.ME, dto.seq);
+      });
+    }
+
+    function sendMessage(text){
+      if (!currentRoomId || !stompClient || !stompClient.connected) return;
+      const payload = { roomId: currentRoomId, senderId: window.ME, msgType: 1, content: text };
+      stompClient.send(`/app/rooms/${currentRoomId}/send`, {}, JSON.stringify(payload));
+    }
+
+    // ===== DM 보장(있으면 사용, 없으면 생성) =====
+    async function ensureDm(me, peer){
+      // 1) 서버가 "DM 조회" 엔드포인트 제공 시
+      try {
+        const dm = await api.findDm(me, peer);
+        if (dm && (dm.roomId || dm.room_id)) return dm.roomId || dm.room_id;
+      } catch (_e) { /* 무시하고 다음 단계 */ }
+
+      // 2) DM 생성 시 서버가 "이미 있음 → 기존 roomId 반환" 로직 구현되어 있으면 이걸로 끝
+      try {
+        const res = await api.createDm(me, peer);
+        // 응답 키 다양한 경우 호환
+        return res.roomId || res.room_id || res.id || (res.data && (res.data.roomId || res.data.room_id));
+      } catch (e) {
+        // 3) 409 등으로 실패 시, 목록에서 찾기(서버가 DM 메타를 내려줄 경우)
+        const rooms = await api.myRooms(me);
+        const match = (rooms||[]).find(r =>
+          Number(r.room_type) === 1 && (
+            (r.dmPeerId && Number(r.dmPeerId) === Number(peer)) ||
+            (Array.isArray(r.members) && r.members.includes(Number(me)) && r.members.includes(Number(peer)))
+          )
+        );
+        if (match) return match.room_id || match.roomId;
+        throw e; // 진짜 실패
+      }
+    }
+
+    // ===== DM 진입 =====
+    async function enterDm(roomId){
+      currentRoomId = roomId;
+
+      // 헤더/정보 갱신
+      $('#meInfo').text(`me: ${window.ME}`);
+      $('#peerInfo').text(`상대: ${window.TO} (room: ${roomId})`);
+
+      // 메시지 로딩
+      const list = await api.messages(roomId, null, 50);
+      renderMessages((list || []).reverse());
+
+      // 읽음 반영
+      if (lastSeq) api.markRead(roomId, window.ME, lastSeq);
+
+      // STOMP 구독
+      connectWs(() => subscribeRoom(roomId));
+    }
+
+    // ===== 시작 =====
+    $(document).ready(async function(){
+      const me = Number(window.ME || 0);
+      const to = Number(window.TO || 0);
+
+      if (!me) {
+        alert('로그인 정보가 없습니다. (ME=0)');
+        return;
+      }
+
+      // DM 강제 모드: TO가 유효하면 방 목록 숨기고 해당 DM만 진입
+      if (to && to !== me) {
+        try {
+          const roomId = await ensureDm(me, to);
+          await enterDm(roomId);
+        } catch (e) {
+          console.error(e);
+          alert('DM 방을 준비하는 중 오류가 발생했습니다.');
+        }
+      } else {
+        // TO가 없거나 자기 자신 → 필요 시 기존 목록 모드로 폴백
+        document.body.classList.remove('dm-only'); // 목록 보이기
+        const rooms = await api.myRooms(me);
+        // 적어도 첫 방 진입
+        if (rooms && rooms.length) {
+          const first = rooms[0];
+          await enterDm(first.room_id || first.roomId);
+        }
+      }
+
+      // 입력 전송
+      $('#sendBtn').on('click', ()=>{
+        const v = $('#msgInput').val().trim();
+        if (!v) return;
+        sendMessage(v);
+        $('#msgInput').val('');
+      });
+      $('#msgInput').on('keydown', (e)=>{
+        if (e.key === 'Enter') {
+          const v = $('#msgInput').val().trim();
+          if (!v) return;
+          sendMessage(v);
+          $('#msgInput').val('');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

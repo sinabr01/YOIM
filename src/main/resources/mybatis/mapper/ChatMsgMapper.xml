@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yoim.www.mapper.ChatMsgMapper">
+
+	<resultMap id="MsgMap" type="map">
+		<result column="msg_id" property="msgId" />
+		<result column="room_id" property="roomId" />
+		<result column="sender_id" property="senderId" />
+		<result column="msg_type" property="msgType" />
+		<result column="content" property="content" />
+		<result column="seq" property="seq" />
+		<result column="regist_dt" property="registDt" />
+	</resultMap>
+
+	<insert id="insertMessage" parameterType="chatMsg" useGeneratedKeys="true" keyProperty="msgId">
+		INSERT INTO tb_chat_msg(room_id, sender_id, msg_type, content,
+		file_upload_id, reply_to_msg_id, seq)
+		VALUES(#{roomId}, #{senderId}, #{msgType}, #{content}, #{fileUploadId},
+		#{replyToMsgId}, #{seq})
+	</insert>
+
+	<select id="recentMessages" resultMap="MsgMap">
+		SELECT msg_id, room_id, sender_id, msg_type, content, seq, regist_dt
+		FROM tb_chat_msg
+		WHERE room_id=#{roomId}
+		<if test="beforeSeq != null">AND seq <![CDATA[ <= ]]> #{beforeSeq}</if>
+		ORDER BY seq DESC
+		LIMIT #{limit}
+	</select>
+
+
+</mapper>
