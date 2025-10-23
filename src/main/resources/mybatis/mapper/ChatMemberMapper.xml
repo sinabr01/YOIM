@@ -5,6 +5,17 @@
 
 <mapper namespace="com.yoim.www.mapper.ChatMemberMapper">
 
+	<resultMap type="chatMember" id="getSelectMap">
+		<result property="roomId" column="room_id" />
+		<result property="userId" column="user_id" />
+		<result property="role" column="role" />
+		<result property="joinedAt" column="joined_at" />
+		<result property="leftAt" column="left_at" />
+		<result property="lastReadSeq" column="last_read_seq" />
+		<result property="notificationsOn" column="notifications_on" />
+		<result property="mutedUntil" column="muted_until" />
+	</resultMap>
+
 	<insert id="insertMember">
 		INSERT IGNORE INTO tb_chat_member(room_id,user_id,role)
 		VALUES(#{roomId},#{userId},#{role})
@@ -13,6 +24,15 @@
 		UPDATE tb_chat_member SET last_read_seq = GREATEST(last_read_seq, #{seq})
 		WHERE room_id=#{roomId} AND user_id=#{userId}
 	</update>
+
+	<select id="selectMemberReadStates" resultMap="getSelectMap">
+		SELECT
+			user_id AS userId,
+			COALESCE(last_read_seq, 0) AS last_read_seq
+		FROM tb_chat_member
+		WHERE room_id = #{roomId}
+	</select>
+
 
 	<!-- 메시지 읽음 카운트 -->
 	<select id="readCountForMessage" resultType="int">

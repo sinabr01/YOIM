@@ -18,228 +18,339 @@
     .bubble{display:inline-block;border:1px solid #eee;border-radius:12px;padding:8px 10px;max-width:70%}
     .mine .bubble{border-color:#cfe3ff;background:#f6faff;align-self:flex-end}
     .meta{font-size:12px;color:#888}
-    /* DM 모드에서 방 목록 숨김 */
+    .meta .read{opacity:.9}
+    .meta .reg{opacity:.9}
     .dm-only aside{display:none}
   </style>
 </head>
 <body class="dm-only">
-  <aside id="sidebar">
-    <h3 style="margin:8px 0;">Rooms</h3>
-    <div id="rooms"></div>
-  </aside>
+<aside id="sidebar">
+  <h3 style="margin:8px 0;">Rooms</h3>
+  <div id="rooms"></div>
+</aside>
 
-  <main>
-    <header>
-      <div>
-        <b id="roomTitle">Direct Message</b>
-        <span id="peerInfo" style="color:#888;margin-left:6px;"></span>
-      </div>
-      <div id="meInfo" style="color:#666;"></div>
-    </header>
-
-    <div class="msgs" id="msgs"></div>
-
-    <div class="input">
-      <input id="msgInput" type="text" placeholder="메시지 입력…" />
-      <button id="sendBtn">Send</button>
+<main>
+  <header>
+    <div>
+      <b id="roomTitle">Direct Message</b>
+      <span id="peerInfo" style="color:#888;margin-left:6px;"></span>
     </div>
-  </main>
+    <div id="meInfo" style="color:#666;"></div>
+  </header>
 
-  <!-- Thymeleaf에서 me/to 바인딩 -->
-  <script th:inline="javascript">
-    window.ME = /*[[${me}]]*/ 0;
-    window.TO = /*[[${to}]]*/ 0;
-  </script>
+  <div class="msgs" id="msgs"></div>
 
-  <!-- jQuery & SockJS/STOMP (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+  <div class="input">
+    <input id="msgInput" type="text" placeholder="메시지 입력…" />
+    <button id="sendBtn">Send</button>
+  </div>
+</main>
 
-  <script>
-    // ===== 상태 =====
-    let currentRoomId = null;
-    let stompClient = null;
-    let roomSub = null;       // 구독 핸들
-    let lastSeq = 0;
+<script th:inline="javascript">
+  window.ME = /*[[${me}]]*/ 0;
+  window.TO = /*[[${to}]]*/ 0;
+</script>
 
-    // ===== API 래퍼 =====
-    const api = {
-      // 내 방들(백업용; DM 모드에선 거의 안 씀)
-      myRooms: (userId) => $.getJSON(`/api/chat/rooms?userId=${userId}`),
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-      // DM 생성(중복 허용: 서버가 기존 방 반환하도록 구성 권장)
-      createDm: (me, peer) => $.ajax({
-        url: '/api/chat/rooms',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ type:1, roomName:null, members:[me, peer], me })
-      }),
+<script>
+  // ===== 상태 =====
+  let currentRoomId = null;
+  let stompClient = null;
+  let roomSub = null;
+  let lastSeq = 0;
 
-      // (선택) DM 조회 엔드포인트가 있다면 사용
-      findDm: (me, peer) => $.getJSON(`/api/chat/dm?me=${me}&peer=${peer}`)
-        .catch(() => $.getJSON(`/api/chat/rooms/dm?me=${me}&peer=${peer}`)),
+  const msgIndex = new Map();   // key -> {$row, data}
+  const membersById = {};       // userId -> { last_read_seq, last_read_dt }
 
-      // 메시지
-      messages: (roomId, beforeSeq=null, limit=50) =>
-        $.getJSON(`/api/chat/rooms/${roomId}/messages`, { beforeSeq, limit }),
+  // ===== API =====
+  const api = {
+    myRooms: (userId) => $.getJSON(`/api/chat/rooms?userId=${userId}`),
+    createDm: (me, peer) => $.ajax({
+      url: '/api/chat/rooms', method: 'POST', contentType: 'application/json',
+      data: JSON.stringify({ type:1, roomName:null, members:[me, peer], me })
+    }),
+    findDm: (me, peer) => $.getJSON(`/api/chat/dm?me=${me}&peer=${peer}`)
+            .catch(() => $.getJSON(`/api/chat/rooms/dm?me=${me}&peer=${peer}`)),
+    messages: (roomId, beforeSeq=null, limit=50) =>
+            $.getJSON(`/api/chat/rooms/${roomId}/messages`, { beforeSeq, limit }),
+    members: (roomId) => $.getJSON(`/api/chat/rooms/${roomId}/members`),
+    markRead: (roomId, userId, lastSeqVal) => $.ajax({
+      url: `/api/chat/rooms/${roomId}/read`, method: 'POST',
+      contentType: 'application/json', data: JSON.stringify({ userId, lastSeq: lastSeqVal })
+    }),
+  };
 
-      // 읽음
-      markRead: (roomId, userId, lastSeqVal) => $.ajax({
-        url: `/api/chat/rooms/${roomId}/read`,
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ userId, lastSeq: lastSeqVal })
-      }),
-    };
+  // ===== 유틸 =====
+  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function scrollBottom(){ const el = document.getElementById('msgs'); el.scrollTop = el.scrollHeight; }
+  function pad2(n){ return (n<10?'0':'')+n; }
+  function normalizeTs(ts){
+    if (ts == null) return null;
+    const num = Number(ts); if (!isFinite(num)) return null;
+    return (num < 1e12) ? num * 1000 : num; // 10자리 초, 13자리 ms
+  }
+  function pickFirst(obj, keys){ for (const k of keys){ if (obj[k] != null) return obj[k]; } return null; }
+  function formatYmdHm(ts){
+    const ms = normalizeTs(ts); if (ms == null) return '';
+    const d = new Date(ms);
+    return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  }
 
-    // ===== 유틸 =====
-    function escapeHtml(s) {
-      return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // ===== 키/인덱스 =====
+  function msgKey(m){
+    const rid = Number(m.roomId ?? m.room_id ?? currentRoomId ?? 0);
+    const seq = Number(m.seq ?? m.msgSeq ?? m.msg_id ?? m.id ?? 0) || `${Date.now()}-${Math.random()}`;
+    return `${rid}:${seq}`;
+  }
+
+  // ===== 렌더 =====
+  function metaHtml(m){
+    const seqText = (m.seq ?? '');
+    const sender = (m.senderId ?? m.sender_id ?? 'SYS');
+
+    const createdRaw = pickFirst(m, ['registMs','regist_ts','registDt','regist_dt','createdAt','created_at','ts','timestamp','time','sentAt','sent_at']);
+    const readRaw    = pickFirst(m, ['readMs','readAt','read_at','readDt','read_dt','readTime','read_time','last_read_at']);
+    const created    = createdRaw ? formatYmdHm(createdRaw) : '';
+
+    const mine = Number(m.senderId ?? m.sender_id) === Number(window.ME);
+    let readStr = '';
+    if (mine) {
+      if (readRaw === true) readStr = '읽음';
+      else if (readRaw)     readStr = '읽음 ' + formatYmdHm(readRaw);
     }
-    function scrollBottom(){
-      const el = document.getElementById('msgs');
-      el.scrollTop = el.scrollHeight;
-    }
 
-    // ===== 메시지 렌더 =====
-    function clearMessages(){ $('#msgs').empty(); lastSeq = 0; }
-    function addMessage(m, autoScroll=true){
-      const mine = Number(m.senderId) === Number(window.ME);
+    return `
+      <span class="seq">#${seqText}</span>
+      <span class="sep"> · </span>
+      <span class="sender">${sender}</span>
+      <span class="reg">${created ? ' · ' + created : ''}</span>
+      <span class="read">${readStr ? ' · ' + readStr : ''}</span>
+    `;
+  }
+
+  function updateMeta($row, m){ $row.find('.meta').html(metaHtml(m)); }
+
+  function clearMessages(){ $('#msgs').empty(); lastSeq = 0; msgIndex.clear(); }
+
+  function upsertMessage(m, autoScroll=true){
+    // 숫자 강제
+    if (m.seq != null) m.seq = Number(m.seq);
+    if (m.senderId != null) m.senderId = Number(m.senderId ?? m.sender_id);
+
+    const key = msgKey(m);
+    const mine = Number(m.senderId ?? m.sender_id) === Number(window.ME);
+
+    let item = msgIndex.get(key);
+    if (item){
+      item.data = { ...item.data, ...m };
+      item.$row.find('.bubble').html(escapeHtml(item.data.content || ''));
+      updateMeta(item.$row, item.data);
+    } else {
       const $row = $(`
-        <div class="msg ${mine ? 'mine' : ''}">
-          <div class="meta">#${m.seq ?? ''} · ${m.senderId ?? 'SYS'} ${m.registDt ? '· '+m.registDt : ''}</div>
-          <div class="bubble">${escapeHtml(m.content||'')}</div>
+        <div class="msg ${mine ? 'mine' : ''}" data-key="${key}">
+          <div class="meta"></div>
+          <div class="bubble">${escapeHtml(m.content || '')}</div>
         </div>
       `);
       $('#msgs').append($row);
-      if (m.seq) lastSeq = Math.max(lastSeq, m.seq);
-      if (autoScroll) scrollBottom();
-    }
-    function renderMessages(msgs){
-      clearMessages();
-      msgs.forEach(m => addMessage(m, false));
-      scrollBottom();
+      item = { $row, data: { ...m } };
+      msgIndex.set(key, item);
+      updateMeta($row, item.data);
     }
 
-    // ===== WS =====
-    function connectWs(onConnected){
-      if (stompClient && stompClient.connected) { onConnected && onConnected(); return; }
-      const sock = new SockJS('/ws');
-      stompClient = Stomp.over(sock);
-      stompClient.debug = () => {}; // 로그 억제
-      stompClient.connect({}, () => onConnected && onConnected());
-    }
-    function unsubscribeRoom(){
-      if (roomSub) { try { roomSub.unsubscribe(); } catch(_e){} roomSub = null; }
-    }
-    function subscribeRoom(roomId){
-      unsubscribeRoom();
-      roomSub = stompClient.subscribe(`/topic/rooms/${roomId}`, (frame) => {
-        const dto = JSON.parse(frame.body);
-        addMessage(dto);
-        if (dto.seq) api.markRead(roomId, window.ME, dto.seq);
-      });
-    }
+    if (m.seq) lastSeq = Math.max(lastSeq, Number(m.seq));
+    if (autoScroll) scrollBottom();
+    return key;
+  }
 
-    function sendMessage(text){
-      if (!currentRoomId || !stompClient || !stompClient.connected) return;
-      const payload = { roomId: currentRoomId, senderId: window.ME, msgType: 1, content: text };
-      stompClient.send(`/app/rooms/${currentRoomId}/send`, {}, JSON.stringify(payload));
-    }
+  function applyReadMarksWithMembers(msgs){
+    const me  = Number(window.ME);
+    const to  = Number(window.TO);
+    const peerState = membersById[to] || { last_read_seq: 0, lastReadSeq: 0, last_read_dt: null };
 
-    // ===== DM 보장(있으면 사용, 없으면 생성) =====
-    async function ensureDm(me, peer){
-      // 1) 서버가 "DM 조회" 엔드포인트 제공 시
-      try {
-        const dm = await api.findDm(me, peer);
-        if (dm && (dm.roomId || dm.room_id)) return dm.roomId || dm.room_id;
-      } catch (_e) { /* 무시하고 다음 단계 */ }
+    const peerLastSeq = Number(peerState.last_read_seq ?? peerState.lastReadSeq ?? 0);
 
-      // 2) DM 생성 시 서버가 "이미 있음 → 기존 roomId 반환" 로직 구현되어 있으면 이걸로 끝
-      try {
-        const res = await api.createDm(me, peer);
-        // 응답 키 다양한 경우 호환
-        return res.roomId || res.room_id || res.id || (res.data && (res.data.roomId || res.data.room_id));
-      } catch (e) {
-        // 3) 409 등으로 실패 시, 목록에서 찾기(서버가 DM 메타를 내려줄 경우)
-        const rooms = await api.myRooms(me);
-        const match = (rooms||[]).find(r =>
-          Number(r.room_type) === 1 && (
-            (r.dmPeerId && Number(r.dmPeerId) === Number(peer)) ||
-            (Array.isArray(r.members) && r.members.includes(Number(me)) && r.members.includes(Number(peer)))
-          )
-        );
-        if (match) return match.room_id || match.roomId;
-        throw e; // 진짜 실패
+    (msgs||[]).forEach(m => {
+      const mine = Number(m.senderId ?? m.sender_id) === me;
+      const seqN = Number(m.seq ?? 0);
+      if (mine && seqN && seqN <= peerLastSeq){
+        const dt = (peerState.last_read_dt != null ? peerState.last_read_dt : null);
+        m.readMs = (dt != null) ? dt : true; // 시간 없으면 '읽음'만
       }
-    }
-
-    // ===== DM 진입 =====
-    async function enterDm(roomId){
-      currentRoomId = roomId;
-
-      // 헤더/정보 갱신
-      $('#meInfo').text(`me: ${window.ME}`);
-      $('#peerInfo').text(`상대: ${window.TO} (room: ${roomId})`);
-
-      // 메시지 로딩
-      const list = await api.messages(roomId, null, 50);
-      renderMessages((list || []).reverse());
-
-      // 읽음 반영
-      if (lastSeq) api.markRead(roomId, window.ME, lastSeq);
-
-      // STOMP 구독
-      connectWs(() => subscribeRoom(roomId));
-    }
-
-    // ===== 시작 =====
-    $(document).ready(async function(){
-      const me = Number(window.ME || 0);
-      const to = Number(window.TO || 0);
-
-      if (!me) {
-        alert('로그인 정보가 없습니다. (ME=0)');
-        return;
-      }
-
-      // DM 강제 모드: TO가 유효하면 방 목록 숨기고 해당 DM만 진입
-      if (to && to !== me) {
-        try {
-          const roomId = await ensureDm(me, to);
-          await enterDm(roomId);
-        } catch (e) {
-          console.error(e);
-          alert('DM 방을 준비하는 중 오류가 발생했습니다.');
-        }
-      } else {
-        // TO가 없거나 자기 자신 → 필요 시 기존 목록 모드로 폴백
-        document.body.classList.remove('dm-only'); // 목록 보이기
-        const rooms = await api.myRooms(me);
-        // 적어도 첫 방 진입
-        if (rooms && rooms.length) {
-          const first = rooms[0];
-          await enterDm(first.room_id || first.roomId);
-        }
-      }
-
-      // 입력 전송
-      $('#sendBtn').on('click', ()=>{
-        const v = $('#msgInput').val().trim();
-        if (!v) return;
-        sendMessage(v);
-        $('#msgInput').val('');
-      });
-      $('#msgInput').on('keydown', (e)=>{
-        if (e.key === 'Enter') {
-          const v = $('#msgInput').val().trim();
-          if (!v) return;
-          sendMessage(v);
-          $('#msgInput').val('');
-        }
-      });
+      upsertMessage(m, false);
     });
-  </script>
+    scrollBottom();
+  }
+
+  function renderMessages(msgs){
+    clearMessages();
+    applyReadMarksWithMembers(msgs);
+  }
+
+  // ===== WS =====
+  function connectWs(onConnected){
+    if (stompClient && stompClient.connected) { onConnected && onConnected(); return; }
+    const sock = new SockJS('/ws');
+    stompClient = Stomp.over(sock);
+    stompClient.debug = () => {};
+    stompClient.connect({}, () => onConnected && onConnected());
+  }
+  function unsubscribeRoom(){ if (roomSub) { try{ roomSub.unsubscribe(); }catch(_){} roomSub = null; } }
+
+  function handleRoomEvent(payload){
+    const dto = typeof payload === 'string' ? JSON.parse(payload) : payload;
+    const ev  = dto.event || dto.type || 'MESSAGE';
+
+    if (ev === 'READ'){
+      const userId = Number(dto.userId || dto.user_id);
+      const seq    = Number(dto.seq || 0);
+      const readAt = dto.readAt || dto.read_at || Date.now();
+
+      if (!membersById[userId]) membersById[userId] = { last_read_seq: 0, last_read_dt: null };
+      membersById[userId].last_read_seq = Math.max(Number(membersById[userId].last_read_seq||0), seq);
+      membersById[userId].last_read_dt  = readAt;
+
+      // 내 메시지(오른쪽)만 업데이트
+      const me = Number(window.ME);
+      for (const [key, item] of msgIndex){
+        const d = item.data;
+        const dSeq = Number(d.seq || 0);
+        if (Number(d.senderId ?? d.sender_id) === me && dSeq && dSeq <= membersById[userId].last_read_seq){
+          d.readMs = membersById[userId].last_read_dt ?? true;
+          updateMeta(item.$row, d);
+        }
+      }
+      return;
+    }
+
+    // MESSAGE
+    const key = upsertMessage(dto);
+
+    // 상대가 보낸 메시지를 내가 읽었다 → 서버에만 업데이트 (상대 버블에는 읽음표시 금지)
+    const mine = Number(dto.senderId ?? dto.sender_id) === Number(window.ME);
+    if (!mine && dto.seq){
+      api.markRead(currentRoomId, window.ME, Number(dto.seq)).catch(()=>{});
+      const me = Number(window.ME);
+      if (!membersById[me]) membersById[me] = { last_read_seq: 0, last_read_dt: null };
+      membersById[me].last_read_seq = Math.max(Number(membersById[me].last_read_seq||0), Number(dto.seq));
+      membersById[me].last_read_dt  = Date.now();
+    }
+  }
+
+  function subscribeRoom(roomId){
+    unsubscribeRoom();
+    roomSub = stompClient.subscribe(`/topic/rooms/${roomId}`, (frame) => handleRoomEvent(frame.body));
+  }
+
+  function sendMessage(text){
+    if (!currentRoomId || !stompClient || !stompClient.connected) return;
+    const payload = { roomId: currentRoomId, senderId: window.ME, msgType: 1, content: text };
+    stompClient.send(`/app/rooms/${currentRoomId}/send`, {}, JSON.stringify(payload));
+  }
+
+  // ===== DM 보장 =====
+  async function ensureDm(me, peer){
+    try {
+      const dm = await api.findDm(me, peer);
+      if (dm && (dm.roomId || dm.room_id)) return dm.roomId || dm.room_id;
+    } catch (_e) { /* ignore */ }
+
+    try {
+      const res = await api.createDm(me, peer);
+      return res.roomId || res.room_id || res.id || (res.data && (res.data.roomId || res.data.room_id));
+    } catch (e) {
+      const rooms = await api.myRooms(me);
+      const match = (rooms||[]).find(r =>
+                      Number(r.room_type) === 1 && (
+                              (r.dmPeerId && Number(r.dmPeerId) === Number(peer)) ||
+                              (Array.isArray(r.members) && r.members.includes(Number(me)) && r.members.includes(Number(peer)))
+                      )
+      );
+      if (match) return match.room_id || match.roomId;
+      throw e;
+    }
+  }
+
+  // ===== 멤버 읽음상태 로드 =====
+  async function loadMembers(roomId){
+    try {
+      const list = await api.members(roomId);
+      (list||[]).forEach(m => {
+        const uid = Number(m.userId || m.user_id);
+        membersById[uid] = {
+          last_read_seq: Number((m.last_read_seq ?? m.lastReadSeq) || 0),
+          last_read_dt:  m.last_read_dt || null,
+        };
+      });
+    } catch(_e){ /* 없으면 무시 */ }
+  }
+
+  // ===== DM 진입 =====
+  async function enterDm(roomId){
+    currentRoomId = Number(roomId);
+    $('#meInfo').text(`me: ${window.ME}`);
+    $('#peerInfo').text(`상대: ${window.TO} (room: ${roomId})`);
+
+    await loadMembers(roomId);
+
+    const res = await api.messages(roomId, null, 50);
+    let msgs = res;
+    if (res && res.messages){
+      msgs = res.messages;
+      if (Array.isArray(res.members)){
+        res.members.forEach(m => {
+          const uid = Number(m.userId || m.user_id);
+          membersById[uid] = {
+            last_read_seq: Number((m.last_read_seq ?? m.lastReadSeq) || 0),
+            last_read_dt:  m.last_read_dt || null,
+          };
+        });
+      }
+    }
+
+    renderMessages((msgs || []).reverse());
+
+    if (lastSeq) {
+      try { await api.markRead(roomId, window.ME, Number(lastSeq)); } catch(_e){}
+      const me = Number(window.ME);
+      if (!membersById[me]) membersById[me] = { last_read_seq: 0, last_read_dt: null };
+      membersById[me].last_read_seq = Math.max(Number(membersById[me].last_read_seq||0), Number(lastSeq));
+      membersById[me].last_read_dt  = Date.now();
+    }
+
+    connectWs(() => subscribeRoom(roomId));
+  }
+
+  // ===== 시작 =====
+  $(document).ready(async function(){
+    const me = Number(window.ME || 0);
+    const to = Number(window.TO || 0);
+    if (!me) { alert('로그인 정보가 없습니다. (ME=0)'); return; }
+
+    if (to && to !== me) {
+      try { const roomId = await ensureDm(me, to); await enterDm(roomId); }
+      catch (e){ console.error(e); alert('DM 방을 준비하는 중 오류가 발생했습니다.'); }
+    } else {
+      document.body.classList.remove('dm-only');
+      const rooms = await api.myRooms(me);
+      if (rooms && rooms.length) {
+        const first = rooms[0];
+        await enterDm(first.room_id || first.roomId);
+      }
+    }
+
+    function doSend(){
+      const v = $('#msgInput').val().trim();
+      if (!v) return;
+      sendMessage(v);
+      $('#msgInput').val('');
+    }
+    $('#sendBtn').on('click', doSend);
+    $('#msgInput').on('keydown', (e)=>{ if (e.key === 'Enter') doSend(); });
+  });
+</script>
 </body>
 </html>

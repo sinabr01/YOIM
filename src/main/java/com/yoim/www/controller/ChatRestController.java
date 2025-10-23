@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yoim.www.mapper.ChatMemberMapper;
+import com.yoim.www.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoim.www.mapper.ChatMsgMapper;
 import com.yoim.www.mapper.ChatRoomMapper;
-import com.yoim.www.model.ChatRoom;
-import com.yoim.www.model.CreateRoomReq;
-import com.yoim.www.model.CustomUserDetails;
-import com.yoim.www.model.MessageDto;
-import com.yoim.www.model.ReadReq;
 import com.yoim.www.serviceImpl.ChatService;
 
 @RestController
@@ -35,6 +32,14 @@ public class ChatRestController {
 
     @Autowired
     private ChatMsgMapper msgM;
+
+    @Autowired
+    private ChatMemberMapper chatMemberMapper;
+
+    @GetMapping("/rooms/{roomId}/members")
+    public List<ChatMember> getMemberReadStates(@PathVariable long roomId) {
+        return chatMemberMapper.selectMemberReadStates(roomId);
+    }
 
 
     @PostMapping("/rooms")
