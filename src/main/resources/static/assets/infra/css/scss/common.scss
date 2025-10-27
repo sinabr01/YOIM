@@ -40,11 +40,15 @@
 // * 색상값
 // * -------------------------------
 :root {
-  --color-gradient: linear-gradient(103deg, #0E457B 9.89%, #075D5D 90.9%);
+  /*--color-gradient: linear-gradient(103deg, #0E457B 9.89%, #075D5D 90.9%);*/
+  --color-gradient: linear-gradient(to right, #7a00f4 0%, #c728d5 25%, #ff6c00 75%, #ffd600 100%) border-box;
 
   /* Primary Colors */
   --color-primary-purple: #5865F2;
   --color-primary-green: #075D5D;
+
+  --color-purple-bg: #DDE1FA;
+  --color-gradient-bg: #F2F3FB;
 
   /* Grayscale */
   --color-black: #000;
@@ -63,7 +67,8 @@
   --color-gray-700: #495057;
   --color-gray-800: #323232;
 
-  --color-border-gray: #EBEBEB;
+  /*--color-border-gray: #EBEBEB;*/
+  --color-border-gray: #E5E8EB;
 
   /* Text */
   --text-main: #111;
@@ -271,7 +276,8 @@ html, body {
 
     .link {
       border-radius: 10px;
-      /*background:rgba(172, 104, 249, 0.10);*/
+      background: #fff;
+      border: 1px solid var(--color-primary-purple);
 
       display: flex;
       gap: 1rem 1.5rem;
@@ -280,7 +286,6 @@ html, body {
       padding: 1.2rem 1rem;
 
       position: relative;
-      border: 1px solid transparent;
 
 
       transition: all 0.3s;
@@ -349,11 +354,11 @@ html, body {
     border-top: 1px solid var(--color-border-gray);
 
     .depth1-ul {
-      padding: 0 3rem;
+      padding: 0;
 
       .depth1-li {
         .depth1 {
-          padding: 1rem 0;
+          padding: 1rem 1.5rem;
           display: block;
 
           color: #000;
@@ -363,31 +368,29 @@ html, body {
           line-height: normal;
 
           position: relative;
+          overflow: hidden;
 
           &:before {
             content: '';
             display: inline-block;
 
             position: absolute;
-            left: 0;
-            bottom: 1rem;
+            left: -100%;
+            bottom: 2px;
 
-            width: 0;
-            height: 1.5rem;
-            background: rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 1px;
+            background: var(--color-gradient);
 
-            /*background: rgba(255,214,0,0.1);*/
-            /*background: rgba(211,36,255,0.1);*/
-
-            transition: all 0.3s;
           }
 
           &:hover {
             &:before {
-              width: 100%;
+              transform: translate3d(200%, 0, 0);
+              transition: all 1s;
             }
-
             font-weight: 500;
+            background: var(--color-gradient-bg);
           }
         }
       }

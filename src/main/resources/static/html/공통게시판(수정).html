@@ -113,99 +113,53 @@
         <div class="sub">
             <div class="sub-tit-area">
                 <div class="sub-tit-wrap">
-                    <span class="tit">게시판</span>
-                </div>
-
-                <!-- 검색박스 -->
-                <div class="search-box">
-                    <div class="search-box-inner">
-                        <!-- 셀렉트박스 -->
-                        <div class="custom-select-box" style="width: 120px;">
-                            <button type="button" class="select-btn">
-                                <span></span>
-                            </button>
-                            <ul class="select-options">
-                                <li class="select-option is-selected" data-value="전체">전체</li>
-                                <li class="select-option" data-value="제목">제목</li>
-                                <li class="select-option" data-value="내용">내용</li>
-                                <li class="select-option" data-value="호스트">호스트</li>
-                            </ul>
-                        </div>
-                        <!--// 셀렉트박스 -->
-
-                        <div class="search-input">
-                            <input type="text" name="" id="">
-                        </div>
-
-                        <button type="button" class="btn md fill-gray">검색</button>
-                    </div>
-                    <!--// 검색박스 -->
+                    <span class="tit">게시판 수정</span>
                 </div>
             </div>
 
 
-            <div class="board mt50-xl">
-                <div class="table-wrap v1">
-                    <table>
-                        <colgroup>
-                            <col style="width: 160px">
-                            <col style="width: auto">
-                            <col style="width: 260px">
-                        </colgroup>
+            <div class="board-view">
+                <div class="view-head">
+                    <div class="view-tit-wrap">
+                        <div class="form row">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">제목</span>
+                            </div>
+                            <div class="form-cont">
+                                <input type="text" name="" id="">
+                            </div>
+                        </div>
 
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 공지 -->
-                        <tr>
-                            <td><span class="txt-yellow txt-bold">공지</span></td>
-                            <td><span class="tb-tit">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</span></td>
-                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>
-                        </tr>
-                        <!--// 공지 -->
-                        <!-- 일반 -->
-                        <tr>
-                            <td><span class="tb-basic">15</span></td>
-                            <td><span class="tb-tit">제목입니다제목입니다</span></td>
-                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>
-                        </tr>
-                        <!--// 일반 -->
-
-                        <!-- 데이터 없을때 -->
-                        <tr class="no-data">
-                            <td colspan="3">데이터가 없습니다.</td>
-                        </tr>
-                        <!--// 데이터 없을때 -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 페이지네이션 -->
-                <div class="pagination">
-                    <div class="arrow-area">
-                        <button type="button" class="prev-all"><i class="ico"></i></button>
-                        <button type="button" class="prev"><i class="ico"></i></button>
-                    </div>
-                    <ul class="pagination-ul">
-                        <li class="active"><button type="button" class="pages">1</button></li>
-                        <li><button type="button" class="pages">2</button></li>
-                        <li><button type="button" class="pages">3</button></li>
-                        <li><button type="button" class="pages">4</button></li>
-                        <li><button type="button" class="pages">5</button></li>
-                    </ul>
-                    <div class="arrow-area">
-                        <button type="button" class="next"><i class="ico"></i></button>
-                        <button type="button" class="next-all"><i class="ico"></i></button>
+                        <div class="form row">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">날짜</span>
+                            </div>
+                            <div class="form-cont">
+                                <input type="text" name="" id="">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!--// 페이지네이션 -->
+
+                <div class="view-body">
+                    <div class="form col">
+                        <div class="form-tit-wrap">
+                            <span class="form-tit">내용</span>
+                        </div>
+
+                        <textarea name="" id="" cols="30" rows="10"></textarea>
+
+                    </div>
+                </div>
+
+                <div class="view-foot">
+                    <div class="btn-wrap">
+                        <button type="button" class="btn sm fill-gray">목록으로 돌아가기</button>
+                    </div>
+                </div>
 
             </div>
+
 
         </div>
 
@@ -237,8 +191,6 @@
 
 </div>
 <!-- //wrap -->
-
-
 
 </body>
 </html>

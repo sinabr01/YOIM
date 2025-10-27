@@ -29,6 +29,20 @@ const iaData = [
         url: "공통게시판(목록).html",
         note: ""
     },{
+        depth1: "공통",
+        depth2: "서브",
+        depth3: "3.게시판",
+        depth4: "",
+        url: "공통게시판(조회).html",
+        note: ""
+    },{
+        depth1: "공통",
+        depth2: "서브",
+        depth3: "3.게시판",
+        depth4: "",
+        url: "공통게시판(수정).html",
+        note: ""
+    },{
         depth1: "모임",
         depth2: "게시판",
         depth3: "1.목록",
