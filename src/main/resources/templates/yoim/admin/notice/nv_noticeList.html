@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+
+<head>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script th:inline="javascript">
+
+    </script>
+</head>
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+
+    <main id="contents">
+    <form name="searchFrm" id="searchFrm" method="post">
+        <input type="hidden" name="currentPage" id="currentPage" />
+        <div class="sub">
+            <div class="sub-tit-area">
+                <div class="sub-tit-wrap">
+                    <span class="tit">게시판</span>
+                </div>
+
+                <!-- 검색박스 -->
+                <div class="search-box">
+                    <div class="search-box-inner">
+                        <!-- 셀렉트박스 -->
+                        <div class="custom-select-box" style="width: 120px;">
+                            <button type="button" class="select-btn">
+                                <span></span>
+                            </button>
+                            <ul class="select-options">
+                                <li class="select-option is-selected" data-value="전체">전체</li>
+                                <li class="select-option" data-value="제목">제목</li>
+                                <li class="select-option" data-value="내용">내용</li>
+                                <li class="select-option" data-value="호스트">호스트</li>
+                            </ul>
+                        </div>
+                        <!--// 셀렉트박스 -->
+
+                        <div class="search-input">
+                            <input type="text" name="" id="">
+                        </div>
+
+                        <button type="button" class="btn md fill-gray">검색</button>
+                    </div>
+                    <!--// 검색박스 -->
+                </div>
+            </div>
+
+
+            <div class="board mt50-xl">
+                <div class="table-wrap v1">
+                    <table>
+                        <colgroup>
+                            <col style="width: 160px">
+                            <col style="width: auto">
+                            <col style="width: 260px">
+                        </colgroup>
+
+                        <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>등록일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 공지 -->
+                        <tr th:each="list,idx : ${plist}">
+                            <td><span class="txt-yellow txt-bold">공지</span></td>
+                            <td onclick="location.href='/admin/noticeList'"><span class="tb-tit">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</span></td>
+                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>
+                        </tr>
+<!--                        &lt;!&ndash;// 공지 &ndash;&gt;-->
+<!--                        &lt;!&ndash; 일반 &ndash;&gt;-->
+<!--                        <tr>-->
+<!--                            <td><span class="tb-basic">15</span></td>-->
+<!--                            <td><span class="tb-tit">제목입니다제목입니다</span></td>-->
+<!--                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>-->
+<!--                        </tr>-->
+                        <!--// 일반 -->
+
+                        <!-- 데이터 없을때 -->
+                        <tr th:if="${#lists.isEmpty(plist)}" class="no-data">
+                            <td colspan="3">조회된 데이터가 없어요.</td>
+                        </tr>
+                        <!--// 데이터 없을때 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination" th:utext="${page}">
+                </div>
+                <!--// 페이지네이션 -->
+
+            </div>
+
+        </div>
+    </form>
+
+    </main>
+
+
+
+
+</div>
+<!-- //wrap -->
+
+
+
+</body>
+</html>
