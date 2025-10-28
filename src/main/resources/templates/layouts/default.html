@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<meta charset="UTF-8">
 
@@ -8,23 +9,23 @@
     <title>YOIM</title>
 
     <!-- pubfile -->
-    <link rel="stylesheet" href="/resource/assets/libs/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" th:href="@{/resource/assets/libs/jquery-ui/jquery-ui.min.css}" />
 
-    <link rel="stylesheet" href="/resource/assets/infra/fonts/Pretendard.css">
-    <link rel="stylesheet" href="/resource/assets/infra/css/reset.css">
-    <link rel="stylesheet" href="/resource/assets/infra/css/utility.css">
-    <link rel="stylesheet" href="/resource/assets/infra/css/component.css">
-    <link rel="stylesheet" href="/resource/assets/infra/css/common.css">
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/fonts/Pretendard.css}" />
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/css/utility.css}" />
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/css/component.css}" />
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/css/common.css}" />
 
-    <script src="/resource/assets/libs/jquery/jquery-3.5.1.min.js"></script>
-    <script src="/resource/assets/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script th:src="@{/resource/assets/libs/jquery/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/resource/assets/libs/jquery-ui/jquery-ui.min.js}"></script>
 
-    <script src="/resource/assets/infra/js/common.js"></script>
-
+    <script th:src="@{/resource/assets/infra/js/common.js}"></script>
 
     <!-- 서브에만 들어가는 파일 -->
-    <link rel="stylesheet" href="/resource/assets/infra/css/sub.css">
-    <script src="/resource/assets/infra/js/sub.js"></script>
+    <link rel="stylesheet" th:href="@{/resource/assets/infra/css/sub.css}" />
+    <script th:src="@{/resource/assets/infra/js/sub.js}"></script>
+
     <!--// 메인에만 들어가는 파일 -->
 
     <!-- //pubfile -->

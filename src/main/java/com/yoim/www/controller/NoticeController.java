@@ -3,6 +3,7 @@ package com.yoim.www.controller;
 import com.yoim.www.model.KakaoApi;
 import com.yoim.www.model.User;
 import com.yoim.www.serviceImpl.NaverOauthService;
+import com.yoim.www.serviceImpl.NoticeService;
 import com.yoim.www.serviceImpl.UserAuthService;
 import com.yoim.www.serviceImpl.UserService;
 import com.yoim.www.util.NaverProfileParser;
@@ -32,35 +33,35 @@ import java.util.HashMap;
 
 @Controller
 public class NoticeController {
-	
-//	@Autowired
-//	private KakaoApi kakaoApi;
-//
-//	@Autowired
-//	UserAuthService userAuthService;
-//
-//	@Autowired
-//	UserService userService;
-	
 
+	@Autowired
+	NoticeService noticeService;
 	
 	private static Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
-	@RequestMapping(value = "/admin/nv_noticeList")
-	public String admin_nv_noticeList(
+	@RequestMapping(value = "/admin/notice/nv_noticeList")
+	public String admin_notice_nv_noticeList(
 			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage,
 			Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HashMap<String,Object> param = new HashMap<>();
+		int total = noticeService.noticeTotalCount(param);
 		PagingAction page = new PagingAction(
 				currentPage,
-				20,//ret.getBody().getTotalElements()
+				total,
 				10,
 				5,
 				"searchFrm",
 				"");
-//		model.addAttribute("plist", ret.getBody().getContent());
-//		model.addAttribute("maxnumber", ret.getBody().getTotalElements() - ((currentPage - 1) * 10));
+		model.addAttribute("plist", noticeService.noticeSelect(param));
+		model.addAttribute("maxnumber", total - ((currentPage - 1) * 10));
 		model.addAttribute("page", page.getPagingHtml());
 	    return "yoim/admin/notice/nv_noticeList";
+	}
+
+	@RequestMapping(value = "/admin/notice/nv_noticeForm")
+	public String admin_notice_nv_noticeForm(
+			Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		return "yoim/admin/notice/nv_noticeForm";
 	}
 	
 

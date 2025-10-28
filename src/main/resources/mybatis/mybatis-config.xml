@@ -23,6 +23,7 @@
 		<typeAlias alias="chatRoom" type="com.yoim.www.model.ChatRoom"/>
 		<typeAlias alias="messageDto" type="com.yoim.www.model.MessageDto"/>
 		<typeAlias alias="messagePayload" type="com.yoim.www.model.MessagePayload"/>
+		<typeAlias alias="notice" type="com.yoim.www.model.Notice"/>
 	</typeAliases>
 
 </configuration>

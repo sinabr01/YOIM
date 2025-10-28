@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+
+<head>
+    <!-- TinyMCE CDN -->
+    <!-- Place the first <script> tag in your HTML's <head> -->
+    <script src="https://cdn.tiny.cloud/1/sq75j4bwgspyoz54kyffnlbvm1kjmi7wtzn74ezyh5kzy52h/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+
+    <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+
+
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+
+            tinymce.init({
+                selector: '#content',   // 우리가 아래에서 지정할 textarea
+                language: 'ko-KR',
+                menubar: false,
+                branding: false,
+                plugins: 'lists link image',
+                toolbar: 'undo redo | styles | bold italic underline | bullist numlist | link image | removeformat',
+                placeholder: '내용을 입력하세요.',
+                height: 300
+            });
+
+            // 폼 전송 전에 따로 복사할 필요 없음
+            // TinyMCE는 submit 시 자동으로 textarea 값(content HTML) 채워줌
+        });
+    </script>
+</head>
+
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+
+    <main id="contents">
+
+        <div class="sub">
+            <div class="sub-tit-area">
+                <div class="sub-tit-wrap">
+                    <span class="tit"
+                          th:text="${#strings.isEmpty(noticeId)} ? '게시판 등록' : '게시판 수정'"></span>
+                </div>
+            </div>
+
+            <!-- form 전체 감싸기 -->
+            <form id="noticeForm"
+                  th:action="@{/admin/notice/ts_noticeUpsert}"
+                  method="post">
+
+                <!-- 수정일 경우 noticeId 전달 -->
+                <input type="hidden" name="noticeId" th:value="${noticeId}"/>
+
+                <div class="board-view">
+                    <div class="view-head">
+                        <div class="view-tit-wrap">
+
+                            <div class="form row">
+                                <div class="form-tit-wrap">
+                                    <span class="form-tit">제목</span>
+                                </div>
+                                <div class="form-cont">
+                                    <input type="text" name="title" id="title">
+                                </div>
+                            </div>
+
+                            <div class="form row">
+                                <div class="form-tit-wrap">
+                                    <span class="form-tit">날짜</span>
+                                </div>
+                                <div class="form-cont">
+                                    <input type="text" name="" id="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="view-body">
+                        <div class="form col">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">내용</span>
+                            </div>
+                            <textarea id="content"
+                                      style="width:100%;"
+                                      name="content"
+                                      placeholder="내용을 입력하세요."></textarea>
+
+                        </div>
+                    </div>
+
+                    <div class="view-foot">
+                        <div class="btn-wrap">
+                            <button type="button" class="btn sm fill-gray"
+                                    th:onclick="|location.href='@{/admin/notice/nv_noticeList}'|">
+                                목록으로 돌아가기
+                            </button>
+
+                            <button type="submit" class="btn sm fill-gray">
+                                <span th:text="${#strings.isEmpty(noticeId)} ? '등록' : '수정'">등록</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+            <!-- //form -->
+
+        </div>
+
+    </main>
+
+</div>
+<!-- //wrap -->
+
+</body>
+</html>
