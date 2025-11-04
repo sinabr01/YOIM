@@ -32,8 +32,8 @@ public class NoticeService {
 		mapper.noticeDelete(param);
 	}
 
-	public void noticeUpsert(HashMap<String, Object> param) {
-		mapper.noticeUpsert(param);
+	public int noticeUpsert(Notice notice) {
+		return mapper.noticeUpsert(notice);
 	}
 
 }

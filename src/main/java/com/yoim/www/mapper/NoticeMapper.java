@@ -13,5 +13,5 @@ public interface NoticeMapper {
 	public int noticeTotalCount(HashMap<String, Object> param);
 	public Notice noticeView(HashMap<String, Object> param);
 	public void noticeDelete(HashMap<String, Object> param);
-	public void noticeUpsert(HashMap<String, Object> param);
+	public int noticeUpsert(Notice notice);
 }

@@ -6,7 +6,23 @@
 
 <head>
     <script th:inline="javascript">
+        $(document).ready(function() {
+            document.querySelectorAll('.auto-format').forEach(el => {
+                el.textContent = formatDateStr(el.dataset.date);
+            });
+        })
 
+        function formatDateStr(str) {
+            if (!str) return '';
+            const d = new Date(str.replace(' ', 'T'));
+            if (isNaN(d)) return str;
+            return d.toLocaleString('ko-KR', {
+                year: '2-digit', month: 'numeric', day: 'numeric',
+                weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true
+            }).replace(/\./g, '.').replace(/\s+/g, ' ').trim();
+        }
+
+        // 자동 실행
     </script>
 </head>
 <body>
@@ -71,18 +87,17 @@
                         <tbody>
                         <!-- 공지 -->
                         <tr th:each="list,idx : ${plist}">
-                            <td><span class="txt-yellow txt-bold">공지</span></td>
-                            <td onclick="location.href='/admin/noticeList'"><span class="tb-tit">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</span></td>
-                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>
+                            <td>
+                                <span class="txt-yellow txt-bold" th:if="${list.pinnedYn == 'Y'}">공지</span>
+                                <span class="tb-basic" th:if="${list.pinnedYn == 'N'}"
+                                      th:text="${maxnumber - ((currentPage - 1) * 10) - idx.index}"></span>
+                            </td>
+                            <td onclick="location.href='/admin/noticeList'"><span class="tb-tit" th:text="${list.title}"></span></td>
+                            <td><span class="tb-date"><!-- ${list.registDt} -->
+                                <i class="icon calendar_gray"></i>
+                                <span th:attr="data-date=${list.registDt}" class="auto-format"></span>
+                              </span></td>
                         </tr>
-<!--                        &lt;!&ndash;// 공지 &ndash;&gt;-->
-<!--                        &lt;!&ndash; 일반 &ndash;&gt;-->
-<!--                        <tr>-->
-<!--                            <td><span class="tb-basic">15</span></td>-->
-<!--                            <td><span class="tb-tit">제목입니다제목입니다</span></td>-->
-<!--                            <td><span class="tb-date"><i class="icon calendar_gray"></i>25.6.22(일) 오후 12:20</span></td>-->
-<!--                        </tr>-->
-                        <!--// 일반 -->
 
                         <!-- 데이터 없을때 -->
                         <tr th:if="${#lists.isEmpty(plist)}" class="no-data">

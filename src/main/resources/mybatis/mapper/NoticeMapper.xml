@@ -6,7 +6,7 @@
 <mapper namespace="com.yoim.www.mapper.NoticeMapper">
 	
 	<resultMap type="notice" id="getSelectMap">
-		<result property="noticeId" column="noticeId"/>
+		<result property="noticeId" column="notice_id"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="pinnedYn" column="pinned_yn"/>
@@ -20,6 +20,10 @@
 	<select id="noticeSelect" resultMap="getSelectMap" parameterType="hashmap">
 		select *
 		from tb_notice
+		ORDER BY
+			CASE WHEN pinned_yn = 'Y' THEN 0 ELSE 1 END,  -- 공지는 위로
+			regist_dt DESC
+			LIMIT #{pagestart}, #{pagesize}
 	</select>
 
 	<select id="noticeTotalCount" resultType="int" parameterType="hashmap">
@@ -37,7 +41,7 @@
 		delete from tb_notice where notice_id = #{noticeId}
 	</delete>
 	
-	<insert id="noticeUpsert" parameterType="hashmap">
+	<insert id="noticeUpsert" parameterType="notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert into tb_notice
 		(
 		title,
