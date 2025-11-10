@@ -24,6 +24,7 @@
 		<typeAlias alias="messageDto" type="com.yoim.www.model.MessageDto"/>
 		<typeAlias alias="messagePayload" type="com.yoim.www.model.MessagePayload"/>
 		<typeAlias alias="notice" type="com.yoim.www.model.Notice"/>
+		<typeAlias alias="cmmnCode" type="com.yoim.www.model.CmmnCode"/>
 	</typeAliases>
 
 </configuration>

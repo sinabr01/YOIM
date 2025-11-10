@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yoim.www.mapper.CmmnCodeMapper">
+	
+	<resultMap type="cmmnCode" id="getSelectMap">
+		<result property="codeTyId" column="code_ty_id"/>
+		<result property="codeId" column="code_id"/>
+		<result property="codeNm" column="code_nm"/>
+		<result property="codeEngNm" column="code_eng_nm"/>
+		<result property="codeDc" column="code_dc"/>
+		<result property="codeSn" column="code_sn"/>
+		<result property="useAt" column="use_at"/>
+		<result property="registId" column="regist_id"/>
+		<result property="registDt" column="regist_dt"/>
+		<result property="updusrId" column="updusr_id"/>
+		<result property="updtDt" column="updt_dt"/>
+	</resultMap>
+	
+	<select id="cmmnCodeSelect" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_cmmn_code
+		where code_ty_id = #{codeTyId}
+		order by code_sn asc
+	</select>
+
+</mapper>

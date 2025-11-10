@@ -10,6 +10,23 @@
             document.querySelectorAll('.auto-format').forEach(el => {
                 el.textContent = formatDateStr(el.dataset.date);
             });
+            $('#noticeCode li').on('click', function() {
+                // 모든 항목 선택 해제
+                $('#noticeCode li').removeClass('is-selected');
+                // 현재 클릭된 항목만 선택
+                $(this).addClass('is-selected');
+
+                // hidden input과 label 갱신
+                $('#searchType').val($(this).data('value'));
+                $('#selectedLabel').text($(this).text());
+            });
+            // 🔹 Enter 누르면 form 자동 submit
+            $('#keyword').on('keypress', function(e) {
+                if (e.which === 13) { // Enter key
+                    e.preventDefault(); // 엔터 기본 동작 방지 (필요시)
+                    $('#searchFrm').submit();
+                }
+            });
         })
 
         function formatDateStr(str) {
@@ -31,7 +48,7 @@
 <div id="container" layout:fragment="content">
 
     <main id="contents">
-    <form name="searchFrm" id="searchFrm" method="post">
+    <form name="searchFrm" id="searchFrm" method="get">
         <input type="hidden" name="currentPage" id="currentPage" />
         <div class="sub">
             <div class="sub-tit-area">
@@ -47,20 +64,24 @@
                             <button type="button" class="select-btn">
                                 <span></span>
                             </button>
-                            <ul class="select-options">
-                                <li class="select-option is-selected" data-value="전체">전체</li>
-                                <li class="select-option" data-value="제목">제목</li>
-                                <li class="select-option" data-value="내용">내용</li>
-                                <li class="select-option" data-value="호스트">호스트</li>
+                            <ul id="noticeCode" class="select-options">
+                                <li th:each="code, idx : ${noticeCode}"
+                                    th:id="|opt_${code.codeId}|"
+                                    th:text="${code.codeNm}"
+                                    th:attr="data-value=${code.codeId}"
+                                    th:classappend="${code.codeId == searchType} ? ' is-selected' : ''"
+                                    class="select-option">
+                                </li>
                             </ul>
+                            <input type="hidden" name="searchType" id="searchType"/>
                         </div>
                         <!--// 셀렉트박스 -->
 
                         <div class="search-input">
-                            <input type="text" name="" id="">
+                            <input type="text" name="keyword" id="keyword" th:value="${keyword}">
                         </div>
 
-                        <button type="button" class="btn md fill-gray">검색</button>
+                        <button type="submit" class="btn md fill-gray">검색</button>
                         <button type="button" class="btn md fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeForm}'|">글쓰기</button>
                     </div>
                     <!--// 검색박스 -->
@@ -92,7 +113,7 @@
                                 <span class="tb-basic" th:if="${list.pinnedYn == 'N'}"
                                       th:text="${maxnumber - ((currentPage - 1) * 10) - idx.index}"></span>
                             </td>
-                            <td onclick="location.href='/admin/noticeList'"><span class="tb-tit" th:text="${list.title}"></span></td>
+                            <td th:onclick="|location.href='@{/admin/notice/nv_noticeView(noticeId=${list.noticeId})}'|"><span class="tb-tit" th:text="${list.title}"></span></td>
                             <td><span class="tb-date"><!-- ${list.registDt} -->
                                 <i class="icon calendar_gray"></i>
                                 <span th:attr="data-date=${list.registDt}" class="auto-format"></span>

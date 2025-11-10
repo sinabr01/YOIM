@@ -20,6 +20,9 @@
 	<select id="noticeSelect" resultMap="getSelectMap" parameterType="hashmap">
 		select *
 		from tb_notice
+		<if test="keyword != null and keyword != ''">
+			where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
 		ORDER BY
 			CASE WHEN pinned_yn = 'Y' THEN 0 ELSE 1 END,  -- 공지는 위로
 			regist_dt DESC
@@ -29,6 +32,9 @@
 	<select id="noticeTotalCount" resultType="int" parameterType="hashmap">
 		select count(*)
 		from tb_notice
+		<if test="keyword != null and keyword != ''">
+		where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
 	</select>
 
 	<select id="noticeView" resultMap="getSelectMap" parameterType="hashmap">
@@ -44,6 +50,7 @@
 	<insert id="noticeUpsert" parameterType="notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert into tb_notice
 		(
+		notice_id,
 		title,
 		content,
 		pinned_yn,
@@ -52,7 +59,8 @@
 		regist_dt
 		)
 		values(
-		#{title},
+	    #{noticeId},
+	    #{title},
 		#{content},
 		#{pinnedYn},
 		#{useYn},

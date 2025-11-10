@@ -44,7 +44,7 @@
             <div class="sub-tit-area">
                 <div class="sub-tit-wrap">
                     <span class="tit"
-                          th:text="${#strings.isEmpty(noticeId)} ? '게시판 등록' : '게시판 수정'"></span>
+                          th:text="${#strings.isEmpty(dataVO.noticeId)} ? '게시판 등록' : '게시판 수정'"></span>
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                   method="post">
 
                 <!-- 수정일 경우 noticeId 전달 -->
-                <input type="hidden" name="noticeId" th:value="${noticeId}"/>
+                <input type="hidden" name="noticeId" th:value="${dataVO.noticeId}"/>
 
                 <div class="board-view">
                     <div class="view-head">
@@ -65,7 +65,7 @@
                                     <span class="form-tit">제목</span>
                                 </div>
                                 <div class="form-cont">
-                                    <input type="text" name="title" id="title">
+                                    <input type="text" name="title" id="title" th:value="${dataVO.title}">
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                             <textarea id="content"
                                       style="width:100%;"
                                       name="content"
-                                      placeholder="내용을 입력하세요."></textarea>
+                                      placeholder="내용을 입력하세요." th:utext="${dataVO.content}"></textarea>
 
                         </div>
                     </div>
