@@ -37,12 +37,12 @@
                 </div>
 
                 <div class="view-foot">
-                    <div class="btn-wrap">
-                        <button type="button" class="btn sm fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeList}'|">목록으로 돌아가기</button>
-                    </div>
+<!--                    <div class="btn-wrap">-->
+<!--                        <button type="button" class="btn sm fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeList}'|">목록으로 돌아가기</button>-->
+<!--                    </div>-->
 
                     <!-- 파티 관계자일경우 -->
-                    <div class="btn-wrap center">
+                    <div class="btn-wrap">
                         <button type="button" class="btn sm line-red" th:onclick="|location.href='@{/admin/notice/ts_noticeDelete(noticeId=${dataVO.noticeId})}'|">삭제하기</button>
                         <button type="button" class="btn sm fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeList}'|">목록으로 돌아가기</button>
                         <button type="button" class="btn sm fill-blue" th:onclick="|location.href='@{/admin/notice/nv_noticeForm(noticeId=${dataVO.noticeId})}'|">수정하기</button>

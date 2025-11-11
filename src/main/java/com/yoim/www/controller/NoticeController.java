@@ -40,37 +40,57 @@ public class NoticeController {
 	CmmnCodeService cmmnCodeService;
 	
 	private static Logger logger = LoggerFactory.getLogger(NoticeController.class);
-	
-	@RequestMapping(value = "/admin/notice/nv_noticeList")
+
+	@RequestMapping("/admin/notice/nv_noticeList")
 	public String admin_notice_nv_noticeList(
 			@RequestParam(value = "searchType", required = false, defaultValue = "title") String searchType,
 			@RequestParam(value = "keyword", required = false) String keyword,
-			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage,
-			Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HashMap<String,Object> param = new HashMap<>();
-		param.put("pagestart", (currentPage-1)*10);
-		param.put("pagesize", 10);
-		if(keyword!=null){
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model, HttpServletRequest request) throws IOException {
+
+		HttpSession session = request.getSession();
+
+		// ✅ 세션 불러오기 (널·빈문자열 방지)
+		searchType = (searchType == null)
+				? (String) session.getAttribute("notice_searchType") : searchType;
+		keyword = (keyword == null)
+				? (String) session.getAttribute("notice_keyword") : keyword;
+
+		// ✅ 페이지 복원
+		String pageStr = String.valueOf(session.getAttribute("notice_currentPage"));
+		if (currentPage == 1 && pageStr != null) {
+			try { currentPage = Integer.parseInt(pageStr.trim()); }
+			catch (NumberFormatException ignore) { currentPage = 1; }
+		}
+
+		// ✅ 세션 저장
+		session.setAttribute("notice_searchType", searchType);
+		session.setAttribute("notice_keyword", keyword);
+		session.setAttribute("notice_currentPage", currentPage);
+
+		// ✅ 파라미터 구성
+		int pageSize = 10;
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("pagestart", (currentPage - 1) * pageSize);
+		param.put("pagesize", pageSize);
+		if (keyword != null) {
 			param.put("searchType", searchType);
 			param.put("keyword", keyword);
 		}
+
+		// ✅ 데이터 조회
 		int total = noticeService.noticeTotalCount(param);
-		PagingAction page = new PagingAction(
-				currentPage,
-				total,
-				10,
-				5,
-				"searchFrm",
-				"");
-		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("plist", noticeService.noticeSelect(param));
+		model.addAttribute("page", new PagingAction(currentPage, total, 10, 5, "searchFrm", "").getPagingHtml());
 		model.addAttribute("maxnumber", total);
-		model.addAttribute("page", page.getPagingHtml());
+		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("noticeCode", cmmnCodeService.cmmnCodeSelect("NOTICE_CODE"));
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
-	    return "yoim/admin/notice/nv_noticeList";
+
+		return "yoim/admin/notice/nv_noticeList";
 	}
+
 
 	@RequestMapping(value = "/admin/notice/nv_noticeForm")
 	public String admin_notice_nv_noticeForm(

@@ -10,11 +10,13 @@ import java.util.List;
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpSessionListener;
 
+import com.yoim.www.interceptor.NoticeSearchInterceptor;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -33,6 +36,16 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @EnableWebMvc
 @EnableConfigurationProperties
 public class WebConfiguration implements WebMvcConfigurer {
+
+	@Autowired
+	private NoticeSearchInterceptor noticeSearchInterceptor;
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(noticeSearchInterceptor)
+				.addPathPatterns("/admin/notice/**"); // 적용 경로
+	}
+
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		// TODO Auto-generated method stub
