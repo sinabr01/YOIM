@@ -322,6 +322,9 @@
 .contents-wrap .join-wrap .btn-wrap {
   margin-top: 3rem;
 }
+.contents-wrap .join-wrap .btn-wrap .btn {
+  width: 100%;
+}
 .contents-wrap .join-complete {
   display: flex;
   flex-direction: column;

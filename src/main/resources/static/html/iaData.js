@@ -43,6 +43,27 @@ const iaData = [
         url: "공통게시판(수정).html",
         note: ""
     },{
+        depth1: "호스트",
+        depth2: "호스트",
+        depth3: "1.템플릿",
+        depth4: "등록",
+        url: "템플릿(등록).html",
+        note: ""
+    },{
+        depth1: "호스트",
+        depth2: "호스트",
+        depth3: "1.템플릿",
+        depth4: "조회",
+        url: "템플릿(조회).html",
+        note: ""
+    },{
+        depth1: "호스트",
+        depth2: "호스트",
+        depth3: "파티",
+        depth4: "상세",
+        url: "파티(상세-호스트).html",
+        note: ""
+    },{
         depth1: "모임",
         depth2: "게시판",
         depth3: "1.목록",
@@ -63,13 +84,7 @@ const iaData = [
         depth4: "",
         url: "파티(상세).html",
         note: ""
-    },{
-        depth1: "모임",
-        depth2: "게시판",
-        depth3: "4.조회(호스트)",
-        depth4: "",
-        url: "파티(상세-호스트).html",
-        note: ""
     },
+
 
 ];

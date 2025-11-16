@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     initTopButton(); //탑버튼 기능
     scrollX(); //가로스크롤
     scrollY(); //세로스크롤
-    
-    
+
+
     // --- 메뉴 열기/닫기 ---
     const mypageBtn = document.querySelector('#header .ico.menu');
     const menuAll = document.querySelector('.menu-all');
@@ -15,9 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
         menuAll.addEventListener('click', (e) => e.stopPropagation());
         document.addEventListener('click', () => menuAll.classList.remove('active'));
     }
-
-
-
 
 
 // --- 커스텀 셀렉트 박스 ---
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 커스텀 이벤트
             selectBox.dispatchEvent(new CustomEvent('select:change', {
-                detail: { value: selectedValue, text: option.textContent.trim() }
+                detail: {value: selectedValue, text: option.textContent.trim()}
             }));
         });
     });
@@ -88,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function initTopButton() {
     const btn = document.querySelector('.top-btn');
+    if (!btn) return;
+
     const showPoint = window.innerHeight * 0.7;
 
     window.addEventListener('scroll', () => {
@@ -98,6 +97,7 @@ function initTopButton() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
+
 
 
 // --- 테이블 가로 스크롤 ---
@@ -119,3 +119,37 @@ function scrollY() {
         });
     });
 }
+
+// --- 데이트피커 ---
+$(function () {
+    flatpickr(".datepicker", {
+        dateFormat: "Y-m-d",
+        locale: "ko"
+    });
+
+
+/*    $(".datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',   // yyyy-mm-dd 형식
+        showOtherMonths: true,    // 앞/뒤 달 날짜도 표시
+        showMonthAfterYear: true, // 년도 먼저
+        changeYear: true,         // 년도 선택 드롭다운
+        changeMonth: true,        // 월 선택 드롭다운
+        yearSuffix: "년",
+        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        dayNamesMin: ['일','월','화','수','목','금','토']
+    });*/
+
+    $(".startDate").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (selectedDate) {
+            $("#endDate").datepicker("option", "minDate", selectedDate);
+        }
+    });
+    $(".endDate").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (selectedDate) {
+            $("#startDate").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+
+});
