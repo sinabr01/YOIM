@@ -59,7 +59,14 @@ const iaData = [
     },{
         depth1: "호스트",
         depth2: "호스트",
-        depth3: "파티",
+        depth3: "2.파티",
+        depth4: "등록",
+        url: "파티등록(등록).html",
+        note: ""
+    },{
+        depth1: "호스트",
+        depth2: "호스트",
+        depth3: "2.파티",
         depth4: "상세",
         url: "파티(상세-호스트).html",
         note: ""

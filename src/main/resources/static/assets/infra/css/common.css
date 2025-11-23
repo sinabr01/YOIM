@@ -355,7 +355,7 @@ html, body {
 .top-btn-area {
   position: fixed;
   right: 5rem;
-  bottom: 5rem;
+  bottom: 20rem;
   z-index: 9995;
 }
 @media (max-width: 767px) {

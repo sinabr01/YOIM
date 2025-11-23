@@ -340,3 +340,27 @@ $(function () {
 
     toggleActiveClass();
 });
+
+
+
+function initSticky() {
+    const el = document.querySelector('.template-btn-wrap');
+    if (!el) return;
+
+    // 페이지 로딩 시 요소의 원래 위치 계산
+    const originalTop = el.getBoundingClientRect().top + window.scrollY;
+
+    function onScroll() {
+        const scrollTop = window.scrollY || window.pageYOffset;
+
+        console.log(scrollTop)
+        if (scrollTop >= originalTop) {
+            el.classList.add('stuck');
+        } else {
+            el.classList.remove('stuck');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+}

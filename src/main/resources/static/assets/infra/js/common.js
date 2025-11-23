@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     initTopButton(); //탑버튼 기능
-    scrollX(); //가로스크롤
-    scrollY(); //세로스크롤
+    scrollx(); //가로스크롤
+    scrolly(); //세로스크롤
 
 
     // --- 메뉴 열기/닫기 ---
@@ -87,7 +87,7 @@ function initTopButton() {
     const btn = document.querySelector('.top-btn');
     if (!btn) return;
 
-    const showPoint = window.innerHeight * 0.7;
+    const showPoint = window.innerHeight * 0.95;
 
     window.addEventListener('scroll', () => {
         btn.classList.toggle('show', window.scrollY > showPoint);
@@ -101,7 +101,7 @@ function initTopButton() {
 
 
 // --- 테이블 가로 스크롤 ---
-function scrollX() {
+function scrollx() {
     $('.scroll-x').each(function () {
         $(this).mCustomScrollbar({
             axis: "x",
@@ -111,7 +111,7 @@ function scrollX() {
 }
 
 // --- 테이블/리스트 세로 스크롤 공통 ---
-function scrollY() {
+function scrolly() {
     $('.scroll-y').each(function () {
         $(this).mCustomScrollbar({
             axis: "x",
