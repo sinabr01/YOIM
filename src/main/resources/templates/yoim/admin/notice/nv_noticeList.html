@@ -7,9 +7,12 @@
 <head>
     <script th:inline="javascript">
         $(document).ready(function() {
+
+            //공통 날짜포맷 해주기
             document.querySelectorAll('.auto-format').forEach(el => {
                 el.textContent = formatDateStr(el.dataset.date);
             });
+
             $('#noticeCode li').on('click', function() {
                 // 모든 항목 선택 해제
                 $('#noticeCode li').removeClass('is-selected');
@@ -20,7 +23,7 @@
                 $('#searchType').val($(this).data('value'));
                 $('#selectedLabel').text($(this).text());
             });
-            // 🔹 Enter 누르면 form 자동 submit
+            //  Enter 누르면 form 자동 submit
             $('#keyword').on('keypress', function(e) {
                 if (e.which === 13) { // Enter key
                     e.preventDefault(); // 엔터 기본 동작 방지 (필요시)
@@ -29,15 +32,7 @@
             });
         })
 
-        function formatDateStr(str) {
-            if (!str) return '';
-            const d = new Date(str.replace(' ', 'T'));
-            if (isNaN(d)) return str;
-            return d.toLocaleString('ko-KR', {
-                year: '2-digit', month: 'numeric', day: 'numeric',
-                weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true
-            }).replace(/\./g, '.').replace(/\s+/g, ' ').trim();
-        }
+
 
         // 자동 실행
     </script>

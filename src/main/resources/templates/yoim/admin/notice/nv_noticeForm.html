@@ -68,6 +68,52 @@
                                     <input type="text" name="title" id="title" th:value="${dataVO.title}">
                                 </div>
                             </div>
+                            <div class="form row">
+                                <div class="form-tit-wrap">
+                                    <span class="form-tit required">상단 고정 여부</span>
+                                </div>
+                                <div class="form-cont">
+                                    <div class="radio-group v2">
+                                        <label class="radio">
+                                            <input type="radio" name="pinnedYn" value="Y"
+                                                   th:checked="${dataVO != null and dataVO.pinnedYn == 'Y'}">
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">사용</span>
+                                        </label>
+
+                                        <label class="radio">
+                                            <input type="radio" name="pinnedYn" value="N"
+                                                   th:checked="${dataVO != null and dataVO.pinnedYn == 'N'}">
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">미사용</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form row">
+                                <div class="form-tit-wrap">
+                                    <span class="form-tit required">노출 여부</span>
+                                </div>
+                                <div class="form-cont">
+                                    <div class="radio-group v2">
+                                        <label class="radio">
+                                            <input type="radio" name="useYn" value="Y"
+                                                   th:checked="${dataVO != null and dataVO.useYn == 'Y'}">
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">사용</span>
+                                        </label>
+
+                                        <label class="radio">
+                                            <input type="radio" name="useYn" value="N"
+                                                   th:checked="${dataVO != null and dataVO.useYn == 'N'}">
+                                            <span class="fake-radio"></span>
+                                            <span class="txt">미사용</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
 
 <!--                            <div class="form row">-->
 <!--                                <div class="form-tit-wrap">-->
@@ -101,7 +147,7 @@
                                 목록으로 돌아가기
                             </button>
 
-                            <button type="submit" class="btn sm fill-gray">
+                            <button type="submit" class="btn sm fill-blue">
                                 <span th:text="${#strings.isEmpty(noticeId)} ? '등록' : '수정'">등록</span>
                             </button>
                         </div>

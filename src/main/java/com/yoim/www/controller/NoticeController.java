@@ -50,25 +50,25 @@ public class NoticeController {
 
 		HttpSession session = request.getSession();
 
-		// ✅ 세션 불러오기 (널·빈문자열 방지)
+		//  세션 불러오기 (널·빈문자열 방지)
 		searchType = (searchType == null)
 				? (String) session.getAttribute("notice_searchType") : searchType;
 		keyword = (keyword == null)
 				? (String) session.getAttribute("notice_keyword") : keyword;
 
-		// ✅ 페이지 복원
+		// 페이지 복원
 		String pageStr = String.valueOf(session.getAttribute("notice_currentPage"));
 		if (currentPage == 1 && pageStr != null) {
 			try { currentPage = Integer.parseInt(pageStr.trim()); }
 			catch (NumberFormatException ignore) { currentPage = 1; }
 		}
 
-		// ✅ 세션 저장
+		//  세션 저장
 		session.setAttribute("notice_searchType", searchType);
 		session.setAttribute("notice_keyword", keyword);
 		session.setAttribute("notice_currentPage", currentPage);
 
-		// ✅ 파라미터 구성
+		//  파라미터 구성
 		int pageSize = 10;
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("pagestart", (currentPage - 1) * pageSize);
@@ -78,7 +78,7 @@ public class NoticeController {
 			param.put("keyword", keyword);
 		}
 
-		// ✅ 데이터 조회
+		//  데이터 조회
 		int total = noticeService.noticeTotalCount(param);
 		model.addAttribute("plist", noticeService.noticeSelect(param));
 		model.addAttribute("page", new PagingAction(currentPage, total, 10, 5, "searchFrm", "").getPagingHtml());
@@ -123,11 +123,8 @@ public class NoticeController {
 			@RequestParam Map<String, Object> paramMap,
 			Notice notice,
 			Model model) throws IOException {
-		notice.setPinnedYn("N");
-		notice.setUseYn("Y");
 		noticeService.noticeUpsert(notice);
-		model.addAttribute("dataVO", notice);
-		return "yoim/admin/notice/nv_noticeView";
+		return "redirect:/admin/notice/nv_noticeView?noticeId=" + notice.getNoticeId();
 	}
 
 	@RequestMapping(value = "/admin/notice/ts_noticeDelete")

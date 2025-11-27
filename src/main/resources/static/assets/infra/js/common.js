@@ -153,3 +153,14 @@ $(function () {
     });
 
 });
+
+
+function formatDateStr(str) {
+    if (!str) return '';
+    const d = new Date(str.replace(' ', 'T'));
+    if (isNaN(d)) return str;
+    return d.toLocaleString('ko-KR', {
+        year: '2-digit', month: 'numeric', day: 'numeric',
+        weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true
+    }).replace(/\./g, '.').replace(/\s+/g, ' ').trim();
+}
