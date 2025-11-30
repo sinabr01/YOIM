@@ -164,3 +164,20 @@ function formatDateStr(str) {
         weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true
     }).replace(/\./g, '.').replace(/\s+/g, ' ').trim();
 }
+
+
+
+//공통팝업
+// 팝업 열기
+function openPopup(popupClass) {
+    const popup = document.querySelector(`.${popupClass}`);
+    if (!popup) return;
+    popup.classList.add('open');
+}
+
+// 팝업 닫기
+function closePopup(trigger) {
+    const popup = trigger.closest('.layer-popup');
+    if (!popup) return;
+    popup.classList.remove('open');
+}

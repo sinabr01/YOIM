@@ -22,6 +22,12 @@
     <script src="../assets/libs/jquery-ui/jquery-ui.min.js"></script>
     <script src="../assets/libs/swiper/swiper.js"></script>
 
+
+    <!-- 데이트피커 추가 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
+
     <!-- 스크롤 커스텀 -->
     <link rel="stylesheet" href="../assets/libs/jquery-mCustomScrollbar/jquery.mCustomScrollbar.min.css">
     <script src="../assets/libs/jquery-mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
@@ -113,38 +119,38 @@
 
         <div class="sub">
 
-
-            <!-- 제목 -->
-            <div class="view-tit-area">
-                <div class="like-info-area">
-                    <button type="button" class="ico like-vector_red like-btn"></button>
-                    <span class="like-num">35</span>
-                </div>
-                <div class="view-tit-wrap">
-                    <span class="view-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</span>
-                </div>
-            </div>
-            <!--// 제목 -->
-
-            <!-- sub-info-area -->
-            <div class="sub-info-area">
-                <div class="left-area">
-                    <div class="date-wrap">
-                        <i class="ico calendar_gray"></i>
-                        <span class="date">25.10.12(일) 오후 6:30</span>
+            <div class="basic-tit-area">
+                <!-- 제목 -->
+                <div class="view-tit-area">
+                    <div class="like-info-area">
+                        <button type="button" class="ico like-vector_red like-btn"></button>
+                        <span class="like-num">35</span>
                     </div>
-                    <div class="review-wrap">
-                        <i class="ico review_yellow"></i>
-                        <span class="review-num">4.9 (1,539)</span>
+                    <div class="view-tit-wrap">
+                        <span class="view-tit">[남자초초급구][미션젠가 251회][추석연휴 다 휩쓸어간 파티]</span>
                     </div>
                 </div>
+                <!--// 제목 -->
 
-                <div class="book-btn-area">
-                    <button type="button" class="btn md fill-red">신청하기</button>
+                <!-- sub-info-area -->
+                <div class="sub-info-area">
+                    <div class="left-area">
+                        <div class="date-wrap">
+                            <i class="ico calendar_gray"></i>
+                            <span class="date">25.10.12(일) 오후 6:30</span>
+                        </div>
+                        <div class="review-wrap">
+                            <i class="ico review_yellow"></i>
+                            <span class="review-num">4.9 (1,539)</span>
+                        </div>
+                    </div>
+
+                    <div class="book-btn-area">
+                        <button type="button" class="btn md fill-red" onclick="openPopup('agree-popup')">신청하기</button>
+                    </div>
                 </div>
+                <!--// sub-info-area -->
             </div>
-            <!--// sub-info-area -->
-
 
             <!-- 탭 -->
             <div class="tab-area v1">
@@ -195,12 +201,14 @@
                                             <span class="review-num">4.9 (1,539)</span>
                                         </div>
                                     </div>
+
+                                    <div class="book-btn-area">
+                                        <button type="button" class="btn md fill-red"
+                                                onclick="openPopup('agree-popup')">신청하기
+                                        </button>
+                                    </div>
                                 </div>
                                 <!--// sub-info-area -->
-                            </div>
-
-                            <div class="book-btn-area">
-                                <button type="button" class="btn md fill-red">신청하기</button>
                             </div>
                         </div>
 
@@ -685,28 +693,20 @@
                                 </div>
 
                                 <div class="right">
-                                    <div class="common-sd swiper-initialized swiper-horizontal swiper-backface-hidden">
-                                        <div class="swiper-wrapper" id="swiper-wrapper-00e1a13b10a1045749"
-                                             aria-live="off"
-                                             style="transition-duration: 0ms; transform: translate3d(-840px, 0px, 0px); transition-delay: 0ms;">
-
-
-                                            <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 3"
-                                                 data-swiper-slide-index="1" style="width: 420px;">
+                                    <div class="common-sd">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
                                                 <img src="../assets/infra/img/@temp/test2.jpg" alt="">
                                             </div>
-                                            <div class="swiper-slide swiper-slide-prev" role="group" aria-label="3 / 3"
-                                                 data-swiper-slide-index="2" style="width: 420px;">
+                                            <div class="swiper-slide">
                                                 <img src="../assets/infra/img/@temp/profile.png" alt="">
                                             </div>
-                                            <div class="swiper-slide swiper-slide-active" role="group"
-                                                 aria-label="1 / 3" data-swiper-slide-index="0" style="width: 420px;">
-                                                <!-- 이미지 사이즈 420 * 236 정도면 딱맞음 -->
+                                            <div class="swiper-slide">
                                                 <img src="../assets/infra/img/@temp/test1.jpg" alt="">
                                             </div>
                                         </div>
-                                        <span class="swiper-notification" aria-live="assertive"
-                                              aria-atomic="true"></span></div>
+                                        <span class="common-sd-pagination"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -815,7 +815,7 @@
             <!--// 탭 -->
 
 
-            <div class="btn-wrap center mt100-xl">
+            <div class="btn-wrap center mt100-xl mt70-sm">
                 <button type="button" class="btn md fill-gray">목록</button>
             </div>
 
@@ -849,6 +849,77 @@
 
 </div>
 <!-- //wrap -->
+
+
+<!-- 신청하기 클릭 후 나오는 팝업 -->
+<div class="layer-popup agree-popup">
+    <div class="layer-popup-wrap" style="width: 500px;">
+
+        <div class="layer-popup-cont">
+            <div class="pop-head">
+                <span class="tit-wrap">파티 신청서</span>
+
+                <button type="button" class="popup-close" onclick="closePopup(this)"></button>
+            </div>
+
+            <div class="pop-body">
+
+                <div class="notice-agree">
+                    <div class="notice-agree__text">
+                        <div class="notice-agree__title-wrap">
+                            <i class="ico notice_red"></i>
+                            <h2 class="notice-agree__title">
+
+                                모두가 즐거운 모임이 될 수 있도록<br>
+                                꼭 확인해 주세요!
+                            </h2>
+                        </div>
+
+                        <ol class="notice-agree__list">
+                            <li>
+                                1. 모임 시작 전 부득이하게 참여가 어려워진 경우,
+                                반드시 호스트에게 미리 알려주세요.
+                            </li>
+                            <li>
+                                2. 무단으로 불참하거나, 함께하는 멤버들에게
+                                피해를 주는 경우 이용 제재를 받게돼요.
+                            </li>
+                            <li>
+                                3. 호스트가 제공하는 얼리버드 할인 혜택은
+                                정상적으로 모임 참여를 완료해야 제공돼요.
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="notice-agree__choice">
+                        <div class="notice-agree__radios">
+                            <div class="radio-group v3">
+                                <label class="radio">
+                                    <input type="radio" name="agree" value="Y">
+                                    <span class="fake-radio"></span>
+                                    <span class="txt">동의합니다.</span>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="agree" value="N">
+                                    <span class="fake-radio"></span>
+                                    <span class="txt">동의 하지 않습니다.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="btn-wrap center mt24-xl">
+                            <button type="button" class="btn line-gray md" onclick="closePopup(this)">취소</button>
+                            <button type="button" class="btn fill-blue md btn-next" disabled>다음</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--// 신청하기 클릭 후 나오는 팝업 -->
+
 
 <script>
 
@@ -911,22 +982,65 @@
 
     $(function () {
         const swiper = new Swiper(".user-slide", {
-
             loop: true,
             speed: 800,
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-
+            spaceBetween: 0,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false,
             },
+            effect: 'slide',
+
+            slidesPerView: 1,
+
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                }
+            }
+        });
 
 
-            effect: 'slide', // 'slide', 'fade', 'cube', 'coverflow', 'flip' 중 선택
+        const swiper2 = new Swiper(".common-sd", {
+            loop: true,
+            /*speed: 800,*/
+            slidesPerView: 1,
+            spaceBetween: 0,
+
+            /*autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },*/
+
+            effect: 'fade',
+
+            pagination: {
+                el: '.common-sd-pagination',
+                clickable: true,
+            },
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const radios = document.querySelectorAll('input[name="agree"]');
+        const nextBtn = document.querySelector('.btn-next');
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                nextBtn.disabled = (radio.value !== 'Y');
+            });
         });
     });
 
+
 </script>
+
+
 </body>
 </html>

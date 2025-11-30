@@ -440,7 +440,7 @@
                         <div class="form-tit-wrap">
                             <span class="form-tit">성비 설정</span>
                         </div>
-                        <div class="form-cont">
+                        <div class="form-cont" style="flex-direction: column;align-items: flex-start">
                             <div class="radio-group v2">
                                 <label class="radio">
                                     <input type="radio" name="ddd">
@@ -700,10 +700,6 @@
                                         <span class="fake-radio"></span>
                                         <span class="txt">미설정</span>
                                     </label>
-                                    <div class="flex-txt">
-                                        <input type="text" name="" id="">
-                                        %
-                                    </div>
                                 </div>
                             </div>
 
@@ -711,6 +707,10 @@
                                 <input type="text" class="datepicker" placeholder="날짜 선택">
                                 _
                                 <input type="text" class="datepicker" placeholder="날짜 선택">
+                                <div class="flex-txt">
+                                    <input type="text" name="" id="" style="width: 70px;">
+                                    %
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -751,10 +751,65 @@
             <!--// 등록 바디 -->
 
 
+            <!-- 이미지 업로드 -->
+            <div class="upload-wrap">
+                <!-- 업로드 버튼(빈 슬롯) -->
+                <label class="upload-item upload-add">
+                    <input type="file" accept="image/*" hidden>
+                    <div class="icon-wrap">
+                        <i class="icon-camera"></i>
+                        <span class="count">1/10(선택)</span>
+                    </div>
+                </label>
+
+                <!-- 업로드된 이미지 박스 -->
+                <div class="img-flex-wrap">
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/profile.png" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/profile.png" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/profile.png" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/profile.png" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/profile.png" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                    <div class="upload-item uploaded">
+                        <img src="../assets/infra/img/@temp/test1.jpg" alt="">
+                        <button class="btn-del" type="button">×</button>
+                    </div>
+                </div>
+            </div>
+            <!--// 이미지 업로드 -->
 
 
-
-            <div class="btn-wrap center mt30-xl">
+            <div class="btn-wrap center mt100-xl mt70-sm">
                 <button type="button" class="btn sm line-blue">임시저장</button>
                 <button type="button" class="btn sm fill-blue">저장</button>
                 <button type="button" class="btn sm line-gray">취소</button>
@@ -798,21 +853,24 @@
 
         initPartyOptionVisibility();
         initGenderRatioSlider();
+
+
+        initUploadRemove(); //이미지업로드 삭제버튼 기능
     });
 
     function initPartyOptionVisibility() {
         const partyBody = document.querySelector('.party-body');
         if (!partyBody) return;
 
-        const memberRow       = partyBody.querySelector('.member-open-row');
-        const participantRow  = partyBody.querySelector('.participant-open-row');
-        const genderRow       = partyBody.querySelector('.gender-setting-row');
+        const memberRow = partyBody.querySelector('.member-open-row');
+        const participantRow = partyBody.querySelector('.participant-open-row');
+        const genderRow = partyBody.querySelector('.gender-setting-row');
         const genderDesignRow = partyBody.querySelector('.gender-design-row');
-        const ageRow          = partyBody.querySelector('.age-setting-row');
-        const ageSelectWrap   = ageRow ? ageRow.querySelector('.age-select-wrap') : null;
+        const ageRow = partyBody.querySelector('.age-setting-row');
+        const ageSelectWrap = ageRow ? ageRow.querySelector('.age-select-wrap') : null;
 
         const priceSettingRow = partyBody.querySelector('.price-setting-row');
-        const priceRows       = partyBody.querySelectorAll('.price-row');
+        const priceRows = partyBody.querySelectorAll('.price-row');
 
         // 인원수 공개여부에 따라 참여인원 공개여부 숨김/표시
         function updateMemberVisibility() {
@@ -906,24 +964,35 @@
         const box = document.querySelector('.gender-ratio');
         if (!box) return;
 
-        const range      = box.querySelector('.gender-range');
+        const range = box.querySelector('.gender-range');
         const femaleSpan = box.querySelector('.female-count');
-        const maleSpan   = box.querySelector('.male-count');
+        const maleSpan = box.querySelector('.male-count');
 
         if (!range || !femaleSpan || !maleSpan) return;
 
         function render() {
-            const value  = parseInt(range.value, 10) || 0; // 0~10
+            const value = parseInt(range.value, 10) || 0; // 0~10
             const female = 10 - value;
-            const male   = value;
+            const male = value;
             femaleSpan.textContent = female;
-            maleSpan.textContent   = male;
+            maleSpan.textContent = male;
         }
 
         range.addEventListener('input', render);
         range.addEventListener('change', render);
 
         render(); // 초기 5:5
+    }
+
+
+
+    function initUploadRemove() {
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-del")) {
+                const item = e.target.closest(".upload-item");
+                if (item) item.remove();
+            }
+        });
     }
 
 

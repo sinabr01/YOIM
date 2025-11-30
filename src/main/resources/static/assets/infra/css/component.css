@@ -116,6 +116,24 @@
   background: url("../img/common/ico_review_gray.png") no-repeat center;
   background-size: cover;
 }
+.ico.notice_red {
+  width: 4.5rem;
+  height: 4.5rem;
+  background: url("../img/common/ico_notice_red.png") no-repeat center;
+  background-size: contain;
+}
+.ico.edit_bk {
+  width: 3.2rem;
+  height: 3.2rem;
+  background: url("../img/common/ico_edit_black.png") no-repeat center;
+  background-size: cover;
+}
+.ico.edit_gray {
+  width: 3.2rem;
+  height: 3.2rem;
+  background: url("../img/common/ico_edit_gray.png") no-repeat center;
+  background-size: cover;
+}
 
 /* -------------------------------------------------------------- */
 /* btn-color */
@@ -153,6 +171,9 @@
   justify-content: center;
   border-radius: 8px;
   /*min-height:4.2rem;*/
+}
+.btn.wd100 {
+  width: 100% !important;
 }
 .btn.xs {
   padding: 0.5rem 1rem;
@@ -308,6 +329,11 @@
   color: var(--color-txt);
   display: block;
 }
+@media (max-width: 767px) {
+  .tit-wrap.v2 .tit {
+    font-size: 2.2rem;
+  }
+}
 .tit-wrap.v2 .txt {
   font-size: 1.8rem;
   font-weight: 400;
@@ -316,6 +342,11 @@
   color: rgb(153, 150, 150);
   display: block;
   margin-top: 1rem;
+}
+@media (max-width: 767px) {
+  .tit-wrap.v2 .txt {
+    font-size: 1.6rem;
+  }
 }
 .tit-wrap.v3 .tit {
   font-size: 2rem;
@@ -390,6 +421,11 @@ input[type=number].error {
 .radio-group.v2 .radio {
   flex: none;
 }
+.radio-group.v3 {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
 
 .radio {
   display: inline-flex;
@@ -455,7 +491,7 @@ input[type=number].error {
 .check {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   gap: 1rem;
   /* 실제 체크박스 숨기기 */
   /* 가짜 박스 */
@@ -481,6 +517,7 @@ input[type=number].error {
   box-sizing: border-box;
   transition: all 0.2s ease;
   position: relative;
+  flex: none;
 }
 .check input[type=checkbox]:checked + .fake-box {
   background: var(--color-primary-purple);
@@ -689,6 +726,11 @@ input[type=number].error {
   position: relative;
   padding: 1rem;
 }
+@media (max-width: 767px) {
+  .tab-btn-area ul li .tab-btn {
+    font-size: 1.4rem;
+  }
+}
 .tab-btn-area ul li .tab-btn.active {
   color: var(--color-txt);
   font-weight: 700;
@@ -708,6 +750,11 @@ input[type=number].error {
 
 .tab-cont-area .tab + .tab {
   margin-top: 10rem;
+}
+@media (max-width: 767px) {
+  .tab-cont-area .tab + .tab {
+    margin-top: 7rem;
+  }
 }
 
 /* 폼 */
@@ -945,4 +992,100 @@ textarea {
 }
 .text-input-wrap input[type=text] {
   flex: 1 0;
+}
+
+.layer-popup {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: none;
+}
+.layer-popup.open {
+  display: block;
+}
+.layer-popup .layer-popup-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+.layer-popup .layer-popup-cont {
+  overflow: hidden;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+.layer-popup .pop-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.6rem;
+}
+.layer-popup .pop-head .tit-wrap {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+.layer-popup .pop-head .popup-close {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url("../img/common/close_btn_gray.png") no-repeat center;
+  background-size: 2rem 2rem;
+}
+.layer-popup .pop-body {
+  padding: 3rem 0;
+}
+
+.notice-agree {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+}
+.notice-agree .notice-agree__title-wrap {
+  display: flex;
+}
+.notice-agree .notice-agree__title-wrap .ico {
+  margin-right: 1rem;
+}
+.notice-agree__title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.notice-agree__list {
+  margin-top: 1.5rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: notice-counter;
+}
+.notice-agree__list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+.notice-agree .notice-agree__choice {
+  margin-top: 2.4rem;
+}
+.notice-agree .notice-agree__radios {
+  padding: 1rem;
+  background: var(--color-gray-200);
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+.notice-agree .btn-wrap .btn-next {
+  opacity: 1;
+  cursor: pointer;
+}
+.notice-agree .btn-wrap .btn-next:disabled {
+  opacity: 0.3;
+  cursor: none;
 }

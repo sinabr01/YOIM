@@ -168,6 +168,30 @@
     background: url("../img/common/ico_review_gray.png") no-repeat center;
     background-size: cover;
   }
+
+  &.notice_red {
+    width: 4.5rem;
+    height: 4.5rem;
+
+    background: url("../img/common/ico_notice_red.png") no-repeat center;
+    background-size: contain;
+  }
+
+  &.edit_bk {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    background: url("../img/common/ico_edit_black.png") no-repeat center;
+    background-size: cover;
+  }
+
+  &.edit_gray {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    background: url("../img/common/ico_edit_gray.png") no-repeat center;
+    background-size: cover;
+  }
 }
 
 /* -------------------------------------------------------------- */
@@ -211,6 +235,10 @@
   justify-content: center;
   border-radius: 8px;
   /*min-height:4.2rem;*/
+
+  &.wd100 {
+    width: 100% !important;
+  }
 
   &.xs {
     padding: 0.5rem 1rem;
@@ -417,6 +445,10 @@
       color: var(--color-txt);
 
       display: block;
+
+      @include MOBILE {
+        font-size: 2.2rem;
+      }
     }
 
     .txt {
@@ -428,6 +460,10 @@
 
       display: block;
       margin-top: 1rem;
+
+      @include MOBILE {
+        font-size: 1.6rem;
+      }
     }
   }
 
@@ -516,6 +552,12 @@ input[type="number"] {
       flex: none;
     }
   }
+
+  &.v3 {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
 }
 
 .radio {
@@ -591,7 +633,7 @@ input[type="number"] {
 .check {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
 
   gap: 1rem;
 
@@ -618,6 +660,7 @@ input[type="number"] {
     box-sizing: border-box;
     transition: all 0.2s ease;
     position: relative;
+    flex:none;
   }
 
   /* 체크됐을 때 */
@@ -889,6 +932,11 @@ input[type="number"] {
         position: relative;
         padding: 1rem;
 
+        @include MOBILE {
+          font-size: 1.4rem;
+
+        }
+
         &.active {
           color: var(--color-txt);
           font-weight: 700;
@@ -916,6 +964,10 @@ input[type="number"] {
   .tab {
     & + .tab {
       margin-top: 10rem;
+
+      @include MOBILE {
+        margin-top: 7rem;
+      }
     }
   }
 }
@@ -940,6 +992,7 @@ input[type="number"] {
           padding: 1rem 0;
           min-height: 3.8rem;
         }
+
         .form-cont {
           width: 100%;
           display: flex;
@@ -1199,5 +1252,135 @@ textarea {
 
   input[type="text"] {
     flex: 1 0;
+  }
+}
+
+
+// * -------------------------------
+// * 레이어팝업
+// * -------------------------------
+.layer-popup {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+
+  display: none;
+
+  &.open {
+    display: block;
+  }
+
+  .layer-popup-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+
+    max-width:90%;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+
+  .layer-popup-cont {
+    overflow:hidden;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+    max-height:70vh;
+  }
+
+
+  .pop-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.6rem;
+
+
+    .tit-wrap {
+      font-size: 2.4rem;
+      font-weight: 600;
+    }
+
+    .popup-close {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      background: url("../img/common/close_btn_gray.png") no-repeat center;
+      background-size: 2rem 2rem;
+    }
+  }
+
+  .pop-body {
+    padding: 3rem 0;
+
+
+  }
+}
+
+
+.notice-agree {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+
+  .notice-agree__title-wrap {
+    display: flex;
+
+    .ico {
+      margin-right: 1rem;
+    }
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.5
+  }
+
+  &__list {
+    margin-top: 1.5rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: notice-counter;
+
+    li {
+      margin-bottom: 0.8rem;
+      font-size: 1.6rem;
+      line-height: 1.6;
+      color: var(--color-gray-700);
+
+    }
+  }
+
+  .notice-agree {
+    &__choice {
+      margin-top: 2.4rem;
+    }
+    &__radios {
+      padding: 1rem;
+      background: var(--color-gray-200);
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+  }
+
+  .btn-wrap {
+    .btn-next {
+      opacity: 1;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: none;
+      }
+    }
   }
 }
