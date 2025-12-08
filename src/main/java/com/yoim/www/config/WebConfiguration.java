@@ -10,7 +10,7 @@ import java.util.List;
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpSessionListener;
 
-import com.yoim.www.interceptor.NoticeSearchInterceptor;
+import com.yoim.www.interceptor.SearchInterceptor;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -38,12 +38,15 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 public class WebConfiguration implements WebMvcConfigurer {
 
 	@Autowired
-	private NoticeSearchInterceptor noticeSearchInterceptor;
+	private SearchInterceptor searchInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(noticeSearchInterceptor)
-				.addPathPatterns("/admin/notice/**"); // 적용 경로
+		registry.addInterceptor(searchInterceptor)
+				.addPathPatterns(
+						"/admin/notice/**",
+						"/host/companyTemplate/**"
+				);
 	}
 
 	@Override

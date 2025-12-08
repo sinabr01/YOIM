@@ -13,9 +13,9 @@
                 el.textContent = formatDateStr(el.dataset.date);
             });
 
-            $('#noticeCode li').on('click', function() {
+            $('#companyTemplateCode li').on('click', function() {
                 // 모든 항목 선택 해제
-                $('#noticeCode li').removeClass('is-selected');
+                $('#companyTemplateCode li').removeClass('is-selected');
                 // 현재 클릭된 항목만 선택
                 $(this).addClass('is-selected');
 
@@ -48,7 +48,7 @@
         <div class="sub">
             <div class="sub-tit-area">
                 <div class="sub-tit-wrap">
-                    <span class="tit">공지사항</span>
+                    <span class="tit">모임 템플릿</span>
                 </div>
 
                 <!-- 검색박스 -->
@@ -59,8 +59,8 @@
                             <button type="button" class="select-btn">
                                 <span></span>
                             </button>
-                            <ul id="noticeCode" class="select-options">
-                                <li th:each="code, idx : ${noticeCode}"
+                            <ul id="companyTemplateCode" class="select-options">
+                                <li th:each="code, idx : ${companyTemplateCode}"
                                     th:id="|opt_${code.codeId}|"
                                     th:text="${code.codeNm}"
                                     th:attr="data-value=${code.codeId}"
@@ -77,7 +77,7 @@
                         </div>
 
                         <button type="submit" class="btn md fill-gray">검색</button>
-                        <button type="button" class="btn md fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeForm}'|">글쓰기</button>
+                        <button type="button" class="btn md fill-gray" th:onclick="|location.href='@{/admin/notice/nv_noticeForm}'|">추가</button>
                     </div>
                     <!--// 검색박스 -->
                 </div>
@@ -101,12 +101,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- 공지 -->
                         <tr th:each="list,idx : ${plist}">
                             <td>
-                                <span class="txt-yellow txt-bold" th:if="${list.pinnedYn == 'Y'}">공지</span>
-                                <span class="tb-basic" th:if="${list.pinnedYn == 'N'}"
-                                      th:text="${maxnumber - ((currentPage - 1) * 10) - idx.index}"></span>
+                                <span class="tb-basic" th:text="${maxnumber - ((currentPage - 1) * 10) - idx.index}"></span>
                             </td>
                             <td th:onclick="|location.href='@{/admin/notice/nv_noticeView(noticeId=${list.noticeId})}'|"><span class="tb-tit" th:text="${list.title}"></span></td>
                             <td><span class="tb-date"><!-- ${list.registDt} -->

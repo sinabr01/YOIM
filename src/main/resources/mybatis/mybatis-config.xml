@@ -24,6 +24,9 @@
 		<typeAlias alias="messageDto" type="com.yoim.www.model.MessageDto"/>
 		<typeAlias alias="messagePayload" type="com.yoim.www.model.MessagePayload"/>
 		<typeAlias alias="notice" type="com.yoim.www.model.Notice"/>
+		<typeAlias alias="companyTemplate" type="com.yoim.www.model.CompanyTemplate"/>
+		<typeAlias alias="qstDetail" type="com.yoim.www.model.QstDetail"/>
+		<typeAlias alias="templateQst" type="com.yoim.www.model.TemplateQst"/>
 		<typeAlias alias="cmmnCode" type="com.yoim.www.model.CmmnCode"/>
 	</typeAliases>
 
