@@ -353,7 +353,6 @@ function initSticky() {
     function onScroll() {
         const scrollTop = window.scrollY || window.pageYOffset;
 
-        console.log(scrollTop)
         if (scrollTop >= originalTop) {
             el.classList.add('stuck');
         } else {

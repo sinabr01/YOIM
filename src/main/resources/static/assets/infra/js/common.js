@@ -181,3 +181,26 @@ function closePopup(trigger) {
     if (!popup) return;
     popup.classList.remove('open');
 }
+
+function showButtonError(button, message, duration = 2000) {
+    // 원래 버튼 숨기기
+    button.style.display = 'none';
+
+    // 메시지 엘리먼트 생성
+    const msg = document.createElement('div');
+    msg.className = 'btn-error-msg';
+    msg.textContent = message;
+    msg.style.color = '#ff4d4d';
+    msg.style.fontSize = '14px';
+    msg.style.textAlign = 'center';
+    msg.style.margin = '6px 0';
+
+    // 버튼 위치에 메시지를 삽입
+    button.insertAdjacentElement('afterend', msg);
+
+    // duration(ms) 후 원래 상태로 복귀
+    setTimeout(() => {
+        msg.remove();
+        button.style.display = '';
+    }, duration);
+}

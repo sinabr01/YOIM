@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -108,13 +107,17 @@ public class CompanyTemplateController {
 		return "yoim/host/companyTemplate/nv_companyTemplateView";
 	}
 
-	@RequestMapping(value = "/host/companyTemplate/ts_companyTemplateUpsert")
+	@PostMapping(value = "/host/companyTemplate/ts_companyTemplateUpsert")
+	@ResponseBody
 	public String host_companyTemplate_ts_companyTemplateUpsert(
-			@RequestParam Map<String, Object> paramMap,
-			CompanyTemplate companyTemplate,
+			@RequestBody Map<String, Object> paramMap,
 			Model model) throws IOException {
-		companyTemplateService.companyTemplateUpsert(companyTemplate);
-		return "redirect:/host/companyTemplate/nv_companyTemplateView?companyTemplateId=" + companyTemplate.getTemplateId();
+
+		System.out.println(paramMap);
+
+		//companyTemplateService.companyTemplateUpsert(companyTemplate);
+		//return "redirect:/host/companyTemplate/nv_companyTemplateView?companyTemplateId=" + companyTemplate.getTemplateId();
+		return null;
 	}
 
 	@RequestMapping(value = "/host/companyTemplate/ts_companyTemplateDelete")
