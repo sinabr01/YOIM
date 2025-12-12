@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/default}">
+
+<head>
+    <script th:inline="javascript">
+
+
+
+
+
+        function buildTemplateData() {
+
+            const result = {
+                title: document.querySelector("#title").value.trim(),
+                questions: []
+            };
+
+            const qBoxes = document.querySelectorAll(".template-cont-box");
+
+            qBoxes.forEach((box, qIndex) => {
+
+                const questionText = box.querySelector("input[name='question']").value.trim();
+                const requiredYn = box.querySelector("input[name='required_yn']:checked") ? "Y" : "N";
+                const type = box.querySelector("input[name='type']:checked") ? "V" : "H";
+
+                const questionObj = {
+                    question: questionText,
+                    requiredYn: requiredYn,
+                    type: type,
+                    orderNo: qIndex + 1,
+                    details: []
+                };
+
+                // 상세 타입 요소들 수집
+                const detailBlocks = box.querySelectorAll(".template-q-item .form.col, .template-q-item .form.row");
+
+                detailBlocks.forEach((block, dIndex) => {
+
+                    let optionType = "";
+                    let qstName = null;
+
+                    if (block.classList.contains("date-type")) optionType = "date";
+                    if (block.classList.contains("check-type")) optionType = "check";
+                    if (block.classList.contains("radio-type")) optionType = "radio";
+                    if (block.classList.contains("select-type")) optionType = "select";
+                    if (block.classList.contains("text-type")) optionType = "text";
+
+                    const detailObj = {
+                        qstOption: optionType,
+                        qstName: null,
+                        orderNo: dIndex + 1,
+                        items: []
+                    };
+
+                    // 체크박스 / 라디오 / 셀렉트 / 텍스트 아이템 수집
+                    const itemRows = block.querySelectorAll(".has-btn, .select-input, .text-input");
+
+                    itemRows.forEach((row, iIndex) => {
+
+                        const input = row.querySelector("input[type='text']");
+                        if (!input) return;
+
+                        detailObj.items.push({
+                            itemName: input.value.trim(),
+                            orderNo: iIndex + 1
+                        });
+                    });
+
+                    questionObj.details.push(detailObj);
+                });
+
+                result.questions.push(questionObj);
+            });
+
+            //result
+
+            fetch("/host/companyTemplate/ts_companyTemplateUpsert", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(result)
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+
+
+            initSticky(); //버튼 상단 고정
+            initTemplateAdd(); //템플릿 틀
+            initTemplateTools(); // 각 요소 추가
+
+            // 질문 추가
+            function initTemplateAdd() {
+                const addBtn = document.querySelector('.add-q');
+                if (!addBtn) return;
+
+                addBtn.addEventListener('click', () => {
+                    const boxes = document.querySelectorAll('.board-view.template-cont-box');
+                    const lastBox = boxes[boxes.length - 1];
+                    if (!lastBox) return;
+
+                    const html = `
+<div class="board-view template-cont-box">
+
+    <div class="template-cont-top">
+        <div class="main-check">
+            <label class="radio">
+                <input type="radio" name="targetBox">
+                <span class="fake-radio"></span>
+                <span class="txt">이 질문에 넣기</span>
+            </label>
+        </div>
+
+        <button type="button" class="btn md fill-red remove-q-box">- 질문 삭제</button>
+    </div>
+
+    <div class="template-q-box">
+
+        <!-- 템플릿 공통부분 -->
+        <div class="template-q-common">
+
+            <div class="form row">
+                <div class="form-tit-wrap">
+                    <span class="form-tit">질문</span>
+                </div>
+                <div class="form-cont">
+                    <input type="text" name="question" value="">
+                </div>
+            </div>
+
+            <div class="form row">
+                <div class="form-tit-wrap">
+                    <span class="form-tit required">질문 필수 여부</span>
+                </div>
+                <div class="form-cont">
+                    <div class="check-group">
+                        <div class="check">
+                            <label>
+                                <input type="checkbox" name="required_yn" checked>
+                                <span class="fake-box"></span>
+                                <span class="txt">사용</span>
+                            </label>
+                        </div>
+
+                        <div class="check">
+                            <label>
+                                <input type="checkbox" name="required_yn">
+                                <span class="fake-box"></span>
+                                <span class="txt">미사용</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-tit-wrap">
+                    <span class="form-tit required">질문 형태</span>
+                </div>
+                <div class="form-cont">
+                    <div class="check-group">
+                        <div class="check">
+                            <label>
+                                <input type="checkbox" name="type">
+                                <span class="fake-box"></span>
+                                <span class="txt">가로</span>
+                            </label>
+                        </div>
+
+                        <div class="check">
+                            <label>
+                                <input type="checkbox" name="type" checked>
+                                <span class="fake-box"></span>
+                                <span class="txt">세로</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// 템플릿 공통부분 -->
+
+        <div class="division"></div>
+
+        <!-- 템플릿 개별유형 추가되는곳 -->
+        <div class="template-q-item">
+        </div>
+        <!--// 템플릿 개별유형 추가되는곳 -->
+
+    </div>
+</div>
+        `;
+
+                    // 마지막 템플릿 박스 뒤에 붙이기
+                    lastBox.insertAdjacentHTML('afterend', html);
+                });
+
+                document.addEventListener('click', (e) => {
+                    const delBlock = e.target.closest('.btn-del-block');
+                    if (delBlock) {
+                        const block = delBlock.closest('.form.col, .form.row');
+                        if (block) block.remove();
+                        return;
+                    }
+                });
+
+                // 유형삭제 버튼 (동적 요소) 처리
+                document.addEventListener('click', (e) => {
+                    const delBtn = e.target.closest('.remove-q-box');
+                    if (!delBtn) return;
+
+                    const box = delBtn.closest('.template-cont-box');
+                    if (!box) return;
+
+                    // 최소 1개는 남겨야 한다면 아래 활성화
+                    const allBoxes = document.querySelectorAll('.template-cont-box');
+                    if (allBoxes.length <= 1) {
+                        showButtonError(delBtn, '최소 1개의 질문은 남아 있어야 합니다.');
+                        return;
+                    }
+
+                    box.remove();
+                });
+            }
+
+
+// --- 템플릿 요소 추가 ---
+            function initTemplateTools() {
+                const btnAddDate = document.querySelector('.add-date');
+                const btnAddCheck = document.querySelector('.add-check');
+                const btnAddRadio = document.querySelector('.add-radio');
+                const btnAddSelect = document.querySelector('.add-select');
+
+
+                // 현재 "추가하기 곳" 으로 선택된 템플릿 박스의 .template-q-item 반환
+                function getActiveContainer() {
+                    const checked = document.querySelector('.template-cont-box .main-check input[type="radio"]:checked');
+                    if (!checked) return null;
+
+                    const box = checked.closest('.template-cont-box');
+                    if (!box) return null;
+
+                    return box.querySelector('.template-q-item');
+                }
+
+                function requireActiveContainer() {
+                    const target = getActiveContainer();
+                    if (!target) {
+                        alert('요소를 추가할 질문을 먼저 선택해주세요.');
+                        return null;
+                    }
+                    return target;
+                }
+
+                // 날짜 블럭 추가
+                if (btnAddDate) {
+                    btnAddDate.addEventListener('click', () => {
+                        const target = requireActiveContainer();
+                        if (!target) return;
+
+                        const html = `
+<div class="form row date-type">
+    <div class="form-tit-wrap">
+        <span class="form-tit">날짜</span>
+    </div>
+    <div class="form-cont">
+        <input type="text" class="datepicker" placeholder="날짜 선택">
+    </div>
+</div>
+`;
+                        target.insertAdjacentHTML('beforeend', html);
+
+                        const inputs = target.querySelectorAll('.date-type .datepicker');
+                        const lastInput = inputs[inputs.length - 1];
+                        if (lastInput && window.flatpickr) {
+                            flatpickr(lastInput, {
+                                dateFormat: 'Y-m-d',
+                                locale: 'ko'
+                            });
+                        }
+                    });
+                }
+
+                // 라디오 블럭 추가
+                if (btnAddRadio) {
+                    btnAddRadio.addEventListener('click', () => {
+                        const target = requireActiveContainer();
+                        if (!target) return;
+
+                        const html = `
+<div class="form col radio-type">
+    <div class="form-tit-wrap">
+        <span class="form-tit">라디오버튼</span>
+        <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+        <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+    </div>
+    <div class="form-cont">
+        <div class="radio-group v1">
+            <div class="has-btn">
+                <label class="radio">
+                    <input type="radio" name="agree">
+                    <span class="fake-radio"></span>
+                    <input type="text" value="">
+                </label>
+                <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+                        target.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+
+                // 체크 블럭 추가
+                if (btnAddCheck) {
+                    btnAddCheck.addEventListener('click', () => {
+                        const target = requireActiveContainer();
+                        if (!target) return;
+
+                        const html = `
+<div class="form col check-type">
+    <div class="form-tit-wrap">
+        <span class="form-tit">체크버튼</span>
+        <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+        <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+    </div>
+    <div class="form-cont">
+        <div class="radio-group v1">
+            <div class="has-btn">
+                <label class="check">
+                    <input type="checkbox" name="">
+                    <span class="fake-box"></span>
+                    <input type="text" value="">
+                </label>
+                <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+                        target.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+
+                // 셀렉트 블럭 추가
+                if (btnAddSelect) {
+                    btnAddSelect.addEventListener('click', () => {
+                        const target = requireActiveContainer();
+                        if (!target) return;
+
+                        const html = `
+<div class="form col select-type">
+    <div class="form-tit-wrap">
+        <span class="form-tit">셀렉트</span>
+        <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+        <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+    </div>
+    <div class="form-cont">
+        <div class="select-input-wrap">
+            <div class="select-input">
+                <span class="select-num">1</span>
+                <span class="dash"> - </span>
+                <input type="text" value="">
+                <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+                        target.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+
+                // 텍스트 입력 블럭 추가
+                const btnAddText = document.querySelector('.add-text');
+                if (btnAddText) {
+                    btnAddText.addEventListener('click', () => {
+                        const target = requireActiveContainer();
+                        if (!target) return;
+
+                        const html = `
+<div class="form col text-type">
+    <div class="form-tit-wrap">
+        <span class="form-tit">텍스트 입력</span>
+        <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+        <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+    </div>
+    <div class="form-cont">
+        <div class="text-input-wrap">
+            <div class="text-input">
+                <input type="text" name="" id="" value="">
+                <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+                        target.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+
+
+                // ------- 여기서부터는 각 유형 내부의 +추가 / -삭제 (이벤트 위임) -------
+
+                document.addEventListener('click', (e) => {
+                    const addBtn = e.target.closest('.btn-add-option');
+                    const delBtn = e.target.closest('.btn-del-option');
+
+                    if (addBtn) {
+                        const form = addBtn.closest('.form');
+                        if (!form) return;
+
+                        if (form.classList.contains('radio-type')) {
+                            const group = form.querySelector('.radio-group.v1');
+                            if (!group) return;
+
+                            const row = document.createElement('div');
+                            row.className = 'has-btn';
+                            row.innerHTML = `
+<label class="radio">
+    <input type="radio" name="agree">
+    <span class="fake-radio"></span>
+    <input type="text" value="">
+</label>
+<button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+`;
+                            group.appendChild(row);
+                        }
+
+                        if (form.classList.contains('check-type')) {
+                            const group = form.querySelector('.radio-group.v1');
+                            if (!group) return;
+
+                            const row = document.createElement('div');
+                            row.className = 'has-btn';
+                            row.innerHTML = `
+<label class="check">
+    <input type="checkbox" name="">
+    <span class="fake-box"></span>
+    <input type="text" value="">
+</label>
+<button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+`;
+                            group.appendChild(row);
+                        }
+
+                        if (form.classList.contains('select-type')) {
+                            const wrap = form.querySelector('.select-input-wrap');
+                            if (!wrap) return;
+
+                            const count = wrap.querySelectorAll('.select-input').length;
+                            const div = document.createElement('div');
+                            div.className = 'select-input';
+                            div.innerHTML = `
+<span class="select-num">${count + 1}</span>
+<span class="dash"> - </span>
+<input type="text" value="">
+<button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+`;
+                            wrap.appendChild(div);
+                        }
+
+                        if (addBtn) {
+                            const form = addBtn.closest('.form');
+                            if (!form) return;
+
+                            // 텍스트 타입
+                            if (form.classList.contains('text-type')) {
+                                const wrap = form.querySelector('.text-input-wrap');
+                                if (!wrap) return;
+
+                                const div = document.createElement('div');
+                                div.className = 'text-input';
+                                div.innerHTML = `
+<input type="text" value="">
+<button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+`;
+                                wrap.appendChild(div);
+                            }
+
+                        }
+                    }
+
+                    if (delBtn) {
+                        const form = delBtn.closest('.form');
+                        if (!form) return;
+
+                        if (form.classList.contains('radio-type') || form.classList.contains('check-type')) {
+                            const group = form.querySelector('.radio-group.v1');
+                            if (!group) return;
+
+                            const rows = group.querySelectorAll('.has-btn');
+                            if (rows.length <= 1) return; // 최소 1개 유지
+
+                            const row = delBtn.closest('.has-btn');
+                            if (row) row.remove();
+                        }
+
+                        if (form.classList.contains('select-type')) {
+                            const wrap = form.querySelector('.select-input-wrap');
+                            if (!wrap) return;
+
+                            const rows = wrap.querySelectorAll('.select-input');
+                            if (rows.length <= 1) return; // 최소 1개 유지
+
+                            const row = delBtn.closest('.select-input');
+                            if (row) row.remove();
+
+                            wrap.querySelectorAll('.select-input .select-num').forEach((span, idx) => {
+                                span.textContent = idx + 1;
+                            });
+                        }
+
+                        if (form.classList.contains('text-type')) {
+                            const wrap = form.querySelector('.text-input-wrap');
+                            if (!wrap) return;
+
+                            const items = wrap.querySelectorAll('.text-input');
+                            if (items.length <= 1) return; // 최소 1개 유지
+
+                            const row = delBtn.closest('.text-input');
+                            if (row) row.remove();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+<!-- wrap -->
+<div id="container" layout:fragment="content">
+
+    <main id="contents">
+
+        <div class="sub">
+            <div class="sub-tit-area">
+                <div class="sub-tit-wrap">
+                    <span class="tit">템플릿 등록</span>
+                </div>
+            </div>
+
+
+            <!-- 상단 버튼 영역 -->
+            <div class="template-btn-wrap">
+                <div class="btn-wrap">
+                    <button type="button" class="btn fill-red md add-q">+ 질문 추가</button>
+                    <button type="button" class="btn fill-blue md add-date">날짜 추가</button>
+                    <button type="button" class="btn fill-blue md add-check">체크버튼 추가</button>
+                    <button type="button" class="btn fill-blue md add-radio">라디오버튼 추가</button>
+                    <button type="button" class="btn fill-blue md add-select">셀렉트 추가</button>
+                    <button type="button" class="btn fill-blue md add-text">텍스트 추가</button>
+                </div>
+            </div>
+            <!--// 상단 버튼 영역 -->
+
+            <div class="board-view">
+                <div class="view-head">
+                    <div class="view-tit-wrap">
+                        <div class="form row">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">템플릿 제목</span>
+                            </div>
+                            <div class="form-cont">
+                                <input type="text" name="title" id="title">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 템플릿 항목 한개 -->
+            <div class="board-view template-cont-box">
+                <div class="template-cont-top">
+                    <div class="main-check">
+                        <label class="radio">
+                            <input type="radio" name="targetBox">
+                            <span class="fake-radio"></span>
+                            <span class="txt">이 질문에 넣기</span>
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn md fill-red remove-q-box">- 질문 삭제</button>
+                </div>
+
+                <div class="template-q-box">
+
+                    <!-- 템플릿 공통부분 -->
+                    <div class="template-q-common">
+                        <div class="form row">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">질문</span>
+                            </div>
+                            <div class="form-cont">
+                                <input type="text" name="question" value="">
+                            </div>
+                        </div>
+
+                        <div class="form row">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit required">질문 필수 여부</span>
+                            </div>
+                            <div class="form-cont">
+                                <div class="check-group">
+                                    <div class="check">
+                                        <label>
+                                            <input type="checkbox" name="required_yn" checked>
+                                            <span class="fake-box"></span>
+                                            <span class="txt">사용</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="check">
+                                        <label>
+                                            <input type="checkbox" name="required_yn" >
+                                            <span class="fake-box"></span>
+                                            <span class="txt">미사용</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-tit-wrap">
+                                <span class="form-tit required">질문 형태</span>
+                            </div>
+                            <div class="form-cont">
+                                <div class="check-group">
+                                    <div class="check">
+                                        <label>
+                                            <input type="checkbox" name="type" >
+                                            <span class="fake-box"></span>
+                                            <span class="txt">가로</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="check">
+                                        <label>
+                                            <input type="checkbox" name="type" checked>
+                                            <span class="fake-box"></span>
+                                            <span class="txt">세로</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 템플릿 공통부분 -->
+
+                    <div class="division"></div>
+
+                    <!-- 템플릿 개별유형 추가되는곳 -->
+                    <div class="template-q-item">
+                        <div class="form col radio-type">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">라디오버튼</span>
+                                <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+                                <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+                            </div>
+                            <div class="form-cont">
+                                <div class="radio-group v1">
+                                    <div class="has-btn">
+                                        <label class="radio">
+                                            <input type="radio" name="agree">
+                                            <span class="fake-radio"></span>
+                                            <input type="text" name="" id="" value="그렇다">
+                                        </label>
+
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+
+                                    <div class="has-btn">
+                                        <label class="radio">
+                                            <input type="radio" name="agree">
+                                            <span class="fake-radio"></span>
+                                            <input type="text" name="" id="" value="보통">
+                                        </label>
+
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+
+                                    <div class="has-btn">
+                                        <label class="radio">
+                                            <input type="radio" name="agree">
+                                            <span class="fake-radio"></span>
+                                            <input type="text" name="" id="" value="아니다">
+                                        </label>
+
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form col check-type">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">체크버튼</span>
+                                <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+                                <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+                            </div>
+                            <div class="form-cont">
+                                <div class="radio-group v1">
+                                    <div class="has-btn">
+
+                                        <label class="check">
+                                            <input type="checkbox" name="" id="">
+                                            <span class="fake-box"></span>
+                                            <input type="text" name="" id="" value="">
+                                        </label>
+
+
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form col select-type">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">셀렉트</span>
+                                <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+                                <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+                            </div>
+                            <div class="form-cont">
+                                <div class="select-input-wrap">
+                                    <div class="select-input">
+                                        <span class="select-num">1</span>
+                                        <span class="dash"> - </span>
+                                        <input type="text" name="" id="" value="">
+
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form col text-type">
+                            <div class="form-tit-wrap">
+                                <span class="form-tit">텍스트 입력</span>
+                                <button type="button" class="btn xs line-red btn-add-option">+ 추가</button>
+                                <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
+                            </div>
+                            <div class="form-cont">
+                                <div class="text-input-wrap">
+                                    <div class="text-input">
+                                        <input type="text" name="" id="" value="">
+                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 템플릿 개별유형 추가되는곳 -->
+                    </div>
+                </div>
+            </div>
+            <!--// 템플릿 항목 한개 -->
+
+
+            <div class="btn-wrap center mt30-xl">
+                <button type="button" class="btn sm fill-blue" onclick="buildTemplateData()">저장</button>
+                <button type="button" class="btn sm line-gray">취소</button>
+            </div>
+        </div>
+
+
+    </main>
+
+
+    <!-- footer -->
+
+    <!--// footer -->
+
+    <div class="top-btn-area">
+        <button type="button" class="top-btn"></button>
+    </div>
+
+</div>
+<!-- //wrap -->
+
+
+<script>
+
+</script>
+
+
+</body>
+</html>
