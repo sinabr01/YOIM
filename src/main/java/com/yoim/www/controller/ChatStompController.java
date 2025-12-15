@@ -7,7 +7,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.yoim.www.model.MessagePayload;
-import com.yoim.www.serviceImpl.ChatService;
+import com.yoim.www.serviceImpl.chat.ChatService;
 
 import lombok.var;
 

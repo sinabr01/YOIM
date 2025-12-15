@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.yoim.www.mapper.ChatMemberMapper;
+import com.yoim.www.mapper.chat.ChatMemberMapper;
 import com.yoim.www.model.*;
+import com.yoim.www.model.chat.ChatMember;
+import com.yoim.www.model.chat.CreateRoomReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoim.www.mapper.ChatMsgMapper;
-import com.yoim.www.mapper.ChatRoomMapper;
-import com.yoim.www.serviceImpl.ChatService;
+import com.yoim.www.mapper.chat.ChatMsgMapper;
+import com.yoim.www.mapper.chat.ChatRoomMapper;
+import com.yoim.www.serviceImpl.chat.ChatService;
 
 @RestController
 @RequestMapping("/api/chat")
@@ -43,7 +45,7 @@ public class ChatRestController {
 
 
     @PostMapping("/rooms")
-    public Map<String, Object> createRoom(@RequestBody CreateRoomReq req,Authentication authentication) {
+    public Map<String, Object> createRoom(@RequestBody CreateRoomReq req, Authentication authentication) {
     	CustomUserDetails user = (CustomUserDetails) authentication.getDetails();
     	long roomId;
         if (Integer.valueOf(1).equals(req.getType()) && req.getMembers() != null && req.getMembers().size() == 2) {

@@ -1,4 +1,4 @@
-package com.yoim.www.serviceImpl;
+package com.yoim.www.serviceImpl.chat;
 
 import java.util.HashMap;
 
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yoim.www.mapper.ChatDmMapper;
-import com.yoim.www.mapper.ChatMemberMapper;
-import com.yoim.www.mapper.ChatMsgMapper;
-import com.yoim.www.mapper.ChatRoomMapper;
-import com.yoim.www.model.ChatMsg;
+import com.yoim.www.mapper.chat.ChatDmMapper;
+import com.yoim.www.mapper.chat.ChatMemberMapper;
+import com.yoim.www.mapper.chat.ChatMsgMapper;
+import com.yoim.www.mapper.chat.ChatRoomMapper;
+import com.yoim.www.model.chat.ChatMsg;
 import com.yoim.www.model.MessageDto;
 import com.yoim.www.model.MessagePayload;
 

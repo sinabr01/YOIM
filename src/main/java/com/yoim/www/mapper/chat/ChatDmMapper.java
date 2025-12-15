@@ -1,4 +1,4 @@
-package com.yoim.www.mapper;
+package com.yoim.www.mapper.chat;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

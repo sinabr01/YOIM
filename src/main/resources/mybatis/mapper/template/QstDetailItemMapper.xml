@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yoim.www.mapper.template.QstDetailItemMapper">
+	
+	<resultMap type="qstDetailItem" id="getSelectMap">
+		<result property="qstItemId" column="qst_item_id"/>
+		<result property="qstId" column="qst_id"/>
+		<result property="itemName" column="item_name"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="registId" column="regist_id"/>
+		<result property="registDt" column="regist_dt"/>
+		<result property="updusrId" column="updusr_id"/>
+		<result property="updtDt" column="updt_dt"/>
+	</resultMap>
+	
+	<select id="qstDetailItemSelect" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_qst_detail_item
+		<if test="keyword != null and keyword != ''">
+			where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY
+			regist_dt DESC
+			LIMIT #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="qstDetailItemTotalCount" resultType="int" parameterType="hashmap">
+		select count(*)
+		from tb_qst_detail_item
+		<if test="keyword != null and keyword != ''">
+		where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</select>
+
+	<select id="qstDetailItemView" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_qst_detail_item
+		where qst_item_id = #{qstItemId}
+	</select>
+
+	<delete id="qstDetailItemDelete" parameterType="hashmap">
+		delete from tb_qst_detail_item where qst_item_id = #{qstItemId}
+	</delete>
+	
+	<insert id="qstDetailItemUpsert" parameterType="qstDetailItem" useGeneratedKeys="true" keyProperty="qstItemId">
+		insert into tb_qst_detail_item
+		(
+		qst_item_id,
+		qst_id,
+		item_name,
+		order_no,
+		regist_id,
+		regist_dt
+		)
+		values(
+	    #{qstItemId},
+		#{qstId},
+		#{itemName},
+		#{orderNo},
+		#{registId},
+		now()
+		)
+		ON DUPLICATE KEY UPDATE
+		order_no = VALUES(order_no),
+		item_name = VALUES(item_name),
+	    updusr_id = VALUES(regist_id),
+	    updt_dt = NOW();
+	</insert>
+	
+	
+	
+	
+</mapper>

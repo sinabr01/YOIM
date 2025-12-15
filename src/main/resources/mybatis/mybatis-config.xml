@@ -17,16 +17,17 @@
 		<typeAlias alias="user" type="com.yoim.www.model.User"/>
 		<typeAlias alias="fileUpload" type="com.yoim.www.model.FileUpload"/>
 		<typeAlias alias="fileDetail" type="com.yoim.www.model.FileDetail"/>
-		<typeAlias alias="chatDm" type="com.yoim.www.model.ChatDm"/>
-		<typeAlias alias="chatMember" type="com.yoim.www.model.ChatMember"/>
-		<typeAlias alias="chatMsg" type="com.yoim.www.model.ChatMsg"/>
-		<typeAlias alias="chatRoom" type="com.yoim.www.model.ChatRoom"/>
+		<typeAlias alias="chatDm" type="com.yoim.www.model.chat.ChatDm"/>
+		<typeAlias alias="chatMember" type="com.yoim.www.model.chat.ChatMember"/>
+		<typeAlias alias="chatMsg" type="com.yoim.www.model.chat.ChatMsg"/>
+		<typeAlias alias="chatRoom" type="com.yoim.www.model.chat.ChatRoom"/>
 		<typeAlias alias="messageDto" type="com.yoim.www.model.MessageDto"/>
 		<typeAlias alias="messagePayload" type="com.yoim.www.model.MessagePayload"/>
 		<typeAlias alias="notice" type="com.yoim.www.model.Notice"/>
-		<typeAlias alias="companyTemplate" type="com.yoim.www.model.CompanyTemplate"/>
-		<typeAlias alias="qstDetail" type="com.yoim.www.model.QstDetail"/>
-		<typeAlias alias="templateQst" type="com.yoim.www.model.TemplateQst"/>
+		<typeAlias alias="companyTemplate" type="com.yoim.www.model.template.CompanyTemplate"/>
+		<typeAlias alias="qstDetail" type="com.yoim.www.model.template.QstDetail"/>
+		<typeAlias alias="templateQst" type="com.yoim.www.model.template.TemplateQst"/>
+		<typeAlias alias="qstDetailItem" type="com.yoim.www.model.template.QstDetailItem"/>
 		<typeAlias alias="cmmnCode" type="com.yoim.www.model.CmmnCode"/>
 	</typeAliases>
 

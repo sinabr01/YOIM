@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yoim.www.mapper.template.QstDetailMapper">
+	
+	<resultMap type="qstDetail" id="getSelectMap">
+		<result property="qstId" column="qst_id"/>
+		<result property="templateQstId" column="template_qst_id"/>
+		<result property="qstOption" column="qst_option"/>
+		<result property="qstName" column="qst_name"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="registId" column="regist_id"/>
+		<result property="registDt" column="regist_dt"/>
+		<result property="updusrId" column="updusr_id"/>
+		<result property="updtDt" column="updt_dt"/>
+	</resultMap>
+	
+	<select id="qstDetailSelect" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_qst_detail
+		<if test="keyword != null and keyword != ''">
+			where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY
+			regist_dt DESC
+			LIMIT #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="qstDetailTotalCount" resultType="int" parameterType="hashmap">
+		select count(*)
+		from tb_qst_detail
+		<if test="keyword != null and keyword != ''">
+		where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</select>
+
+	<select id="qstDetailView" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_qst_detail
+		where qst_id = #{qstId}
+	</select>
+
+	<delete id="qstDetailDelete" parameterType="hashmap">
+		delete from tb_qst_detail where qst_id = #{qstId}
+	</delete>
+	
+	<insert id="qstDetailUpsert" parameterType="qstDetail" useGeneratedKeys="true" keyProperty="qstId">
+		insert into tb_qst_detail
+		(
+		qst_id,
+		template_qst_id,
+		qst_option,
+		qst_name,
+		order_no,
+		regist_id,
+		regist_dt
+		)
+		values(
+	    #{qstId},
+		#{templateQstId},
+		#{qstOption},
+		#{qstName},
+		#{orderNo},
+		#{registId},
+		now()
+		)
+		ON DUPLICATE KEY UPDATE
+		qst_option = VALUES(qst_option),
+		qst_name = VALUES(qst_name),
+		order_no = VALUES(order_no),
+	    updusr_id = VALUES(regist_id),
+	    updt_dt = NOW();
+	</insert>
+	
+	
+	
+	
+</mapper>

@@ -1,6 +1,6 @@
-package com.yoim.www.mapper;
+package com.yoim.www.mapper.chat;
 
-import com.yoim.www.model.ChatMember;
+import com.yoim.www.model.chat.ChatMember;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

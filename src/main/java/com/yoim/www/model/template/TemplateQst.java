@@ -1,4 +1,4 @@
-package com.yoim.www.model;
+package com.yoim.www.model.template;
 
 import lombok.Data;
 

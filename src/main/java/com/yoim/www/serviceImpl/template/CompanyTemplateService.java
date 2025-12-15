@@ -1,7 +1,7 @@
-package com.yoim.www.serviceImpl;
+package com.yoim.www.serviceImpl.template;
 
-import com.yoim.www.mapper.CompanyTemplateMapper;
-import com.yoim.www.model.CompanyTemplate;
+import com.yoim.www.mapper.template.CompanyTemplateMapper;
+import com.yoim.www.model.template.CompanyTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

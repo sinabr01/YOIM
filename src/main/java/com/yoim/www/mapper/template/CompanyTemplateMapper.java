@@ -1,6 +1,6 @@
-package com.yoim.www.mapper;
+package com.yoim.www.mapper.template;
 
-import com.yoim.www.model.CompanyTemplate;
+import com.yoim.www.model.template.CompanyTemplate;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;

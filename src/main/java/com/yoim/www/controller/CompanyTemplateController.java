@@ -1,8 +1,11 @@
 package com.yoim.www.controller;
 
-import com.yoim.www.model.CompanyTemplate;
+import com.yoim.www.model.template.CompanyTemplate;
 import com.yoim.www.serviceImpl.CmmnCodeService;
-import com.yoim.www.serviceImpl.CompanyTemplateService;
+import com.yoim.www.serviceImpl.template.CompanyTemplateService;
+import com.yoim.www.serviceImpl.template.QstDetailItemService;
+import com.yoim.www.serviceImpl.template.QstDetailService;
+import com.yoim.www.serviceImpl.template.TemplateQstService;
 import com.yoim.www.util.PagingAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +28,15 @@ public class CompanyTemplateController {
 
 	@Autowired
 	CompanyTemplateService companyTemplateService;
+
+	@Autowired
+	QstDetailService qstDetailService;
+
+	@Autowired
+	QstDetailItemService qstDetailItemService;
+
+	@Autowired
+	TemplateQstService templateQstService;
 
 	@Autowired
 	CmmnCodeService cmmnCodeService;
@@ -114,6 +127,49 @@ public class CompanyTemplateController {
 			Model model) throws IOException {
 
 		System.out.println(paramMap);
+
+		// 제목
+		String title = (String) paramMap.get("title");
+
+		// 질문 리스트
+		List<Map<String, Object>> questions = (List<Map<String, Object>>) paramMap.get("questions");
+
+		for (Map<String, Object> q : questions) {
+
+			String question = (String) q.get("question");
+			String requiredYn = (String) q.get("requiredYn");
+			String type = (String) q.get("type");
+			int orderNo = (int) q.get("orderNo");
+
+			System.out.println("===== 질문 =====");
+			System.out.println(question + " / 필수:" + requiredYn + " / 형태:" + type);
+
+			// 상세 리스트
+			List<Map<String, Object>> details = (List<Map<String, Object>>) q.get("details");
+
+			for (Map<String, Object> d : details) {
+
+				String option = (String) d.get("qstOption");
+				int detailOrder = (int) d.get("orderNo");
+
+				System.out.println("  --- 상세 옵션: " + option);
+
+				// 상세에 딸린 아이템 리스트 (예: 라디오 항목)
+				List<Map<String, Object>> items =
+						(List<Map<String, Object>>) d.get("items");
+
+				for (Map<String, Object> item : items) {
+
+					String itemName = (String) item.get("itemName");
+					int itemOrder = (int) item.get("orderNo");
+
+					System.out.println("    * " + itemOrder + " : " + itemName);
+				}
+			}
+		}
+
+		//return Map.of("result", true);
+
 
 		//companyTemplateService.companyTemplateUpsert(companyTemplate);
 		//return "redirect:/host/companyTemplate/nv_companyTemplateView?companyTemplateId=" + companyTemplate.getTemplateId();

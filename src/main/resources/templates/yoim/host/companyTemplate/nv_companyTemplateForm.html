@@ -7,82 +7,144 @@
 <head>
     <script th:inline="javascript">
 
+        function saveTemplate() {
 
-
-
-
-        function buildTemplateData() {
+            // 템플릿 제목 체크
+            const title = document.querySelector("#title").value.trim();
+            if (!title) {
+                alert("템플릿 제목을 입력해주세요.");
+                return;
+            }
 
             const result = {
-                title: document.querySelector("#title").value.trim(),
+                title: title,
                 questions: []
             };
 
             const qBoxes = document.querySelectorAll(".template-cont-box");
 
-            qBoxes.forEach((box, qIndex) => {
+            if (qBoxes.length === 0) {
+                alert("최소 1개의 질문이 필요합니다.");
+                return;
+            }
 
-                const questionText = box.querySelector("input[name='question']").value.trim();
-                const requiredYn = box.querySelector("input[name='required_yn']:checked") ? "Y" : "N";
-                const type = box.querySelector("input[name='type']:checked") ? "V" : "H";
+            try {
+                qBoxes.forEach((box, qIndex) => {
 
-                const questionObj = {
-                    question: questionText,
-                    requiredYn: requiredYn,
-                    type: type,
-                    orderNo: qIndex + 1,
-                    details: []
-                };
+                    const questionText = box.querySelector("input[name='question']").value.trim();
+                    if (!questionText) {
+                        alert((qIndex + 1) + "번 질문 내용을 입력해주세요.");
+                        throw "STOP";
+                    }
 
-                // 상세 타입 요소들 수집
-                const detailBlocks = box.querySelectorAll(".template-q-item .form.col, .template-q-item .form.row");
+                    const requiredYn = box.querySelector("input[name='required_yn']:checked") ? "Y" : "N";
+                    const type = box.querySelector("input[name='type']:checked") ? "W" : "H";
 
-                detailBlocks.forEach((block, dIndex) => {
-
-                    let optionType = "";
-                    let qstName = null;
-
-                    if (block.classList.contains("date-type")) optionType = "date";
-                    if (block.classList.contains("check-type")) optionType = "check";
-                    if (block.classList.contains("radio-type")) optionType = "radio";
-                    if (block.classList.contains("select-type")) optionType = "select";
-                    if (block.classList.contains("text-type")) optionType = "text";
-
-                    const detailObj = {
-                        qstOption: optionType,
-                        qstName: null,
-                        orderNo: dIndex + 1,
-                        items: []
+                    const questionObj = {
+                        question: questionText,
+                        requiredYn: requiredYn,
+                        type: type,
+                        orderNo: qIndex + 1,
+                        details: []
                     };
 
-                    // 체크박스 / 라디오 / 셀렉트 / 텍스트 아이템 수집
-                    const itemRows = block.querySelectorAll(".has-btn, .select-input, .text-input");
+                    // 상세 옵션 블럭들 수집
+                    const detailBlocks = box.querySelectorAll(".template-q-item .form.col, .template-q-item .form.row");
 
-                    itemRows.forEach((row, iIndex) => {
+                    // 🔥 여기 추가됨: 질문 1개당 옵션 1개만 허용
+                    if (detailBlocks.length > 1) {
+                        alert((qIndex + 1) + "번 질문에 옵션은 1개만 등록할 수 있습니다.");
+                        throw "STOP";
+                    }
 
-                        const input = row.querySelector("input[type='text']");
-                        if (!input) return;
+                    // 옵션이 아예 없으면 오류
+                    if (detailBlocks.length === 0) {
+                        alert((qIndex + 1) + "번 질문에 최소 1개의 옵션을 추가해주세요.");
+                        throw "STOP";
+                    }
 
-                        detailObj.items.push({
-                            itemName: input.value.trim(),
-                            orderNo: iIndex + 1
+                    // 옵션 1개만 처리
+                    detailBlocks.forEach((block, dIndex) => {
+
+                        let optionType = "";
+                        if (block.classList.contains("date-type")) optionType = "date";
+                        if (block.classList.contains("check-type")) optionType = "check";
+                        if (block.classList.contains("radio-type")) optionType = "radio";
+                        if (block.classList.contains("select-type")) optionType = "select";
+                        if (block.classList.contains("text-type")) optionType = "text";
+
+                        const detailObj = {
+                            qstOption: optionType,
+                            qstName: null,
+                            orderNo: 1,
+                            items: []
+                        };
+
+                        // 타입이 date 이면 item 없음 → 바로 push
+                        if (optionType === "date") {
+                            questionObj.details.push(detailObj);
+                            return;
+                        }
+
+                        // 아이템 수집
+                        const itemRows = block.querySelectorAll(".has-btn, .select-input, .text-input");
+
+                        if (itemRows.length === 0) {
+                            alert((qIndex + 1) + "번 질문의 옵션에 최소 1개의 항목을 입력해주세요.");
+                            throw "STOP";
+                        }
+
+                        itemRows.forEach((row, iIndex) => {
+                            const input = row.querySelector("input[type='text']");
+                            if (!input) return;
+
+                            const value = input.value.trim();
+                            if (!value) {
+                                alert(
+                                    (qIndex + 1) + "번 질문 옵션의 " +
+                                    (iIndex + 1) + "번 항목을 입력해주세요."
+                                );
+                                throw "STOP";
+                            }
+
+                            detailObj.items.push({
+                                itemName: value,
+                                orderNo: iIndex + 1
+                            });
                         });
+
+                        questionObj.details.push(detailObj);
                     });
 
-                    questionObj.details.push(detailObj);
+                    result.questions.push(questionObj);
                 });
 
-                result.questions.push(questionObj);
-            });
+            } catch (e) {
+                return; // 유효성 실패로 저장 중단
+            }
 
-            //result
-
-            fetch("/host/companyTemplate/ts_companyTemplateUpsert", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(result)
+            //저장 실행
+            $.ajax({
+                url: "/host/companyTemplate/ts_companyTemplateUpsert",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(result),
+                success: function (data) {
+                    if (data.result) {
+                        alert("저장 완료!");
+                        location.href = "/";
+                    } else {
+                        alert("저장 실패했습니다.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("ERROR:", error);
+                    alert("서버 오류가 발생했습니다.");
+                }
             });
         }
+
+
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -93,6 +155,10 @@
             initSticky(); //버튼 상단 고정
             initTemplateAdd(); //템플릿 틀
             initTemplateTools(); // 각 요소 추가
+
+            function hasAnyOption(box) {
+                return box.querySelector(".template-q-item").children.length > 0;
+            }
 
             // 질문 추가
             function initTemplateAdd() {
@@ -235,22 +301,22 @@
 
 
                 // 현재 "추가하기 곳" 으로 선택된 템플릿 박스의 .template-q-item 반환
-                function getActiveContainer() {
-                    const checked = document.querySelector('.template-cont-box .main-check input[type="radio"]:checked');
-                    if (!checked) return null;
-
-                    const box = checked.closest('.template-cont-box');
-                    if (!box) return null;
-
-                    return box.querySelector('.template-q-item');
-                }
-
                 function requireActiveContainer() {
-                    const target = getActiveContainer();
-                    if (!target) {
+                    const checked = document.querySelector('.template-cont-box .main-check input[type="radio"]:checked');
+                    if (!checked) {
                         alert('요소를 추가할 질문을 먼저 선택해주세요.');
                         return null;
                     }
+
+                    const box = checked.closest('.template-cont-box');
+                    const target = box.querySelector('.template-q-item');
+
+                    // 🔥 옵션이 이미 1개라도 있으면 추가 불가
+                    if (hasAnyOption(box)) {
+                        alert('이미 옵션이 존재합니다. 하나의 질문에는 하나의 옵션만 등록할 수 있습니다.');
+                        return null;
+                    }
+
                     return target;
                 }
 
@@ -264,6 +330,7 @@
 <div class="form row date-type">
     <div class="form-tit-wrap">
         <span class="form-tit">날짜</span>
+        <button type="button" class="btn xs fill-red btn-del-block">- 삭제</button>
     </div>
     <div class="form-cont">
         <input type="text" class="datepicker" placeholder="날짜 선택">
@@ -666,31 +733,12 @@
                                         <label class="radio">
                                             <input type="radio" name="agree">
                                             <span class="fake-radio"></span>
-                                            <input type="text" name="" id="" value="그렇다">
+                                            <input type="text" name="" id="" value="">
                                         </label>
 
                                         <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
                                     </div>
 
-                                    <div class="has-btn">
-                                        <label class="radio">
-                                            <input type="radio" name="agree">
-                                            <span class="fake-radio"></span>
-                                            <input type="text" name="" id="" value="보통">
-                                        </label>
-
-                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
-                                    </div>
-
-                                    <div class="has-btn">
-                                        <label class="radio">
-                                            <input type="radio" name="agree">
-                                            <span class="fake-radio"></span>
-                                            <input type="text" name="" id="" value="아니다">
-                                        </label>
-
-                                        <button type="button" class="btn xs line-red btn-del-option">- 삭제</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -761,7 +809,7 @@
 
 
             <div class="btn-wrap center mt30-xl">
-                <button type="button" class="btn sm fill-blue" onclick="buildTemplateData()">저장</button>
+                <button type="button" class="btn sm fill-blue" onclick="saveTemplate()">저장</button>
                 <button type="button" class="btn sm line-gray">취소</button>
             </div>
         </div>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.yoim.www.mapper.template.TemplateQstMapper">
+	
+	<resultMap type="templateQst" id="getSelectMap">
+		<result property="templateQstId" column="template_qst_id"/>
+		<result property="templateId" column="template_id"/>
+		<result property="question" column="question"/>
+		<result property="requiredYn" column="required_yn"/>
+		<result property="type" column="type"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="registId" column="regist_id"/>
+		<result property="registDt" column="regist_dt"/>
+		<result property="updusrId" column="updusr_id"/>
+		<result property="updtDt" column="updt_dt"/>
+	</resultMap>
+	
+	<select id="templateQstSelect" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_template_qst
+		<if test="keyword != null and keyword != ''">
+			where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY
+			regist_dt DESC
+			LIMIT #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="templateQstTotalCount" resultType="int" parameterType="hashmap">
+		select count(*)
+		from tb_template_qst
+		<if test="keyword != null and keyword != ''">
+		where ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</select>
+
+	<select id="templateQstView" resultMap="getSelectMap" parameterType="hashmap">
+		select *
+		from tb_template_qst
+		where template_qst_id = #{templateQstId}
+	</select>
+
+	<delete id="templateQstDelete" parameterType="hashmap">
+		delete from tb_template_qst where template_qst_id = #{templateQstId}
+	</delete>
+	
+	<insert id="templateQstUpsert" parameterType="templateQst" useGeneratedKeys="true" keyProperty="templateQstId">
+		insert into tb_template_qst
+		(
+		template_qst_id,
+		template_id,
+		question,
+		required_yn,
+		type,
+		order_no,
+		regist_id,
+		regist_dt
+		)
+		values(
+	    #{templateQstId},
+		#{templateId},
+		#{question},
+		#{requiredYn},
+		#{type},
+		#{orderNo},
+		#{registId},
+		now()
+		)
+		ON DUPLICATE KEY UPDATE
+		question = VALUES(question),
+		required_yn = VALUES(required_yn),
+		type = VALUES(type),
+		order_no = VALUES(order_no),
+	    updusr_id = VALUES(regist_id),
+	    updt_dt = NOW();
+	</insert>
+	
+	
+	
+	
+</mapper>
