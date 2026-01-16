@@ -33,6 +33,7 @@ public class UsersDetailsService implements UserDetailsService{
         }
 		CustomUserDetails principal = new CustomUserDetails();
 		principal.setUserId(user.getUserId());
+		principal.setLoginId(user.getLoginId());
 		principal.setUsername(user.getUserNm());
 		principal.setNickname(user.getNickNm());
 		principal.setUserType(user.getUserType());

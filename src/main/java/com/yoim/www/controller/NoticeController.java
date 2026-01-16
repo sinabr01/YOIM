@@ -1,5 +1,6 @@
 package com.yoim.www.controller;
 
+import com.yoim.www.model.CustomUserDetails;
 import com.yoim.www.model.KakaoApi;
 import com.yoim.www.model.Notice;
 import com.yoim.www.model.User;
@@ -122,7 +123,10 @@ public class NoticeController {
 	public String admin_notice_ts_noticeUpsert(
 			@RequestParam Map<String, Object> paramMap,
 			Notice notice,
-			Model model) throws IOException {
+			Model model,
+			Authentication authentication) throws IOException {
+		CustomUserDetails user = (CustomUserDetails) authentication.getDetails();
+		notice.setRegistId(user.getLoginId());
 		noticeService.noticeUpsert(notice);
 		return "redirect:/admin/notice/nv_noticeView?noticeId=" + notice.getNoticeId();
 	}

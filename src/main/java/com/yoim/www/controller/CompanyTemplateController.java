@@ -1,5 +1,6 @@
 package com.yoim.www.controller;
 
+import com.yoim.www.model.CustomUserDetails;
 import com.yoim.www.model.template.CompanyTemplate;
 import com.yoim.www.serviceImpl.CmmnCodeService;
 import com.yoim.www.serviceImpl.template.CompanyTemplateService;
@@ -10,6 +11,7 @@ import com.yoim.www.util.PagingAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -124,12 +126,23 @@ public class CompanyTemplateController {
 	@ResponseBody
 	public String host_companyTemplate_ts_companyTemplateUpsert(
 			@RequestBody Map<String, Object> paramMap,
-			Model model) throws IOException {
+			Model model,
+			Authentication authentication) throws IOException {
+		CustomUserDetails user = (CustomUserDetails) authentication.getDetails();
 
 		System.out.println(paramMap);
 
 		// 제목
 		String title = (String) paramMap.get("title");
+
+		CompanyTemplate companyTemplate = new CompanyTemplate();
+		companyTemplate.setTitle(title);
+		companyTemplate.setRegistId(user.getLoginId());
+		companyTemplate.setCompanyId(1L);
+		int templateId = companyTemplateService.companyTemplateUpsert(companyTemplate);
+
+		System.out.println(companyTemplate.getTemplateId());
+
 
 		// 질문 리스트
 		List<Map<String, Object>> questions = (List<Map<String, Object>>) paramMap.get("questions");
