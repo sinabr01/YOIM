@@ -26,16 +26,14 @@ public class AuthProvider implements AuthenticationProvider {
 		String id = authentication.getName();
         String password = authentication.getCredentials().toString();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.err.println(passwordEncoder.encode(password));
         CustomUserDetails users = (CustomUserDetails) usersDetailsService.loadUserByUsername(id);
         if (!passwordEncoder.matches(password, users.getPassword())) {
 			throw new UsernameNotFoundException("USER NOT FOUND OR NOT MATCH PASSWORD");
 		}
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), users.getPassword(), users.getAuthorities());
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(users, users.getPassword(), users.getAuthorities());
         
         //setDetails을 함으로써 html에서 th:text="${#authentication.details.nickname}" 이런걸 사용할수있는거임
         result.setDetails(users);
-        System.out.println(result.getDetails());
         return result;
 	}
 

@@ -30,3 +30,7 @@ naver:
 yoim:
   upload:
     base-dir: C:\home\yoim\uploads
+
+jwt:
+  secret: your-secure-secret-key-at-least-32-characters-long-change-this-in-production
+  expiration: 86400000

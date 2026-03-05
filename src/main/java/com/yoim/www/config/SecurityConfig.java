@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
@@ -26,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired AuthProvider authProvider;
     @Autowired AuthFailureHandler authFailureHandler;
     @Autowired AuthSuccessHandler authSuccessHandler;
+    @Autowired JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -35,6 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     /** CORS 허용 오리진 */
@@ -69,9 +78,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers("/", "/doLogin", "/logout",
                          "/resource/**", "/main/**",
-                         "/error", "/favicon.ico").permitAll()
+                         "/error", "/favicon.ico", "/api/auth/**").permitAll()
             .anyRequest().permitAll()
         .and()
+
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
         .formLogin()
             .loginPage("/")

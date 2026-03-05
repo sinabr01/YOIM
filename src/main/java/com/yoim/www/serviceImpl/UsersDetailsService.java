@@ -41,6 +41,10 @@ public class UsersDetailsService implements UserDetailsService{
 		principal.setPassword(user.getLoginPw());
 		//user.getUserImgFileId()
 		//principal.setUserImg(user.getUserImgFileId());
+		principal.setEnabled(!"Y".equals(user.getUserDelYn())); // Assuming userDelYn 'Y' means deleted
+		principal.setAccountNonExpired(true);
+		principal.setAccountNonLocked(true);
+		principal.setCredentialsNonExpired(true);
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
 		grantedAuthorityList.add(new SimpleGrantedAuthority(user.getUserType()));
 		principal.setAuthorities(grantedAuthorityList);
