@@ -1,9 +1,7 @@
 package com.yoim.www.serviceImpl;
 
-import com.yoim.www.mapper.NoticeMapper;
-import com.yoim.www.mapper.UserMapper;
 import com.yoim.www.model.Notice;
-import com.yoim.www.model.User;
+import com.yoim.www.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,26 +12,32 @@ import java.util.List;
 public class NoticeService {
 
 	@Autowired
-	NoticeMapper mapper;
+	NoticeRepository noticeRepository;
 
 	public List<Notice> noticeSelect(HashMap<String, Object> param) {
-		return mapper.noticeSelect(param);
+		String keyword = (String) param.get("keyword");
+		int pageStart = (Integer) param.get("pagestart");
+		int pageSize = (Integer) param.get("pagesize");
+		return noticeRepository.findNoticesWithPagination(keyword, pageStart, pageSize);
 	}
 
 	public int noticeTotalCount(HashMap<String, Object> param) {
-		return mapper.noticeTotalCount(param);
+		String keyword = (String) param.get("keyword");
+		return noticeRepository.countNotices(keyword);
 	}
 
 	public Notice noticeView(HashMap<String, Object> param) {
-		return mapper.noticeView(param);
+		Long noticeId = ((Number) param.get("noticeId")).longValue();
+		return noticeRepository.findById(noticeId).orElse(null);
 	}
 
 	public void noticeDelete(HashMap<String, Object> param) {
-		mapper.noticeDelete(param);
+		Long noticeId = ((Number) param.get("noticeId")).longValue();
+		noticeRepository.deleteById(noticeId);
 	}
 
-	public int noticeUpsert(Notice notice) {
-		return mapper.noticeUpsert(notice);
+	public void noticeUpsert(Notice notice) {
+		noticeRepository.upsertNotice(notice.getTitle(), notice.getContent(), notice.getPinnedYn(), notice.getUseYn(), notice.getRegistId());
 	}
 
 }

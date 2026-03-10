@@ -11,13 +11,26 @@ import lombok.Data;
 public class CustomUserDetails implements UserDetails{
 	private Long userId;
     private String loginId;
-    private Long companyId;
-	private String username;
+    private String username;
     private String password;
     private String nickname;
     private String email;
     private String userType;
     private String userImg;
+    private String birthDate;
+    private String gender;
+    private String intro;
+    private String interests;
+    private String phone;
+    private String providerId;
+    private String providerType;
+    private String userDelYn;
+    private String userDelDate;
+    private Long userImgId;
+    private String registId;
+    private String registDt;
+    private String updusrId;
+    private String updtDt;
     private boolean isEnabled;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
@@ -26,7 +39,7 @@ public class CustomUserDetails implements UserDetails{
 
     @Override
     public String getUsername() {
-        return loginId;
+        return username;
     }
 
     @Override

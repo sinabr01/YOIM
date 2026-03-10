@@ -34,6 +34,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String loginId = tokenProvider.getLoginIdFromToken(token);
                 CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(loginId);
 
+                // 토큰에서 추가 정보 세팅 (DB 정보 덮어쓰기)
+                userDetails.setNickname(tokenProvider.getNicknameFromToken(token));
+                userDetails.setUserType(tokenProvider.getUserTypeFromToken(token));
+                userDetails.setUserId(tokenProvider.getUserIdFromToken(token));
+                userDetails.setUsername(tokenProvider.getUserNmFromToken(token));
+                userDetails.setEmail(tokenProvider.getEmailFromToken(token));
+                userDetails.setBirthDate(tokenProvider.getBirthDateFromToken(token));
+                userDetails.setGender(tokenProvider.getGenderFromToken(token));
+                userDetails.setIntro(tokenProvider.getIntroFromToken(token));
+                userDetails.setInterests(tokenProvider.getInterestsFromToken(token));
+                userDetails.setPhone(tokenProvider.getPhoneFromToken(token));
+                userDetails.setProviderId(tokenProvider.getProviderIdFromToken(token));
+                userDetails.setProviderType(tokenProvider.getProviderTypeFromToken(token));
+                userDetails.setUserDelYn(tokenProvider.getUserDelYnFromToken(token));
+                userDetails.setUserDelDate(tokenProvider.getUserDelDateFromToken(token));
+                userDetails.setUserImgId(tokenProvider.getUserImgIdFromToken(token));
+                userDetails.setRegistId(tokenProvider.getRegistIdFromToken(token));
+                userDetails.setRegistDt(tokenProvider.getRegistDtFromToken(token));
+                userDetails.setUpdusrId(tokenProvider.getUpdusrIdFromToken(token));
+                userDetails.setUpdtDt(tokenProvider.getUpdtDtFromToken(token));
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(userDetails);
